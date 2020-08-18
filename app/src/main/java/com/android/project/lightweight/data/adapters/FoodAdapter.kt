@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodBinding
 import com.android.project.lightweight.network.Food
 
-class FoodAdapter : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
+class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
 
     override fun onBindViewHolder(holder: FoodHolder, position: Int) {
         val food = getItem(position)
-        holder.bindFood(food)
+        holder.bindFood(food, listener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodHolder {
@@ -21,8 +21,9 @@ class FoodAdapter : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
 
     class FoodHolder private constructor(private val binding: ListItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindFood(food: Food) {
+        fun bindFood(food: Food, listener : OnFoodClickListener) {
             binding.food = food
+            binding.listener = listener
         }
 
         companion object {
@@ -43,4 +44,8 @@ class FoodCallback : DiffUtil.ItemCallback<Food>() {
     override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
         return oldItem == newItem
     }
+}
+
+interface OnFoodClickListener {
+    fun onClick(food : Food)
 }

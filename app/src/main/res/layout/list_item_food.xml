@@ -6,13 +6,18 @@
     <data>
 
         <variable
+            name="listener"
+            type="com.android.project.lightweight.data.adapters.OnFoodClickListener" />
+
+        <variable
             name="food"
             type="com.android.project.lightweight.network.Food" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> listener.onClick(food)}">
 
         <TextView
             android:id="@+id/txtFoodName"

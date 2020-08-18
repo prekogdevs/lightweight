@@ -8,10 +8,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
+import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
+import com.android.project.lightweight.network.Food
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -21,8 +24,13 @@ class SearchFragment : Fragment() {
     private val searchViewModel: SearchViewModel by lazy {
         ViewModelProvider(this).get(SearchViewModel::class.java)
     }
+
     private val foodAdapter by lazy {
-        FoodAdapter()
+        FoodAdapter(object : OnFoodClickListener {
+            override fun onClick(food: Food) {
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food))
+            }
+        })
     }
 
     override fun onCreateView(
