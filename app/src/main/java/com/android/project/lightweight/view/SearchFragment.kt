@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
@@ -16,7 +15,6 @@ import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.network.Food
 import com.android.project.lightweight.utilities.UIUtils
-import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment() {
 
@@ -33,17 +31,14 @@ class SearchFragment : Fragment() {
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
-
         binding.btnSearch.setOnClickListener{
-            searchViewModel.getFoods("DEMO_KEY", edtFood.text.toString())
+            val foodName = binding.edtFood.text.toString()
+            searchViewModel.getFoods("DEMO_KEY", foodName)
             UIUtils.closeKeyboard(requireActivity())
         }
 
@@ -52,7 +47,7 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        searchViewModel.response.observe(viewLifecycleOwner, Observer {
+        searchViewModel.response.observe(viewLifecycleOwner, {
             it?.let {
                 foodAdapter.submitList(it)
             }
