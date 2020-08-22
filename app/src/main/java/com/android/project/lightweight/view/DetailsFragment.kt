@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.R
+import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.network.Food
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -20,22 +21,22 @@ class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var food: Food
     private lateinit var navController: NavController
+    private val foodNutrientAdapter by lazy {
+        FoodNutrientAdapter(food.foodNutrients)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
         navController = findNavController()
-        // TODO: For test purposes only. Remove it later.
         arguments?.let { bundle ->
             food = DetailsFragmentArgs.fromBundle(bundle).selectedFood
             binding.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
-            var text = ""
-            for (nutrient in food.foodNutrients) {
-                text += "Nutrient name: " + nutrient.nutrientName + ",unit name: " + nutrient.unitName + ", amount: " + nutrient.amount + "\n"
-            }
-            binding.txtTest.text = text
         }
-
+        binding.foodNutrientsRecyclerView.apply {
+            adapter = foodNutrientAdapter
+            setHasFixedSize(true)
+        }
         return binding.root
     }
 

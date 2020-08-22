@@ -10,13 +10,13 @@ import com.android.project.lightweight.network.Food
 
 class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodHolder {
+        return FoodHolder.from(parent)
+    }
+
     override fun onBindViewHolder(holder: FoodHolder, position: Int) {
         val food = getItem(position)
         holder.bindFood(food, listener)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodHolder {
-        return FoodHolder.from(parent)
     }
 
     class FoodHolder private constructor(private val binding: ListItemFoodBinding) :
