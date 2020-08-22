@@ -24,8 +24,7 @@ class FoodNutrientAdapter(private val foodNutrients: List<FoodNutrient>) : Recyc
 
         @SuppressLint("SetTextI18n")
         fun bindFoodNutrient(foodNutrient: FoodNutrient) {
-            binding.txtNutrientName.text = foodNutrient.nutrientName
-            binding.txtNutrientAmount.text = "${foodNutrient.amount} ${foodNutrient.unitName}"
+            binding.foodNutrient = foodNutrient
         }
 
         companion object {
