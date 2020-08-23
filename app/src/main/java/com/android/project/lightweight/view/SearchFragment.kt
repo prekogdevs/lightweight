@@ -36,20 +36,25 @@ class SearchFragment : Fragment() {
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
-        binding.btnSearch.setOnClickListener{
+        binding.btnSearch.setOnClickListener {
             val foodName = binding.edtFood.text.toString()
             searchViewModel.getFoods("DEMO_KEY", foodName)
             UIUtils.closeKeyboard(requireActivity())
+            binding.foodRecyclerView.visibility = View.INVISIBLE
+            binding.progressbar.visibility = View.VISIBLE
         }
 
-        binding.foodRV.apply {
+        binding.foodRecyclerView.apply {
             adapter = foodAdapter
             setHasFixedSize(true)
         }
 
         searchViewModel.response.observe(viewLifecycleOwner, {
             it?.let {
+                // Stop progressbar here
                 foodAdapter.submitList(it)
+                binding.progressbar.visibility = View.INVISIBLE
+                binding.foodRecyclerView.visibility = View.VISIBLE
             }
         })
 
