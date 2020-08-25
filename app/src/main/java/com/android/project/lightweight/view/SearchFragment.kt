@@ -40,7 +40,7 @@ class SearchFragment : Fragment() {
             val foodName = binding.edtFood.text.toString()
             searchViewModel.getFoods("DEMO_KEY", foodName)
             UIUtils.closeKeyboard(requireActivity())
-            binding.foodRecyclerView.visibility = View.INVISIBLE
+            binding.noResultsTextview.visibility = View.INVISIBLE
             binding.progressbar.visibility = View.VISIBLE
         }
 
@@ -51,10 +51,12 @@ class SearchFragment : Fragment() {
 
         searchViewModel.response.observe(viewLifecycleOwner, {
             it?.let {
-                // Stop progressbar here
                 foodAdapter.submitList(it)
                 binding.progressbar.visibility = View.INVISIBLE
-                binding.foodRecyclerView.visibility = View.VISIBLE
+                binding.noResultsTextview.visibility = when (it.isEmpty()) {
+                    true -> View.VISIBLE
+                    else -> View.INVISIBLE
+                }
             }
         })
 

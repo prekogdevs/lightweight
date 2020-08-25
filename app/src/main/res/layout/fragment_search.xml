@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.android.project.lightweight.data.SearchViewModel" />
@@ -66,8 +66,23 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:visibility="@{viewModel.response.size() > 0 ? View.VISIBLE : View.INVISIBLE}"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
+
+        <TextView
+            android:id="@+id/no_results_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="No results"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/foodRecyclerView"
+            app:layout_constraintStart_toStartOf="@+id/foodRecyclerView"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
