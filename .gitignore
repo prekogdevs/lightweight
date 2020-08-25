@@ -175,7 +175,6 @@ hs_err_pid*
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 
 ### Gradle ###
-.gradle
 build/
 
 # Ignore Gradle GUI config
@@ -239,13 +238,11 @@ captures/
 gen-external-apklibs
 
 # External native build folder generated in Android Studio 2.2 and later
-.externalNativeBuild
 
 # NDK
 obj/
 
 # IntelliJ IDEA
-*.iml
 /out/
 
 # User-specific configurations
@@ -272,7 +269,6 @@ obj/
 .idea/assetWizardSettings.xml
 
 # OS-specific files
-.DS_Store
 .DS_Store?
 ._*
 .Spotlight-V100

@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Lightweight</string>
-    <string name="edtSearchForFoodHint">Food name</string>
+    <string name="edtSearchForFoodHint">What did you eat</string>
     <string name="btnSearchText">Search</string>
+    <string name="nutrients_in_food">Nutrients in %1$s</string>
+    <string name="nutrient_with_amount">%1$.2f %2$s</string>
 </resources>
