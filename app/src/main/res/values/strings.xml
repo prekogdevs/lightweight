@@ -4,4 +4,5 @@
     <string name="btnSearchText">Search</string>
     <string name="nutrients_in_food">Nutrients in %1$s</string>
     <string name="nutrient_with_amount">%1$.2f %2$s</string>
+    <string name="no_results">No results</string>
 </resources>

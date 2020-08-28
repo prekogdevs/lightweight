@@ -9,5 +9,6 @@ data class FoodNutrient(
     val nutrientName : String,
     val unitName : String,
     @Json(name = "value")
-    val amount : Double
+    val amount : Double,
+    val nutrientNumber : Int
 ) : Parcelable
