@@ -1,4 +1,4 @@
-package com.android.project.lightweight.view
+package com.android.project.lightweight.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

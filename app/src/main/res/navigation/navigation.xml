@@ -2,23 +2,28 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/diaryFragment">
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.android.project.lightweight.view.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        android:name="com.android.project.lightweight.fragments.SearchFragment"
+        android:label="Search in API"
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.android.project.lightweight.view.DetailsFragment"
-        tools:layout="@layout/fragment_details" >
+        android:name="com.android.project.lightweight.fragments.DetailsFragment"
+        tools:layout="@layout/fragment_details">
         <argument
             android:name="selectedFood"
             app:argType="com.android.project.lightweight.network.Food" />
     </fragment>
+    <fragment
+        android:id="@+id/diaryFragment"
+        android:name="com.android.project.lightweight.fragments.DiaryFragment"
+        android:label="Your Diary"
+        tools:layout="@layout/fragment_diary" />
 </navigation>
