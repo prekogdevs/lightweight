@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
 import com.android.project.lightweight.network.FoodNutrient
 
-class FoodNutrientAdapter(private val foodNutrients: List<FoodNutrient>) : RecyclerView.Adapter<FoodNutrientAdapter.FoodNutrientHolder>() {
+class FoodNutrientAdapter(private var foodNutrients: List<FoodNutrient>) : RecyclerView.Adapter<FoodNutrientAdapter.FoodNutrientHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodNutrientHolder {
         return FoodNutrientHolder.from(parent)
@@ -19,6 +19,11 @@ class FoodNutrientAdapter(private val foodNutrients: List<FoodNutrient>) : Recyc
     }
 
     override fun getItemCount() = foodNutrients.size
+
+    fun setNutrients(foodNutrients: List<FoodNutrient>) {
+        this.foodNutrients = foodNutrients
+        notifyDataSetChanged()
+    }
 
     class FoodNutrientHolder private constructor(private val binding: ListItemFoodNutrientBinding) : RecyclerView.ViewHolder(binding.root) {
 
