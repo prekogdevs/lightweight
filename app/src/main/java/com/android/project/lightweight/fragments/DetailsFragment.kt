@@ -58,6 +58,10 @@ class DetailsFragment : Fragment() {
             }
         }
 
+        binding.btnSaveFood.setOnClickListener{
+
+        }
+
         return binding.root
     }
 
