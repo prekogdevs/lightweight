@@ -66,6 +66,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_kotlin_coroutines"
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
+    // MaterialDateTimePicker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
     // Moshi + Retrofit converter
     implementation "com.squareup.moshi:moshi:$version_moshi"

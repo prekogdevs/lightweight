@@ -2,18 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/diaryFragment"
-        android:icon="@drawable/ic_diary"
-        android:title="Diary" />
+        android:icon="@drawable/ic_diary_24dp"
+        android:title="@string/diary" />
     <item
         android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
-        android:title="Search in API" />
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/search_in_api" />
     <item
         android:id="@+id/menu_favoritessearch"
-        android:icon="@drawable/ic_search_favorites"
-        android:title="Search in FAV" />
+        android:icon="@drawable/ic_search_favorites_24dp"
+        android:title="@string/search_in_fav" />
     <item
         android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile" />
+        android:icon="@drawable/ic_profile_24dp"
+        android:title="@string/profile" />
 </menu>
