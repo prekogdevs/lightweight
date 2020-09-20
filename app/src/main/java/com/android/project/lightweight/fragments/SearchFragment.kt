@@ -30,7 +30,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food))
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food,"SearchFragment"))
             }
         })
     }

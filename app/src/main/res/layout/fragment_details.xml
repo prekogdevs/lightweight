@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="previousFragment"
+            type="String" />
+
         <variable
             name="viewModel"
             type="com.android.project.lightweight.data.DetailsViewModel" />
@@ -75,6 +82,7 @@
             android:layout_marginEnd="8dp"
             android:background="@color/colorPrimary"
             android:text="@string/btnSaveText"
+            android:visibility="@{previousFragment.equals(`SearchFragment`) ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/includedLayout" />
 

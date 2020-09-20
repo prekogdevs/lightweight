@@ -20,6 +20,12 @@
         <argument
             android:name="selectedFood"
             app:argType="com.android.project.lightweight.network.Food" />
+        <action
+            android:id="@+id/action_detailsFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment" />
+        <argument
+            android:name="previousFragment"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"

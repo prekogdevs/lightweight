@@ -43,7 +43,9 @@ class DetailsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         arguments?.let { bundle ->
-            food = DetailsFragmentArgs.fromBundle(bundle).selectedFood
+            val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
+            food = argsBundle.selectedFood
+            binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
         }
         binding.foodNutrientsRecyclerView.apply {

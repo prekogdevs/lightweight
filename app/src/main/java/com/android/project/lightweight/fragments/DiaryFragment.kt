@@ -24,7 +24,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(food))
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(food, "DiaryFragment"))
             }
         })
     }
