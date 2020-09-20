@@ -12,7 +12,7 @@
             type="String" />
 
         <variable
-            name="viewModel"
+            name="detailsViewModel"
             type="com.android.project.lightweight.data.DetailsViewModel" />
     </data>
 

@@ -55,7 +55,6 @@ class DetailsFragment : Fragment() {
 
         val application = requireNotNull(activity).application
         viewModelFactory = ViewModelFactory(application, food)
-        binding.viewModel = detailsViewModel
 
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
@@ -64,7 +63,7 @@ class DetailsFragment : Fragment() {
         }
 
         binding.btnSaveFood.setOnClickListener{
-
+            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
         }
 
         return binding.root
