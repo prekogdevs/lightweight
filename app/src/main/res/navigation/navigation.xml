@@ -20,10 +20,23 @@
         <argument
             android:name="selectedFood"
             app:argType="com.android.project.lightweight.network.Food" />
+        <action
+            android:id="@+id/action_detailsFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment" />
+        <argument
+            android:name="previousFragment"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
         android:name="com.android.project.lightweight.fragments.DiaryFragment"
         android:label="Your Diary"
-        tools:layout="@layout/fragment_diary" />
+        tools:layout="@layout/fragment_diary">
+        <action
+            android:id="@+id/action_diaryFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <argument
+            android:name="consumedFood"
+            app:argType="com.android.project.lightweight.network.Food" />
+    </fragment>
 </navigation>

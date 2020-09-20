@@ -15,6 +15,10 @@
         android:layout_height="match_parent"
         tools:context=".fragments.SearchFragment">
 
+        <include
+            android:id="@+id/includedLayout"
+            layout="@layout/toolbar" />
+
         <RelativeLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -22,7 +26,7 @@
             android:gravity="center_horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/includedLayout">
 
             <EditText
                 android:id="@+id/edtFood"
@@ -36,12 +40,12 @@
 
             <Button
                 android:id="@+id/btnSearch"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="@string/btnSearchText" />
 
         </RelativeLayout>

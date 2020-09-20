@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
-            name="viewModel"
+            name="previousFragment"
+            type="String" />
+
+        <variable
+            name="detailsViewModel"
             type="com.android.project.lightweight.data.DetailsViewModel" />
     </data>
 
@@ -13,34 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/toolbarTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-        </androidx.appcompat.widget.Toolbar>
+        <include
+            android:id="@+id/includedLayout"
+            layout="@layout/toolbar" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/includedLayout"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
@@ -75,7 +67,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,6 +74,17 @@
             app:layout_constraintTop_toBottomOf="@+id/chipGroup"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food_nutrient" />
+
+        <Button
+            android:id="@+id/btnSaveFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/btnSaveText"
+            android:visibility="@{previousFragment.equals(`SearchFragment`) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includedLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
