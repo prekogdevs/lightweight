@@ -8,6 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
@@ -15,6 +17,8 @@ import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.network.Food
 import com.android.project.lightweight.utilities.UIUtils
+import kotlinx.android.synthetic.main.fragment_details.view.*
+import kotlinx.android.synthetic.main.toolbar.view.*
 
 class SearchFragment : Fragment() {
 
@@ -29,6 +33,10 @@ class SearchFragment : Fragment() {
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food))
             }
         })
+    }
+
+    private val navController by lazy {
+        findNavController()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
@@ -61,5 +69,11 @@ class SearchFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    // Source: https://developer.android.com/guide/navigation/navigation-ui#support_app_bar_variations
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val appBarConfig = AppBarConfiguration(navController.graph)
+        view.includedLayout.toolbar.setupWithNavController(navController, appBarConfig)
     }
 }

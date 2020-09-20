@@ -25,5 +25,9 @@
         android:id="@+id/diaryFragment"
         android:name="com.android.project.lightweight.fragments.DiaryFragment"
         android:label="Your Diary"
-        tools:layout="@layout/fragment_diary" />
+        tools:layout="@layout/fragment_diary" >
+        <action
+            android:id="@+id/action_diaryFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 </navigation>

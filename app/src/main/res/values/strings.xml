@@ -15,4 +15,5 @@
     <string name="search_in_fav">Search in FAV</string>
     <string name="profile">Profile</string>
     <string name="btnSaveText">Save</string>
+    <string name="toolbarDefaultText">Looking for something tasty</string>
 </resources>
