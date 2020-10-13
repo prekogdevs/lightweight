@@ -1,18 +1,21 @@
 package com.android.project.lightweight.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.*
 import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.persistence.DiaryDatabase
+import com.android.project.lightweight.persistence.DiaryRepository
 
-class DiaryViewModel : ViewModel() {
+class DiaryViewModel(application: Application, consumptionDate: String) : AndroidViewModel(application) {
     private val _consumedFoods = MutableLiveData<ArrayList<Food>>()
     val consumedFoods: LiveData<ArrayList<Food>>
         get() = _consumedFoods
 
+    private val diaryRepository: DiaryRepository
+
     init {
-        // This will come from Room DB later
-        _consumedFoods.value = arrayListOf(Food(1, "Tasty 1", listOf()), Food(2, "Tasty 2", listOf()), Food(3, "Tasty 3", listOf()))
+        val diaryDao = DiaryDatabase(application).diaryDao()
+        diaryRepository = DiaryRepository(diaryDao, consumptionDate)
     }
 
 }
