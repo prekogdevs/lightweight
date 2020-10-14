@@ -18,7 +18,7 @@ import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.factory.ViewModelFactory
-import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.utilities.AppConstants
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*

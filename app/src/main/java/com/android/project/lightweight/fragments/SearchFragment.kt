@@ -15,7 +15,7 @@ import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
-import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_details.view.*

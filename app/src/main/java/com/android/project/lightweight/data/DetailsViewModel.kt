@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.R
-import com.android.project.lightweight.network.Food
-import com.android.project.lightweight.network.FoodNutrient
+import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.DiaryRepository
 

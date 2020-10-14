@@ -3,8 +3,8 @@ package com.android.project.lightweight.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.project.lightweight.network.Food
-import com.android.project.lightweight.network.FoodApi
+import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.api.FoodApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

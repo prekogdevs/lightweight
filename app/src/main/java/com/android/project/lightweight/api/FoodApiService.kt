@@ -1,5 +1,6 @@
-package com.android.project.lightweight.network
+package com.android.project.lightweight.api
 
+import com.android.project.lightweight.api.model.FoodProperty
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

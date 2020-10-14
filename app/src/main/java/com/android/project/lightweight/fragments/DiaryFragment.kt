@@ -14,7 +14,7 @@ import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
-import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.UIUtils
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog

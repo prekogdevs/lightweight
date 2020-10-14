@@ -1,4 +1,4 @@
-package com.android.project.lightweight.network
+package com.android.project.lightweight.api.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

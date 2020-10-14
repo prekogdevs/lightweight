@@ -19,7 +19,7 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="selectedFood"
-            app:argType="com.android.project.lightweight.network.Food" />
+            app:argType="com.android.project.lightweight.api.model.Food" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
@@ -40,6 +40,6 @@
             app:destination="@id/detailsFragment" />
         <argument
             android:name="consumedFood"
-            app:argType="com.android.project.lightweight.network.Food" />
+            app:argType="com.android.project.lightweight.api.model.Food" />
     </fragment>
 </navigation>
