@@ -1,8 +1,9 @@
 package com.android.project.lightweight.data
 
 import android.app.Application
-import androidx.lifecycle.*
-import com.android.project.lightweight.network.Food
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.DiaryRepository
 import com.android.project.lightweight.persistence.entities.DiaryEntry

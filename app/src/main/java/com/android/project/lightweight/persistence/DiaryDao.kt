@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.android.project.lightweight.network.Food
 import com.android.project.lightweight.persistence.entities.DiaryEntry
 
 @Dao
