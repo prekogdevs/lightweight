@@ -26,6 +26,9 @@
         <argument
             android:name="previousFragment"
             app:argType="string" />
+        <argument
+            android:name="consumptionDate"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"

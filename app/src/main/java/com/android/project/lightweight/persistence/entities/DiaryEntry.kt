@@ -7,7 +7,9 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "diary")
 class DiaryEntry(
     @PrimaryKey
-    val CD_ID: String, // CD: Consumption date (e.g.: 2020-07-12)
+    val CD_ID: Long, // CD: Consumption date (e.g.: 20200712)
     @ColumnInfo
-    val fdcId : Long // Food ID
+    val fdcId: Long,
+    @ColumnInfo
+    val foodName: String, // this is equal to description in network.Food
 )

@@ -16,6 +16,7 @@ import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -30,7 +31,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food,"SearchFragment"))
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, "SearchFragment", AppConstants.TODAY_FORMATTED))
             }
         })
     }
@@ -39,7 +40,7 @@ class SearchFragment : Fragment() {
         findNavController()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this

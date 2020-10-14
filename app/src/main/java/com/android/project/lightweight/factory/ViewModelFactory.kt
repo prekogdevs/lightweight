@@ -8,12 +8,12 @@ import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.network.Food
 
 // TODO: Refactor later
-class ViewModelFactory(private val application: Application, private val food : Food = Food(-1,"UNKNOWN", emptyList()), private val consumptionDate : String = "UNKNOWN") :
+class ViewModelFactory(private val application: Application, private val food : Food = Food(-1,"UNKNOWN", emptyList()), private val consumptionDate : Long) :
     ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
-            return DetailsViewModel(application, food) as T
+            return DetailsViewModel(application, food, consumptionDate) as T
         }
         else if (modelClass.isAssignableFrom(DiaryViewModel::class.java)) {
             return DiaryViewModel(application, consumptionDate) as T

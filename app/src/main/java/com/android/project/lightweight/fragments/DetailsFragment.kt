@@ -30,9 +30,9 @@ class DetailsFragment : Fragment() {
         findNavController()
     }
     private lateinit var viewModelFactory: ViewModelFactory
-    private val detailsViewModel: DetailsViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
-    }
+//    private val detailsViewModel: DetailsViewModel by lazy {
+//        ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
+//    }
 
     private val foodNutrientAdapter by lazy {
         FoodNutrientAdapter(food.foodNutrients)
@@ -54,15 +54,20 @@ class DetailsFragment : Fragment() {
         }
 
         val application = requireNotNull(activity).application
-        viewModelFactory = ViewModelFactory(application, food)
+//        viewModelFactory = ViewModelFactory(application, food)
 
-        binding.chipGroup.forEach {
-            it.setOnClickListener { chip ->
-                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip))
-            }
-        }
+//        binding.chipGroup.forEach {
+//            it.setOnClickListener { chip ->
+//                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip))
+//            }
+//        }
 
         binding.btnSaveFood.setOnClickListener{
+            /* TODO:
+            * DetailsViewModel-be kell egy insert function ami a dao-ból jön
+            * így az itt kiválasztott ételt, le tudom menteni foodEntry-ként
+            * detailsViewModel.insert(FoodEntry(food.fdcId, food.description)
+            * */
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
         }
 
