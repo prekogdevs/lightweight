@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.android.project.lightweight.persistence.entities.DiaryEntry
+import com.android.project.lightweight.persistence.entity.Food
 
 @Dao
 interface DiaryDao {
-    @Query("SELECT * FROM diary WHERE CD_ID = :consumptionDate")
-    fun getEntries(consumptionDate: Long): LiveData<List<DiaryEntry>>
+    @Query("SELECT * FROM food WHERE consumedWhen = :consumedWhen")
+    fun getEntries(consumedWhen: Long): LiveData<List<Food>>
 
     @Insert
-    fun addEntry(entry : DiaryEntry)
+    suspend fun addEntry(food : Food)
 }

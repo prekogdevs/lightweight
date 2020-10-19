@@ -18,7 +18,7 @@ import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.factory.ViewModelFactory
-import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.persistence.entity.Food
 import com.android.project.lightweight.utilities.AppConstants
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -39,6 +39,8 @@ class DetailsFragment : Fragment() {
         FoodNutrientAdapter(food.foodNutrients)
     }
 
+    private var consumedWhen = -1L
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
@@ -46,6 +48,7 @@ class DetailsFragment : Fragment() {
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
             food = argsBundle.selectedFood
+            consumedWhen = argsBundle.consumedWhen
             binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
         }
@@ -55,7 +58,7 @@ class DetailsFragment : Fragment() {
         }
 
         val application = requireNotNull(activity).application
-        viewModelFactory = ViewModelFactory(application, food, AppConstants.TODAY_FORMATTED)
+        viewModelFactory = ViewModelFactory(application, consumedWhen, food)
 
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
@@ -63,12 +66,8 @@ class DetailsFragment : Fragment() {
             }
         }
 
-        binding.btnSaveFood.setOnClickListener{
-            /* TODO:
-            * DetailsViewModel-be kell egy insert function ami a dao-ból jön
-            * így az itt kiválasztott ételt, le tudom menteni foodEntry-ként
-            * detailsViewModel.insert(FoodEntry(food.fdcId, food.description)
-            * */
+        binding.btnSaveFood.setOnClickListener {
+            detailsViewModel.insert(Food(food.fdcId, food.description, food.foodNutrients, consumedWhen))
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
         }
 

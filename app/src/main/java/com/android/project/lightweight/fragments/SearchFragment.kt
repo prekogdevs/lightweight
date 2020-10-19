@@ -15,7 +15,7 @@ import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
-import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.persistence.entity.Food
 import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -31,6 +31,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
+                // TODO: Update AppConstants.TODAY_FORMATTED with correct value
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, "SearchFragment", AppConstants.TODAY_FORMATTED))
             }
         })

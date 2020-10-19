@@ -4,17 +4,17 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.android.project.lightweight.persistence.entity.Food
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.DiaryRepository
-import com.android.project.lightweight.persistence.entities.DiaryEntry
 
-class DiaryViewModel(application: Application, consumptionDate: Long) : AndroidViewModel(application) {
-    val consumedFoods: LiveData<List<DiaryEntry>>
+class DiaryViewModel(application: Application, consumedWhen: Long) : AndroidViewModel(application) {
+    val consumedFoods: LiveData<List<Food>>
     private val diaryRepository: DiaryRepository
 
     init {
-        val diaryDao = DiaryDatabase(application, viewModelScope).diaryDao()
-        diaryRepository = DiaryRepository(diaryDao, consumptionDate)
+        val diaryDao = DiaryDatabase(application).diaryDao()
+        diaryRepository = DiaryRepository(diaryDao, consumedWhen)
         consumedFoods = diaryRepository.entries
     }
 

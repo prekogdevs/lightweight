@@ -1,9 +1,9 @@
 package com.android.project.lightweight.persistence
 
-import com.android.project.lightweight.persistence.entities.DiaryEntry
+import com.android.project.lightweight.persistence.entity.Food
 
-class DiaryRepository(private val diaryDao: DiaryDao, consumptionDate: Long = 0L) {
-    val entries = diaryDao.getEntries(consumptionDate)
+class DiaryRepository(private val diaryDao: DiaryDao, consumedWhen: Long) {
+    val entries = diaryDao.getEntries(consumedWhen)
 
-    suspend fun addEntry(entry: DiaryEntry) = diaryDao.addEntry(entry)
+    suspend fun addEntry(food: Food) = diaryDao.addEntry(food)
 }

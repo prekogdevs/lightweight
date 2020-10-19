@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodBinding
-import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.persistence.entity.Food
 
 class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
 
