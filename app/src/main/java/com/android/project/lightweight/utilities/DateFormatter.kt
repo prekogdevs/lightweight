@@ -10,10 +10,14 @@ object DateFormatter {
     private val defaultInputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US) // ex.: 2020-09-03
     private val defaultOutputFormat = SimpleDateFormat("MMM dd, yyyy", Locale.US) // ex.: Sep 03, 2020
 
-    fun today(): Long {
+    fun today(): String {
         val current = LocalDateTime.now()
-        val formatter = DateTimeFormatter.BASIC_ISO_DATE
-        return current.format(formatter).toLong()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return current.format(formatter)
+    }
+
+    fun parseDateToLong(date : String): Long {
+        return date.replace("-","").toLong()
     }
 
     // Format dates from yyyy-MM-dd to yyyyMMdd

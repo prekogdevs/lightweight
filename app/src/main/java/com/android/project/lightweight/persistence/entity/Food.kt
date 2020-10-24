@@ -2,8 +2,6 @@ package com.android.project.lightweight.persistence.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.android.project.lightweight.persistence.converter.FoodNutrientConverter
 import com.android.project.lightweight.persistence.entity.Food
-import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [Food::class], version = 1)
 @TypeConverters(FoodNutrientConverter::class)

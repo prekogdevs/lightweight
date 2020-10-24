@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,48 +15,37 @@ import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
-import com.android.project.lightweight.factory.ViewModelFactory
 import com.android.project.lightweight.persistence.entity.Food
-import com.android.project.lightweight.utilities.AppConstants
+import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
-import kotlinx.android.synthetic.main.activity_main.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentDiaryBinding
-    private var date = 0L
     private val navController by lazy {
         findNavController()
     }
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(food, "DiaryFragment", date))
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(food, "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
             }
         })
     }
-
-    private lateinit var viewModelFactory: ViewModelFactory
     private val diaryViewModel: DiaryViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(DiaryViewModel::class.java)
+        ViewModelProvider(this).get(DiaryViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
         binding.lifecycleOwner = this
-        date = AppConstants.TODAY_FORMATTED
+        binding.pickedDate = CurrentDate.currentDate
         binding.diaryRecyclerview.apply {
             adapter = foodAdapter
             setHasFixedSize(true)
         }
-
-        val application = requireNotNull(activity).application
-        // TODO: #1 Task: query foods on the given date
-        viewModelFactory = ViewModelFactory(application,AppConstants.TODAY_FORMATTED)
 
         diaryViewModel.consumedFoods.observe(viewLifecycleOwner, {
             it?.let {
@@ -86,7 +73,8 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         // The picked date in the given format will be handled by [DateBindingAdapter]
         val str = "$year-${monthOfYear + 1}-$dayOfMonth"
-        date = DateFormatter.parseDate(str, outputDateFormat = SimpleDateFormat("yyyyMMdd", Locale.US)).toLong()
+        CurrentDate.currentDate = str
+        diaryViewModel.changeDate(CurrentDate.currentDate)
         binding.pickedDate = str
     }
 }

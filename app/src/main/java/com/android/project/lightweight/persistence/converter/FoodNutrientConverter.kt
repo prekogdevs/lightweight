@@ -11,7 +11,7 @@ import java.util.*
 //  in the table it looks weird
 class FoodNutrientConverter {
 
-    var gson: Gson = Gson()
+    private var gson: Gson = Gson()
 
     @TypeConverter
     fun stringToSomeObjectList(data: String?): List<FoodNutrient?>? {
