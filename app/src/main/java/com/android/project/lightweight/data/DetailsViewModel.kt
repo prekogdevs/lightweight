@@ -11,7 +11,7 @@ import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.DiaryRepository
 import kotlinx.coroutines.launch
 
-class DetailsViewModel(application: Application, val consumedWhen : Long, val food: Food) : AndroidViewModel(application) {
+class DetailsViewModel(application: Application) : AndroidViewModel(application) {
     private val general = listOf(203, 204, 605, 606, 645, 646, 205, 208, 291)
     private val vitamins = listOf(318, 323, 328, 430, 404, 405, 406, 410, 415, 418, 578, 431, 401, 421, 430)
     private val minerals = listOf(301, 312, 303, 304, 315, 305, 306, 317, 307, 309)
@@ -20,14 +20,18 @@ class DetailsViewModel(application: Application, val consumedWhen : Long, val fo
 
     init {
         val diaryDao = DiaryDatabase(application).diaryDao()
-        diaryRepository = DiaryRepository(diaryDao, consumedWhen)
+        diaryRepository = DiaryRepository(diaryDao)
     }
 
     fun insert(food: Food) = viewModelScope.launch {
         diaryRepository.addEntry(food)
     }
 
-    fun filterNutrients(view: View): List<FoodNutrient> {
+    fun delete(food: Food) = viewModelScope.launch {
+        diaryRepository.removeEntry(food)
+    }
+
+    fun filterNutrients(view: View, food : Food): List<FoodNutrient> {
         return when (view.id) {
             R.id.chip_general -> filter(food.foodNutrients, general)
             R.id.chip_vitamins -> filter(food.foodNutrients, vitamins)

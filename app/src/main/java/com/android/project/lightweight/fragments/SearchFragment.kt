@@ -46,6 +46,7 @@ class SearchFragment : Fragment() {
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
         binding.viewModel = searchViewModel
+        binding.includedLayout.toolbarTextView.text = getString(R.string.toolbarDefaultText, CurrentDate.currentDate)
         binding.btnSearch.setOnClickListener {
             val foodName = binding.edtFood.text.toString()
             searchViewModel.getFoods("DEMO_KEY", foodName)

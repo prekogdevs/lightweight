@@ -2,6 +2,7 @@ package com.android.project.lightweight.persistence
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.android.project.lightweight.persistence.entity.Food
@@ -13,4 +14,7 @@ interface DiaryDao {
 
     @Insert
     suspend fun addEntry(food : Food)
+
+    @Delete
+    suspend fun removeEntry(food : Food)
 }

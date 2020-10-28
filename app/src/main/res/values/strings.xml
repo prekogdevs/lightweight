@@ -14,6 +14,5 @@
     <string name="search_in_api">Search in API</string>
     <string name="search_in_fav">Search in FAV</string>
     <string name="profile">Profile</string>
-    <string name="btnSaveText">Save</string>
-    <string name="toolbarDefaultText">Looking for something tasty</string>
+    <string name="toolbarDefaultText">What did I eat on: %1$s</string>
 </resources>

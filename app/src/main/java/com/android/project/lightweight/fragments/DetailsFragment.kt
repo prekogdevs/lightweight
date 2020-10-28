@@ -17,7 +17,6 @@ import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
-import com.android.project.lightweight.factory.ViewModelFactory
 import com.android.project.lightweight.persistence.entity.Food
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -29,9 +28,9 @@ class DetailsFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
-    private lateinit var viewModelFactory: ViewModelFactory
+
     private val detailsViewModel: DetailsViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
+        ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
     private val foodNutrientAdapter by lazy {
@@ -56,17 +55,18 @@ class DetailsFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        val application = requireNotNull(activity).application
-        viewModelFactory = ViewModelFactory(application, consumedWhen, food)
-
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip))
+                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip, food))
             }
         }
 
-        binding.btnSaveFood.setOnClickListener {
-            detailsViewModel.insert(Food(food.fdcId, food.description, food.foodNutrients, consumedWhen))
+        binding.btnPersistFood.setOnClickListener {
+            if (binding.previousFragment == "SearchFragment") {
+                detailsViewModel.insert(Food(food.fdcId, food.description, food.foodNutrients, consumedWhen))
+            } else {
+                detailsViewModel.delete(food)
+            }
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
         }
 
