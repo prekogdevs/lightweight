@@ -5,10 +5,11 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.R
-import com.android.project.lightweight.persistence.entity.Food
-import com.android.project.lightweight.persistence.entity.FoodNutrient
+import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.DiaryRepository
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -23,12 +24,12 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         diaryRepository = DiaryRepository(diaryDao)
     }
 
-    fun insert(food: Food) = viewModelScope.launch {
-        diaryRepository.addEntry(food)
+    fun insert(entry: DiaryEntry) = viewModelScope.launch {
+        diaryRepository.addEntry(entry)
     }
 
-    fun delete(food: Food) = viewModelScope.launch {
-        diaryRepository.removeEntry(food)
+    fun delete(foodId : Long, consumedOn : Long) = viewModelScope.launch {
+        diaryRepository.removeEntry(foodId, consumedOn)
     }
 
     fun filterNutrients(view: View, food : Food): List<FoodNutrient> {

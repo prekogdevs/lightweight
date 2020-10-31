@@ -22,7 +22,7 @@ private val retrofit =
 
 interface FoodApiService {
     @GET("search")
-    fun getFoods(
+    fun getFoodsAsync(
         @Query("api_key") apiKey: String,
         @Query("query") query: String
     ): Deferred<FoodResponse>

@@ -14,10 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
-import com.android.project.lightweight.persistence.entity.Food
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -45,7 +46,7 @@ class DetailsFragment : Fragment() {
 
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            food = argsBundle.selectedFood
+            food = argsBundle.food!!
             consumedOn = argsBundle.consumedOn
             binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
@@ -63,11 +64,11 @@ class DetailsFragment : Fragment() {
 
         binding.btnPersistFood.setOnClickListener {
             if (binding.previousFragment == "SearchFragment") {
-                detailsViewModel.insert(Food(food.id, food.description, food.foodNutrients, consumedOn))
+                detailsViewModel.insert(DiaryEntry(food.id, food.description, food.foodNutrients, consumedOn))
             } else {
-                detailsViewModel.delete(food)
+                detailsViewModel.delete(food.id, consumedOn)
             }
-            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
+            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
 
         return binding.root

@@ -3,8 +3,8 @@ package com.android.project.lightweight.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.project.lightweight.persistence.entity.Food
 import com.android.project.lightweight.api.FoodApi
+import com.android.project.lightweight.api.model.Food
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,7 +24,7 @@ class SearchViewModel : ViewModel() {
 
     fun getFoods(apiKey : String, query : String) {
         coroutineScope.launch {
-            val getFoodsDeferred = FoodApi.retrofitService.getFoods(apiKey, query)
+            val getFoodsDeferred = FoodApi.retrofitService.getFoodsAsync(apiKey, query)
             try {
                 val result = getFoodsDeferred.await()
                 _response.value = result.foods

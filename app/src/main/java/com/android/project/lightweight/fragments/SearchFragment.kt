@@ -11,11 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.R
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
-import com.android.project.lightweight.persistence.entity.Food
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils

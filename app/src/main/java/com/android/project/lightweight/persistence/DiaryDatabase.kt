@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.android.project.lightweight.persistence.converter.FoodNutrientConverter
-import com.android.project.lightweight.persistence.entity.Food
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 
-@Database(entities = [Food::class], version = 1)
+@Database(entities = [DiaryEntry::class], version = 1)
 @TypeConverters(FoodNutrientConverter::class)
 abstract class DiaryDatabase : RoomDatabase() {
 

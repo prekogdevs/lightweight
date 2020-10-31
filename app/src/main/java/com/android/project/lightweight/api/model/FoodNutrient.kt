@@ -1,16 +1,14 @@
-package com.android.project.lightweight.persistence.entity
+package com.android.project.lightweight.api.model
 
 import android.os.Parcelable
-import androidx.room.Entity
 import com.squareup.moshi.Json
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "nutrient")
 data class FoodNutrient(
     val nutrientName : String,
     val unitName : String,
     @Json(name = "value")
-    val amount : Double,
+    val amount : Double, // amount in 100 grams
     val nutrientNumber : Int
 ) : Parcelable

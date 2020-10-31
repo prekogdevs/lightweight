@@ -1,14 +1,13 @@
 package com.android.project.lightweight.persistence.converter
 
 import androidx.room.TypeConverter
-import com.android.project.lightweight.persistence.entity.FoodNutrient
+import com.android.project.lightweight.api.model.FoodNutrient
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
 import java.util.*
 
-// TODO: Rework this class
-//  in the table it looks weird
+// TODO: Rework this class in the table it looks weird
 class FoodNutrientConverter {
 
     private var gson: Gson = Gson()

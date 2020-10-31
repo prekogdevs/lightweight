@@ -6,7 +6,7 @@
     <data>
         <variable
             name="foodNutrient"
-            type="com.android.project.lightweight.persistence.entity.FoodNutrient" />
+            type="com.android.project.lightweight.api.model.FoodNutrient" />
     </data>
 
 

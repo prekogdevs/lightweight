@@ -12,10 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DiaryViewModel
-import com.android.project.lightweight.data.adapters.FoodAdapter
-import com.android.project.lightweight.data.adapters.OnFoodClickListener
+import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
+import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
-import com.android.project.lightweight.persistence.entity.Food
+import com.android.project.lightweight.persistence.DiaryEntryTransformer
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
@@ -27,10 +28,10 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val navController by lazy {
         findNavController()
     }
-    private val foodAdapter by lazy {
-        FoodAdapter(object : OnFoodClickListener {
-            override fun onClick(food: Food) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(food, "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
+    private val diaryEntryAdapter by lazy {
+        DiaryEntryAdapter(object : OnDiaryEntryClickListener {
+            override fun onClick(diaryEntry: DiaryEntry) {
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(DiaryEntryTransformer.transformEntryToFood(diaryEntry), "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
             }
         })
     }
@@ -43,13 +44,13 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
         binding.diaryRecyclerview.apply {
-            adapter = foodAdapter
+            adapter = diaryEntryAdapter
             setHasFixedSize(true)
         }
 
         diaryViewModel.consumedFoods.observe(viewLifecycleOwner, {
             it?.let {
-                foodAdapter.submitList(it)
+                diaryEntryAdapter.submitList(it)
             }
         })
 

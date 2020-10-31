@@ -18,8 +18,8 @@
         android:name="com.android.project.lightweight.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details">
         <argument
-            android:name="selectedFood"
-            app:argType="com.android.project.lightweight.persistence.entity.Food" />
+            android:name="food"
+            app:argType="com.android.project.lightweight.api.model.Food" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
@@ -38,8 +38,5 @@
         <action
             android:id="@+id/action_diaryFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
-        <argument
-            android:name="consumedFood"
-            app:argType="com.android.project.lightweight.persistence.entity.Food" />
     </fragment>
 </navigation>
