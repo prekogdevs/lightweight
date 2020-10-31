@@ -37,7 +37,7 @@ class DetailsFragment : Fragment() {
         FoodNutrientAdapter(food.foodNutrients)
     }
 
-    private var consumedWhen = -1L
+    private var consumedOn = -1L
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -46,7 +46,7 @@ class DetailsFragment : Fragment() {
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
             food = argsBundle.selectedFood
-            consumedWhen = argsBundle.consumedWhen
+            consumedOn = argsBundle.consumedOn
             binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
         }
@@ -63,7 +63,7 @@ class DetailsFragment : Fragment() {
 
         binding.btnPersistFood.setOnClickListener {
             if (binding.previousFragment == "SearchFragment") {
-                detailsViewModel.insert(Food(food.fdcId, food.description, food.foodNutrients, consumedWhen))
+                detailsViewModel.insert(Food(food.id, food.description, food.foodNutrients, consumedOn))
             } else {
                 detailsViewModel.delete(food)
             }

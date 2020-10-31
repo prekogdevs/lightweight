@@ -39,7 +39,7 @@ class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAd
 
 class FoodCallback : DiffUtil.ItemCallback<Food>() {
     override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
-        return oldItem.fdcId == newItem.fdcId
+        return oldItem.id == newItem.id
     }
     override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
         return oldItem == newItem

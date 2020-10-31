@@ -9,8 +9,8 @@ import com.android.project.lightweight.persistence.entity.Food
 
 @Dao
 interface DiaryDao {
-    @Query("SELECT * FROM food WHERE consumedWhen = :consumedWhen")
-    fun getEntries(consumedWhen: Long): LiveData<List<Food>>
+    @Query("SELECT * FROM food WHERE consumedOn = :consumedOn")
+    fun getEntries(consumedOn: Long): LiveData<List<Food>>
 
     @Insert
     suspend fun addEntry(food : Food)

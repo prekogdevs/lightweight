@@ -27,7 +27,7 @@
             android:name="previousFragment"
             app:argType="string" />
         <argument
-            android:name="consumedWhen"
+            android:name="consumedOn"
             app:argType="long" />
     </fragment>
     <fragment
