@@ -26,16 +26,14 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var food: Food
-    private val navController by lazy {
-        findNavController()
-    }
+    private val navController by lazy { findNavController() }
 
     private val detailsViewModel: DetailsViewModel by lazy {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
     private val foodNutrientAdapter by lazy {
-        FoodNutrientAdapter(food.foodNutrients)
+        FoodNutrientAdapter(food.foodNutrients.filter { it.amount > 0 })
     }
 
     private var consumedOn = -1L
@@ -46,7 +44,7 @@ class DetailsFragment : Fragment() {
 
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            food = argsBundle.food!!
+            food = argsBundle.food
             consumedOn = argsBundle.consumedOn
             binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
@@ -64,11 +62,12 @@ class DetailsFragment : Fragment() {
 
         binding.btnPersistFood.setOnClickListener {
             if (binding.previousFragment == "SearchFragment") {
-                detailsViewModel.insert(DiaryEntry(food.id, food.description, food.foodNutrients, consumedOn))
+                val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn)
+                detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry, food.foodNutrients)
             } else {
-                detailsViewModel.delete(food.id, consumedOn)
+                detailsViewModel.deleteDiaryEntry(food.fdcId, consumedOn)
             }
-            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+            navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
 
         return binding.root

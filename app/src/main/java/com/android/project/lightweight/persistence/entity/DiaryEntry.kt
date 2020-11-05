@@ -2,16 +2,18 @@ package com.android.project.lightweight.persistence.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
-import com.android.project.lightweight.api.model.FoodNutrient
-import com.squareup.moshi.Json
+import androidx.room.PrimaryKey
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "Diary", primaryKeys = ["consumedOn", "id"])
+@Entity(tableName = "Diary")
 data class DiaryEntry(
-    @Json(name = "fdcId")
-    val id: Long,
+    val fdcId: Long,
     val description: String,
-    val foodNutrients: List<FoodNutrient>, // TODO: FoodNutrient from API, is it correct?
-    var consumedOn: Long = -1L
-) : Parcelable
+    var consumedOn: Long
+) : Parcelable {
+    @IgnoredOnParcel
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
+}

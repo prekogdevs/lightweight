@@ -1,4 +1,4 @@
-package com.android.project.lightweight.persistence
+package com.android.project.lightweight.persistence.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -12,8 +12,8 @@ interface DiaryDao {
     fun getEntries(consumedOn: Long): LiveData<List<DiaryEntry>>
 
     @Insert
-    suspend fun addEntry(diaryEntry: DiaryEntry)
+    suspend fun insertDiaryEntry(diaryEntry: DiaryEntry) : Long
 
-    @Query("DELETE FROM Diary WHERE id = :foodId AND consumedOn = :consumedOn")
-    suspend fun removeEntry(foodId: Long, consumedOn: Long)
+    @Query("DELETE FROM Diary WHERE fdcId = :foodId AND consumedOn = :consumedOn")
+    suspend fun deleteDiaryEntry(foodId: Long, consumedOn: Long)
 }

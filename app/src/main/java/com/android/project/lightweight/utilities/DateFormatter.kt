@@ -16,8 +16,10 @@ object DateFormatter {
         return current.format(formatter)
     }
 
-    fun parseDateToLong(date : String): Long {
-        return date.replace("-","").toLong()
+    fun formatToValidDate(year: Int, monthOfYear: Int, dayOfMonth: Int) = "$year-${String.format("%02d", monthOfYear)}-${String.format("%02d", dayOfMonth)}"
+
+    fun parseDateToLong(date: String): Long {
+        return date.replace("-", "").toLong()
     }
 
     // Format dates from yyyy-MM-dd to yyyyMMdd

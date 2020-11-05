@@ -16,12 +16,12 @@ class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<D
 
     override fun onBindViewHolder(holder: DiaryEntryHolder, position: Int) {
         val entry = getItem(position)
-        holder.bindFood(entry, listener)
+        holder.bindDiaryEntry(entry, listener)
     }
 
     class DiaryEntryHolder private constructor(private val binding: ListItemDiaryEntryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindFood(diaryEntry: DiaryEntry, listener: OnDiaryEntryClickListener) {
+        fun bindDiaryEntry(diaryEntry: DiaryEntry, listener: OnDiaryEntryClickListener) {
             binding.diaryEntry = diaryEntry
             binding.listener = listener
         }
@@ -40,7 +40,7 @@ class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<D
 
 class DiaryEntryCallback : DiffUtil.ItemCallback<DiaryEntry>() {
     override fun areItemsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.fdcId == newItem.fdcId
     }
 
     override fun areContentsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {

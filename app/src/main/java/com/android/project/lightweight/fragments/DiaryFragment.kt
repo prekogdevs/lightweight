@@ -15,7 +15,7 @@ import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
 import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
-import com.android.project.lightweight.persistence.DiaryEntryTransformer
+import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
@@ -31,7 +31,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val diaryEntryAdapter by lazy {
         DiaryEntryAdapter(object : OnDiaryEntryClickListener {
             override fun onClick(diaryEntry: DiaryEntry) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(DiaryEntryTransformer.transformEntryToFood(diaryEntry), "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(EntityTransformer.transformDiaryEntryToFood(diaryEntry), "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
             }
         })
     }
@@ -72,8 +72,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        // The picked date in the given format will be handled by [DateBindingAdapter]
-        val str = "$year-${monthOfYear + 1}-$dayOfMonth"
+        val str = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth)
         CurrentDate.currentDate = str
         diaryViewModel.changeDate(CurrentDate.currentDate)
         binding.pickedDate = str
