@@ -7,24 +7,25 @@
 
         <variable
             name="listener"
-            type="com.android.project.lightweight.data.adapters.OnFoodClickListener" />
+            type="com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener" />
 
         <variable
-            name="food"
-            type="com.android.project.lightweight.api.model.Food" />
+            name="diaryEntry"
+            type="com.android.project.lightweight.persistence.entity.DiaryEntry" />
     </data>
 
+<!-- TODO: Extend this View with P/CH/F Columns after food name-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> listener.onClick(food)}">
+        android:onClick="@{() -> listener.onClick(diaryEntry)}">
 
         <TextView
             android:id="@+id/txtFoodName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{food.description}"
+            android:text="@{diaryEntry.description}"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

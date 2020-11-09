@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="previousFragment"
             type="String" />
@@ -76,13 +74,12 @@
             tools:listitem="@layout/list_item_food_nutrient" />
 
         <Button
-            android:id="@+id/btnSaveFood"
+            android:id="@+id/btnPersistFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@color/colorPrimary"
-            android:text="@string/btnSaveText"
-            android:visibility="@{previousFragment.equals(`SearchFragment`) ? View.VISIBLE : View.GONE}"
+            android:text="@{previousFragment.equals(`SearchFragment`) ? `Save` : `Remove`}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/includedLayout" />
 

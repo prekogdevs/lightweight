@@ -1,4 +1,4 @@
-package com.android.project.lightweight.network
+package com.android.project.lightweight.api.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 data class Food(
     val fdcId: Long,
     val description: String,
-    val foodNutrients : List<FoodNutrient>
+    val foodNutrients: List<FoodNutrient>
 ) : Parcelable

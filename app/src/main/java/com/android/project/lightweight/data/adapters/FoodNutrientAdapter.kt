@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
-import com.android.project.lightweight.network.FoodNutrient
 
 class FoodNutrientAdapter(private var foodNutrients: List<FoodNutrient>) : RecyclerView.Adapter<FoodNutrientAdapter.FoodNutrientHolder>() {
 

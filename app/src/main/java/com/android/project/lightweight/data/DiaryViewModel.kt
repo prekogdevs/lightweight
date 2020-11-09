@@ -1,18 +1,18 @@
 package com.android.project.lightweight.data
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.android.project.lightweight.network.Food
+import android.app.Application
+import androidx.lifecycle.*
+import com.android.project.lightweight.persistence.DiaryDatabase
+import com.android.project.lightweight.utilities.CurrentDate
+import com.android.project.lightweight.utilities.DateFormatter
 
-class DiaryViewModel : ViewModel() {
-    private val _consumedFoods = MutableLiveData<ArrayList<Food>>()
-    val consumedFoods: LiveData<ArrayList<Food>>
-        get() = _consumedFoods
-
-    init {
-        // This will come from Room DB later
-        _consumedFoods.value = arrayListOf(Food(1, "Tasty 1", listOf()), Food(2, "Tasty 2", listOf()), Food(3, "Tasty 3", listOf()))
+class DiaryViewModel(application: Application) : AndroidViewModel(application) {
+    val consumedOn = MutableLiveData(CurrentDate.currentDate) // on start the Date will be "TODAY"
+    val consumedFoods = Transformations.switchMap(consumedOn) { consumedOn ->
+        DiaryDatabase(application).diaryDao().getEntries(DateFormatter.parseDateToLong(consumedOn))
     }
 
+    fun changeDate(date : String) {
+        consumedOn.value = date
+    }
 }

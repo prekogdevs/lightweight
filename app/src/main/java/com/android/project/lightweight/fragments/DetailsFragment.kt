@@ -14,11 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
+import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
-import com.android.project.lightweight.factory.ViewModelFactory
-import com.android.project.lightweight.network.Food
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -26,17 +26,17 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var food: Food
-    private val navController by lazy {
-        findNavController()
-    }
-    private lateinit var viewModelFactory: ViewModelFactory
+    private val navController by lazy { findNavController() }
+
     private val detailsViewModel: DetailsViewModel by lazy {
-        ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
+        ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
     private val foodNutrientAdapter by lazy {
-        FoodNutrientAdapter(food.foodNutrients)
+        FoodNutrientAdapter(food.foodNutrients.filter { it.amount > 0 })
     }
+
+    private var consumedOn = -1L
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -44,7 +44,8 @@ class DetailsFragment : Fragment() {
 
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            food = argsBundle.selectedFood
+            food = argsBundle.food
+            consumedOn = argsBundle.consumedOn
             binding.previousFragment = argsBundle.previousFragment // This value defines the visibility of Save button (handled in fragment_details.xml with databinding)
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food.description)
         }
@@ -53,17 +54,20 @@ class DetailsFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        val application = requireNotNull(activity).application
-        viewModelFactory = ViewModelFactory(application, food)
-
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip))
+                foodNutrientAdapter.setNutrients(detailsViewModel.filterNutrients(chip, food))
             }
         }
 
-        binding.btnSaveFood.setOnClickListener{
-            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment(food))
+        binding.btnPersistFood.setOnClickListener {
+            if (binding.previousFragment == "SearchFragment") {
+                val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn)
+                detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry, food.foodNutrients)
+            } else {
+                detailsViewModel.deleteDiaryEntry(food.fdcId, consumedOn)
+            }
+            navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
 
         return binding.root

@@ -18,14 +18,17 @@
         android:name="com.android.project.lightweight.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details">
         <argument
-            android:name="selectedFood"
-            app:argType="com.android.project.lightweight.network.Food" />
+            android:name="food"
+            app:argType="com.android.project.lightweight.api.model.Food" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
         <argument
             android:name="previousFragment"
             app:argType="string" />
+        <argument
+            android:name="consumedOn"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
@@ -35,8 +38,5 @@
         <action
             android:id="@+id/action_diaryFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
-        <argument
-            android:name="consumedFood"
-            app:argType="com.android.project.lightweight.network.Food" />
     </fragment>
 </navigation>
