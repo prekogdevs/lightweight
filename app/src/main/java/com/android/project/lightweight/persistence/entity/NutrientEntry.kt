@@ -21,7 +21,7 @@ import kotlinx.android.parcel.Parcelize
 )
 data class NutrientEntry(
     val diaryEntryId: Long,
-    val nutrientNumber: Int,
+    val nutrientNumber: Double,
     @Json(name = "value")
     val consumedAmount: Double,
     val unitName: String,

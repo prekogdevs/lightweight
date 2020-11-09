@@ -57,6 +57,6 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     }
 
     private fun filter(foodNutrients: List<FoodNutrient>, filterList: List<Int>): List<FoodNutrient> {
-        return foodNutrients.filter { foodNutrient -> filterList.contains(foodNutrient.nutrientNumber) && foodNutrient.amount > 0 }
+        return foodNutrients.filter { foodNutrient -> filterList.contains(foodNutrient.nutrientNumber.toInt()) && foodNutrient.amount > 0 }
     }
 }
