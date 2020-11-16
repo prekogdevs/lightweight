@@ -25,9 +25,6 @@
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
         <argument
-            android:name="consumedOn"
-            app:argType="long" />
-        <argument
             android:name="diaryEntry"
             app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry"
             app:nullable="true" />

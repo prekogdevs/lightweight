@@ -20,6 +20,8 @@ import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.transformer.EntityTransformer
+import com.android.project.lightweight.utilities.CurrentDate
+import com.android.project.lightweight.utilities.DateFormatter
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -38,15 +40,12 @@ class DetailsFragment : Fragment() {
 
     private var nutrientAdapter = FoodNutrientAdapter(emptyList())
 
-    private var consumedOn = -1L
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
 
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            consumedOn = argsBundle.consumedOn
             food = argsBundle.food
             diaryEntry = argsBundle.diaryEntry
             when (food) { // with this check we know which was the previous fragment (when food is null: previousFragment = "DiaryFragment" else "SearchFragment")
@@ -54,14 +53,14 @@ class DetailsFragment : Fragment() {
                     detailsViewModel.setDiaryEntryId(diaryEntry!!.id)
                     // TODO: Extract XML "code"
                     binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, diaryEntry!!.description)
-                    binding.btnPersistFood.text = "Remove"
+                    binding.btnPersistFood.text = getString(R.string.removeText)
                 }
                 else -> {
                     food = argsBundle.food!!
                     detailsViewModel.setFood(food!!)
                     // TODO: Extract XML "code"
                     binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, food!!.description)
-                    binding.btnPersistFood.text = "Save"
+                    binding.btnPersistFood.text =  getString(R.string.saveText)
                 }
             }
         }
@@ -99,9 +98,9 @@ class DetailsFragment : Fragment() {
         binding.btnPersistFood.setOnClickListener {
             when (food) {
                 null ->
-                    detailsViewModel.deleteDiaryEntry(diaryEntry!!.fdcId, consumedOn)
+                    detailsViewModel.deleteDiaryEntry(diaryEntry!!.fdcId, DateFormatter.parseDateToLong(CurrentDate.currentDate))
                 else -> {
-                    val diaryEntry = DiaryEntry(food!!.fdcId, food!!.description, consumedOn)
+                    val diaryEntry = DiaryEntry(food!!.fdcId, food!!.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
                     detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry, food!!.foodNutrients)
                 }
             }

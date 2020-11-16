@@ -17,7 +17,6 @@ import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.utilities.CurrentDate
-import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -32,7 +31,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, DateFormatter.parseDateToLong(CurrentDate.currentDate), null))
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, null))
             }
         })
     }
