@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, "SearchFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, DateFormatter.parseDateToLong(CurrentDate.currentDate), null))
             }
         })
     }

@@ -12,6 +12,7 @@ data class DiaryEntry(
     val fdcId: Long,
     val description: String,
     var consumedOn: Long
+// TODO: amount field
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

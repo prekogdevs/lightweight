@@ -3,6 +3,8 @@ package com.android.project.lightweight.data
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.model.Food
@@ -23,6 +25,12 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     private val diaryRepository: DiaryRepository
     private val nutrientRepository: NutrientRepository
 
+    var diaryEntryId = MutableLiveData<Long>()
+    var food = MutableLiveData<Food>()
+    val nutrients = Transformations.switchMap(diaryEntryId) {
+        DiaryDatabase(application).nutrientDao().getNutrientsByDiaryEntryId(diaryEntryId.value!!)
+    }
+
     init {
         val diaryDao = DiaryDatabase(application).diaryDao()
         diaryRepository = DiaryRepository(diaryDao)
@@ -30,6 +38,13 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         nutrientRepository = NutrientRepository(nutrientDao)
     }
 
+    fun setFood(food : Food) {
+        this.food.value = food
+    }
+
+    fun setDiaryEntryId(diaryEntryId: Long) {
+        this.diaryEntryId.value = diaryEntryId
+    }
 
     private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
 
@@ -45,13 +60,13 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         diaryRepository.deleteDiaryEntry(foodId, consumedOn)
     }
 
-    fun filterNutrients(view: View, food: Food): List<FoodNutrient> {
+    fun filterFoodNutrients(view: View, foodNutrients: List<FoodNutrient>): List<FoodNutrient> {
         return when (view.id) {
-            R.id.chip_general -> filter(food.foodNutrients, general)
-            R.id.chip_vitamins -> filter(food.foodNutrients, vitamins)
-            R.id.chip_minerals -> filter(food.foodNutrients, minerals)
+            R.id.chip_general -> filter(foodNutrients, general)
+            R.id.chip_vitamins -> filter(foodNutrients, vitamins)
+            R.id.chip_minerals -> filter(foodNutrients, minerals)
             else -> {
-                food.foodNutrients.filter { it.amount > 0 }
+                foodNutrients.filter { it.amount > 0 }
             }
         }
     }

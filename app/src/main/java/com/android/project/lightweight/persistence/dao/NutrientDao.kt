@@ -15,5 +15,5 @@ interface NutrientDao {
     suspend fun insertNutrientEntries(nutrientEntries: List<NutrientEntry>)
 
     @Query("SELECT * FROM Nutrient WHERE diaryEntryId = :diaryEntryId")
-    fun getNutrientEntriesByFdcId(diaryEntryId: Long): LiveData<List<NutrientEntry>>
+    fun getNutrientsByDiaryEntryId(diaryEntryId: Long): LiveData<List<NutrientEntry>>
 }

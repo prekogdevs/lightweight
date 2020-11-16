@@ -19,16 +19,18 @@
         tools:layout="@layout/fragment_details">
         <argument
             android:name="food"
-            app:argType="com.android.project.lightweight.api.model.Food" />
+            app:argType="com.android.project.lightweight.api.model.Food"
+            app:nullable="true" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
         <argument
-            android:name="previousFragment"
-            app:argType="string" />
-        <argument
             android:name="consumedOn"
             app:argType="long" />
+        <argument
+            android:name="diaryEntry"
+            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
