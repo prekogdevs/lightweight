@@ -14,7 +14,6 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -48,16 +47,20 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
 
     private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
 
-    private suspend fun insertNutrientEntries(nutrientEntries: List<NutrientEntry>) = nutrientRepository.insertNutrientEntries(nutrientEntries)
-
-    fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry, food: List<FoodNutrient>) = viewModelScope.launch {
-        val diaryEntryId = insertDiaryEntry(entry)
-        val nutrientEntries = EntityTransformer.transformFoodNutrientsToNutrientEntries(food, diaryEntryId)
-        insertNutrientEntries(nutrientEntries)
+    private suspend fun insertNutrientEntriesToEntry(nutrientEntries: List<NutrientEntry>) {
+        nutrientRepository.insertNutrientEntries(nutrientEntries)
     }
 
-    fun deleteDiaryEntry(foodId: Long, consumedOn: Long) = viewModelScope.launch {
-        diaryRepository.deleteDiaryEntry(foodId, consumedOn)
+    fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry) = viewModelScope.launch {
+        val diaryEntryId = insertDiaryEntry(entry)
+        // TODO: #1 Nem a legszebb megoldás, egyelőre így hagyni, megoldani a többi függő elemet a DetailsFragmentben
+        //  majd refactor
+        entry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList()
+        insertNutrientEntriesToEntry(entry.nutrients)
+    }
+
+    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
+        diaryRepository.deleteDiaryEntry(diaryEntryId)
     }
 
     fun filterFoodNutrients(view: View, foodNutrients: List<FoodNutrient>): List<FoodNutrient> {

@@ -16,7 +16,10 @@ import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
+import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.utilities.CurrentDate
+import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
@@ -31,7 +34,9 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, null))
+                val diaryEntry = DiaryEntry(food.fdcId, food.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
+                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(food.foodNutrients, diaryEntry.id)
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
             }
         })
     }

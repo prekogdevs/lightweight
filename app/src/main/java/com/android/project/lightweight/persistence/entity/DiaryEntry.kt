@@ -2,6 +2,7 @@ package com.android.project.lightweight.persistence.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
@@ -17,4 +18,6 @@ data class DiaryEntry(
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+    @Ignore
+    var nutrients : List<NutrientEntry> = emptyList()
 }

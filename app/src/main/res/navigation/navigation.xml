@@ -17,17 +17,12 @@
         android:id="@+id/detailsFragment"
         android:name="com.android.project.lightweight.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details">
-        <argument
-            android:name="food"
-            app:argType="com.android.project.lightweight.api.model.Food"
-            app:nullable="true" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
         <argument
             android:name="diaryEntry"
-            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry"
-            app:nullable="true" />
+            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"

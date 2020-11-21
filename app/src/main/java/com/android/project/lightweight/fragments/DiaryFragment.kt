@@ -30,7 +30,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val diaryEntryAdapter by lazy {
         DiaryEntryAdapter(object : OnDiaryEntryClickListener {
             override fun onClick(diaryEntry: DiaryEntry) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(null, diaryEntry))
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
             }
         })
     }

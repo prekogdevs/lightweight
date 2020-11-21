@@ -10,10 +10,4 @@ object EntityTransformer {
                 foodNutrient ->
             NutrientEntry(diaryEntryId, foodNutrient.nutrientNumber, foodNutrient.amount, foodNutrient.unitName, foodNutrient.nutrientName)
         }.toList()
-
-    fun transformNutrientToFoodNutrient(nutrients: List<NutrientEntry>) =
-        nutrients.map { foodNutrient ->
-            FoodNutrient(foodNutrient.nutrientName, foodNutrient.unitName, foodNutrient.consumedAmount, foodNutrient.nutrientNumber)
-        }.toList()
-
 }
