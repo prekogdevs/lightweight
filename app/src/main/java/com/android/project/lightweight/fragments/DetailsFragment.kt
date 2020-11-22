@@ -14,14 +14,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
-import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.DetailsViewModel
-import com.android.project.lightweight.data.adapters.FoodNutrientAdapter
+import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
-import com.android.project.lightweight.utilities.CurrentDate
-import com.android.project.lightweight.utilities.DateFormatter
+import com.android.project.lightweight.persistence.entity.NutrientEntry
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -35,7 +32,7 @@ class DetailsFragment : Fragment() {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
-    private var nutrientAdapter = FoodNutrientAdapter(emptyList())
+    private var nutrientAdapter = NutrientAdapter(emptyList())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -45,36 +42,35 @@ class DetailsFragment : Fragment() {
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
             diaryEntry = argsBundle.diaryEntry
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, diaryEntry.description)
-            binding.btnPersistFood.text = if (diaryEntry.id == 0L) getString(R.string.saveText) else getString(R.string.removeText)
+            if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
+                nutrientAdapter.setNutrients(diaryEntry.nutrients)
+                binding.btnPersistFood.text = getString(R.string.saveText)
+            } else {
+                detailsViewModel.getNutrientEntriesByDiaryEntryId(diaryEntry.id) // this will initiate a room query from detailsViewModel
+                binding.btnPersistFood.text = getString(R.string.removeText)
+            }
         }
         binding.foodNutrientsRecyclerView.apply {
             adapter = nutrientAdapter
             setHasFixedSize(true)
         }
 
-//        detailsViewModel.nutrients.observe(viewLifecycleOwner, { nutrientEntryList ->
-//            nutrientEntryList?.let {
-//                nutrientAdapter.setNutrients(EntityTransformer.transformNutrientToFoodNutrient(detailsViewModel.nutrients.value!!.filter { it.consumedAmount > 0 }))
-//            }
-//        })
-//
-//        detailsViewModel.food.observe(viewLifecycleOwner, { food ->
-//            food?.let {
-//                nutrientAdapter.setNutrients(food.foodNutrients.filter { it.amount > 0 })
-//            }
-//        })
+        detailsViewModel.nutrients.observe(viewLifecycleOwner, { nutrientEntryList ->
+            nutrientEntryList?.let {
+                nutrientAdapter.setNutrients(it)
+            }
+        })
 
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-//                when(food) {
-//                    null -> {
-//                        // TODO: Refactor
-//                        nutrientAdapter.setNutrients(detailsViewModel.filterFoodNutrients(chip, EntityTransformer.transformNutrientToFoodNutrient(detailsViewModel.nutrients.value!!)))
-//                    }
-//                    else -> {
-//                        nutrientAdapter.setNutrients(detailsViewModel.filterFoodNutrients(chip, food!!.foodNutrients))
-//                    }
-//                }
+                val filteredNutrients: List<NutrientEntry>
+                if (diaryEntry.id == 0L) {
+                    filteredNutrients = detailsViewModel.filterFoodNutrients(chip, diaryEntry.nutrients)
+                    nutrientAdapter.setNutrients(filteredNutrients)
+                } else {
+                    filteredNutrients = detailsViewModel.filterFoodNutrients(chip, detailsViewModel.nutrients.value!!)
+                    nutrientAdapter.setNutrients(filteredNutrients)
+                }
             }
         }
 
@@ -84,14 +80,6 @@ class DetailsFragment : Fragment() {
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)
             }
-//            when (food) {
-//                null ->
-//                    detailsViewModel.deleteDiaryEntry(diaryEntry!!.fdcId, DateFormatter.parseDateToLong(CurrentDate.currentDate))
-//                else -> {
-//                    val diaryEntry = DiaryEntry(food!!.fdcId, food!!.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
-//                    detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry, food!!.foodNutrients)
-//                }
-//            }
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
 

@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.R
-import com.android.project.lightweight.api.model.Food
-import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
@@ -24,10 +22,13 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     private val diaryRepository: DiaryRepository
     private val nutrientRepository: NutrientRepository
 
-    var diaryEntryId = MutableLiveData<Long>()
-    var food = MutableLiveData<Food>()
+    private var diaryEntryId = MutableLiveData<Long>()
     val nutrients = Transformations.switchMap(diaryEntryId) {
-        DiaryDatabase(application).nutrientDao().getNutrientsByDiaryEntryId(diaryEntryId.value!!)
+        DiaryDatabase(application).nutrientDao().getNutrientEntriesByDiaryEntryId(diaryEntryId.value!!)
+    }
+
+    fun getNutrientEntriesByDiaryEntryId(id: Long) {
+        diaryEntryId.value = id
     }
 
     init {
@@ -37,13 +38,6 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         nutrientRepository = NutrientRepository(nutrientDao)
     }
 
-    fun setFood(food : Food) {
-        this.food.value = food
-    }
-
-    fun setDiaryEntryId(diaryEntryId: Long) {
-        this.diaryEntryId.value = diaryEntryId
-    }
 
     private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
 
@@ -53,9 +47,7 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
 
     fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry) = viewModelScope.launch {
         val diaryEntryId = insertDiaryEntry(entry)
-        // TODO: #1 Nem a legszebb megoldás, egyelőre így hagyni, megoldani a többi függő elemet a DetailsFragmentben
-        //  majd refactor
-        entry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList()
+        entry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList() // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
         insertNutrientEntriesToEntry(entry.nutrients)
     }
 
@@ -63,18 +55,18 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         diaryRepository.deleteDiaryEntry(diaryEntryId)
     }
 
-    fun filterFoodNutrients(view: View, foodNutrients: List<FoodNutrient>): List<FoodNutrient> {
+    fun filterFoodNutrients(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
         return when (view.id) {
-            R.id.chip_general -> filter(foodNutrients, general)
-            R.id.chip_vitamins -> filter(foodNutrients, vitamins)
-            R.id.chip_minerals -> filter(foodNutrients, minerals)
+            R.id.chip_general -> filter(nutrientEntries, general)
+            R.id.chip_vitamins -> filter(nutrientEntries, vitamins)
+            R.id.chip_minerals -> filter(nutrientEntries, minerals)
             else -> {
-                foodNutrients.filter { it.amount > 0 }
+                nutrientEntries.filter { it.consumedAmount > 0 }
             }
         }
     }
 
-    private fun filter(foodNutrients: List<FoodNutrient>, filterList: List<Int>): List<FoodNutrient> {
-        return foodNutrients.filter { foodNutrient -> filterList.contains(foodNutrient.nutrientNumber.toInt()) && foodNutrient.amount > 0 }
+    private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>): List<NutrientEntry> {
+        return nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) && nutrientEntry.consumedAmount > 0 }
     }
 }
