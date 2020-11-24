@@ -41,10 +41,6 @@ class SearchFragment : Fragment() {
         })
     }
 
-    private val navController by lazy {
-        findNavController()
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
@@ -80,6 +76,7 @@ class SearchFragment : Fragment() {
 
     // Source: https://developer.android.com/guide/navigation/navigation-ui#support_app_bar_variations
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navController = findNavController()
         val appBarConfig = AppBarConfiguration(navController.graph)
         view.includedLayout.toolbar.setupWithNavController(navController, appBarConfig)
     }

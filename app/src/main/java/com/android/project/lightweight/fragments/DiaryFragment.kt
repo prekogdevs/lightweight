@@ -60,16 +60,6 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).showBottomNavigation()
-    }
-
-    override fun onDetach() {
-        (activity as MainActivity).hideBottomNavigation()
-        super.onDetach()
-    }
-
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         val str = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth)
         CurrentDate.currentDate = str
