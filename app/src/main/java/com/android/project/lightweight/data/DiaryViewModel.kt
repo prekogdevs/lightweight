@@ -7,7 +7,7 @@ import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 
 class DiaryViewModel(application: Application) : AndroidViewModel(application) {
-    val consumedOn = MutableLiveData(CurrentDate.currentDate) // on start the Date will be "TODAY"
+    private val consumedOn = MutableLiveData(CurrentDate.currentDate) // on start the Date will be "TODAY"
     val consumedFoods = Transformations.switchMap(consumedOn) { consumedOn ->
         DiaryDatabase(application).diaryDao().getEntries(DateFormatter.parseDateToLong(consumedOn))
     }

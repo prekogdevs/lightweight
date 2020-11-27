@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.android.project.lightweight.fragments.SearchFragment"
+        android:name="com.android.project.lightweight.ui.fragments.SearchFragment"
         android:label="Search in API"
         tools:layout="@layout/fragment_search">
         <action
@@ -15,24 +15,18 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.android.project.lightweight.fragments.DetailsFragment"
+        android:name="com.android.project.lightweight.ui.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details">
-        <argument
-            android:name="food"
-            app:argType="com.android.project.lightweight.api.model.Food" />
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
             app:destination="@id/diaryFragment" />
         <argument
-            android:name="previousFragment"
-            app:argType="string" />
-        <argument
-            android:name="consumedOn"
-            app:argType="long" />
+            android:name="diaryEntry"
+            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.android.project.lightweight.fragments.DiaryFragment"
+        android:name="com.android.project.lightweight.ui.fragments.DiaryFragment"
         android:label="Your Diary"
         tools:layout="@layout/fragment_diary">
         <action

@@ -4,32 +4,32 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
+import com.android.project.lightweight.persistence.entity.NutrientEntry
 
-class FoodNutrientAdapter(private var foodNutrients: List<FoodNutrient>) : RecyclerView.Adapter<FoodNutrientAdapter.FoodNutrientHolder>() {
+class NutrientAdapter(private var nutrientEntries: List<NutrientEntry>) : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodNutrientHolder {
         return FoodNutrientHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: FoodNutrientHolder, position: Int) {
-        val foodNutrient = foodNutrients[position]
+        val foodNutrient = nutrientEntries[position]
         holder.bindFoodNutrient(foodNutrient)
     }
 
-    override fun getItemCount() = foodNutrients.size
+    override fun getItemCount() = nutrientEntries.size
 
-    fun setNutrients(foodNutrients: List<FoodNutrient>) {
-        this.foodNutrients = foodNutrients
+    fun setNutrients(nutrientEntries: List<NutrientEntry>) {
+        this.nutrientEntries = nutrientEntries
         notifyDataSetChanged()
     }
 
     class FoodNutrientHolder private constructor(private val binding: ListItemFoodNutrientBinding) : RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindFoodNutrient(foodNutrient: FoodNutrient) {
-            binding.foodNutrient = foodNutrient
+        fun bindFoodNutrient(nutrientEntry: NutrientEntry) {
+            binding.nutrientEntry = nutrientEntry
         }
 
         companion object {

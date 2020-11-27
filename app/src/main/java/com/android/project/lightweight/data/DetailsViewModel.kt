@@ -3,16 +3,15 @@ package com.android.project.lightweight.data
 import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.R
-import com.android.project.lightweight.api.model.Food
-import com.android.project.lightweight.api.model.FoodNutrient
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -22,6 +21,15 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
 
     private val diaryRepository: DiaryRepository
     private val nutrientRepository: NutrientRepository
+
+    private var diaryEntryId = MutableLiveData<Long>()
+    val nutrients = Transformations.switchMap(diaryEntryId) {
+        DiaryDatabase(application).nutrientDao().getNutrientEntriesByDiaryEntryId(diaryEntryId.value!!)
+    }
+
+    fun getNutrientEntriesByDiaryEntryId(id: Long) {
+        diaryEntryId.value = id
+    }
 
     init {
         val diaryDao = DiaryDatabase(application).diaryDao()
@@ -33,30 +41,32 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
 
     private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
 
-    private suspend fun insertNutrientEntries(nutrientEntries: List<NutrientEntry>) = nutrientRepository.insertNutrientEntries(nutrientEntries)
+    private suspend fun insertNutrientEntriesToEntry(nutrientEntries: List<NutrientEntry>) {
+        nutrientRepository.insertNutrientEntries(nutrientEntries)
+    }
 
-    fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry, food: List<FoodNutrient>) = viewModelScope.launch {
+    fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry) = viewModelScope.launch {
         val diaryEntryId = insertDiaryEntry(entry)
-        val nutrientEntries = EntityTransformer.transformFoodNutrientsToNutrientEntries(food, diaryEntryId)
-        insertNutrientEntries(nutrientEntries)
+        entry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList() // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
+        insertNutrientEntriesToEntry(entry.nutrients)
     }
 
-    fun deleteDiaryEntry(foodId: Long, consumedOn: Long) = viewModelScope.launch {
-        diaryRepository.deleteDiaryEntry(foodId, consumedOn)
+    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
+        diaryRepository.deleteDiaryEntry(diaryEntryId)
     }
 
-    fun filterNutrients(view: View, food: Food): List<FoodNutrient> {
+    fun filterFoodNutrients(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
         return when (view.id) {
-            R.id.chip_general -> filter(food.foodNutrients, general)
-            R.id.chip_vitamins -> filter(food.foodNutrients, vitamins)
-            R.id.chip_minerals -> filter(food.foodNutrients, minerals)
+            R.id.chip_general -> filter(nutrientEntries, general)
+            R.id.chip_vitamins -> filter(nutrientEntries, vitamins)
+            R.id.chip_minerals -> filter(nutrientEntries, minerals)
             else -> {
-                food.foodNutrients.filter { it.amount > 0 }
+                nutrientEntries.filter { it.consumedAmount > 0 }
             }
         }
     }
 
-    private fun filter(foodNutrients: List<FoodNutrient>, filterList: List<Int>): List<FoodNutrient> {
-        return foodNutrients.filter { foodNutrient -> filterList.contains(foodNutrient.nutrientNumber.toInt()) && foodNutrient.amount > 0 }
+    private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>): List<NutrientEntry> {
+        return nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) && nutrientEntry.consumedAmount > 0 }
     }
 }

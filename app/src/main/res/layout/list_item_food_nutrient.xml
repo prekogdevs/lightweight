@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="foodNutrient"
-            type="com.android.project.lightweight.api.model.FoodNutrient" />
+            name="nutrientEntry"
+            type="com.android.project.lightweight.persistence.entity.NutrientEntry" />
     </data>
 
 
@@ -20,18 +20,19 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@{foodNutrient.nutrientName}"
+            android:text="@{nutrientEntry.nutrientName}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nutrient name" />
 
+        <!-- TODO: ConsumedAmount might not be valid -->
         <TextView
             android:id="@+id/txtNutrientAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
-            android:text="@{@string/nutrient_with_amount(foodNutrient.amount,foodNutrient.unitName)}"
+            android:text="@{@string/nutrient_with_amount(nutrientEntry.consumedAmount,nutrientEntry.unitName)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Nutrient amount" />

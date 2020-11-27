@@ -15,4 +15,6 @@
     <string name="search_in_fav">Search in FAV</string>
     <string name="profile">Profile</string>
     <string name="toolbarDefaultText">What did I eat on: %1$s</string>
+    <string name="removeText">Remove</string>
+    <string name="saveText">Save</string>
 </resources>

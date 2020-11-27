@@ -1,6 +1,5 @@
-package com.android.project.lightweight.fragments
+package com.android.project.lightweight.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,13 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
 import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
@@ -31,7 +28,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private val diaryEntryAdapter by lazy {
         DiaryEntryAdapter(object : OnDiaryEntryClickListener {
             override fun onClick(diaryEntry: DiaryEntry) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(EntityTransformer.transformDiaryEntryToFood(diaryEntry), "DiaryFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
+                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
             }
         })
     }
@@ -39,7 +36,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         ViewModelProvider(this).get(DiaryViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
@@ -61,20 +58,10 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).showBottomNavigation()
-    }
-
-    override fun onDetach() {
-        (activity as MainActivity).hideBottomNavigation()
-        super.onDetach()
-    }
-
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val str = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth)
-        CurrentDate.currentDate = str
+        val formattedDate = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth) // valid format means: yyyy-MM-dd
+        CurrentDate.currentDate = formattedDate
         diaryViewModel.changeDate(CurrentDate.currentDate)
-        binding.pickedDate = str
+        binding.pickedDate = formattedDate
     }
 }

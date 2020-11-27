@@ -14,6 +14,6 @@ interface DiaryDao {
     @Insert
     suspend fun insertDiaryEntry(diaryEntry: DiaryEntry) : Long
 
-    @Query("DELETE FROM Diary WHERE fdcId = :foodId AND consumedOn = :consumedOn")
-    suspend fun deleteDiaryEntry(foodId: Long, consumedOn: Long)
+    @Query("DELETE FROM Diary WHERE id = :diaryEntryId")
+    suspend fun deleteDiaryEntry(diaryEntryId : Long)
 }

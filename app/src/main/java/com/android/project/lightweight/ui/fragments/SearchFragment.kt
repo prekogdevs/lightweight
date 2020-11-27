@@ -1,4 +1,4 @@
-package com.android.project.lightweight.fragments
+package com.android.project.lightweight.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +16,8 @@ import com.android.project.lightweight.data.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
+import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
@@ -32,16 +34,14 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(food, "SearchFragment", DateFormatter.parseDateToLong(CurrentDate.currentDate)))
+                val diaryEntry = DiaryEntry(food.fdcId, food.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
+                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(food.foodNutrients, diaryEntry.id)
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
             }
         })
     }
 
-    private val navController by lazy {
-        findNavController()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
@@ -76,6 +76,7 @@ class SearchFragment : Fragment() {
 
     // Source: https://developer.android.com/guide/navigation/navigation-ui#support_app_bar_variations
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val navController = findNavController()
         val appBarConfig = AppBarConfiguration(navController.graph)
         view.includedLayout.toolbar.setupWithNavController(navController, appBarConfig)
     }
