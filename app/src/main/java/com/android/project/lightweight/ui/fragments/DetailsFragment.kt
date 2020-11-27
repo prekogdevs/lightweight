@@ -1,6 +1,5 @@
-package com.android.project.lightweight.fragments
+package com.android.project.lightweight.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.persistence.entity.NutrientEntry
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -34,7 +31,7 @@ class DetailsFragment : Fragment() {
 
     private var nutrientAdapter = NutrientAdapter(emptyList())
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
 
@@ -63,14 +60,12 @@ class DetailsFragment : Fragment() {
 
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-                val filteredNutrients: List<NutrientEntry>
-                if (diaryEntry.id == 0L) {
-                    filteredNutrients = detailsViewModel.filterFoodNutrients(chip, diaryEntry.nutrients)
-                    nutrientAdapter.setNutrients(filteredNutrients)
+                val filteredNutrients = if (diaryEntry.id == 0L) {
+                    detailsViewModel.filterFoodNutrients(chip, diaryEntry.nutrients)
                 } else {
-                    filteredNutrients = detailsViewModel.filterFoodNutrients(chip, detailsViewModel.nutrients.value!!)
-                    nutrientAdapter.setNutrients(filteredNutrients)
+                    detailsViewModel.filterFoodNutrients(chip, detailsViewModel.nutrients.value!!)
                 }
+                nutrientAdapter.setNutrients(filteredNutrients)
             }
         }
 
@@ -90,10 +85,5 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val appBarConfig = AppBarConfiguration(navController.graph)
         view.includedLayout.toolbar.setupWithNavController(navController, appBarConfig)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).hideBottomNavigation()
     }
 }

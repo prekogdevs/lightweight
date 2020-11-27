@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.android.project.lightweight.fragments.SearchFragment"
+        android:name="com.android.project.lightweight.ui.fragments.SearchFragment"
         android:label="Search in API"
         tools:layout="@layout/fragment_search">
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.android.project.lightweight.fragments.DetailsFragment"
+        android:name="com.android.project.lightweight.ui.fragments.DetailsFragment"
         tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_detailsFragment_to_diaryFragment"
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"
-        android:name="com.android.project.lightweight.fragments.DiaryFragment"
+        android:name="com.android.project.lightweight.ui.fragments.DiaryFragment"
         android:label="Your Diary"
         tools:layout="@layout/fragment_diary">
         <action

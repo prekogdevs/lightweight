@@ -1,6 +1,5 @@
-package com.android.project.lightweight.fragments
+package com.android.project.lightweight.ui.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DiaryViewModel
 import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
@@ -38,7 +36,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         ViewModelProvider(this).get(DiaryViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
@@ -61,14 +59,9 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        val str = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth)
-        CurrentDate.currentDate = str
+        val formattedDate = DateFormatter.formatToValidDate(year, monthOfYear + 1, dayOfMonth) // valid format means: yyyy-MM-dd
+        CurrentDate.currentDate = formattedDate
         diaryViewModel.changeDate(CurrentDate.currentDate)
-        binding.pickedDate = str
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (activity as MainActivity).showBottomNavigation()
+        binding.pickedDate = formattedDate
     }
 }
