@@ -1,5 +1,6 @@
 package com.android.project.lightweight.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.android.project.lightweight.MainActivity
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.SearchViewModel
@@ -79,5 +81,10 @@ class SearchFragment : Fragment() {
         val navController = findNavController()
         val appBarConfig = AppBarConfiguration(navController.graph)
         view.includedLayout.toolbar.setupWithNavController(navController, appBarConfig)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).showBottomNavigation()
     }
 }

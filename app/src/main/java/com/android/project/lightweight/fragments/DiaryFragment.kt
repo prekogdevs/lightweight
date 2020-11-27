@@ -66,4 +66,9 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         diaryViewModel.changeDate(CurrentDate.currentDate)
         binding.pickedDate = str
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).showBottomNavigation()
+    }
 }

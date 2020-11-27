@@ -96,9 +96,4 @@ class DetailsFragment : Fragment() {
         super.onAttach(context)
         (activity as MainActivity).hideBottomNavigation()
     }
-
-    override fun onDetach() {
-        (activity as MainActivity).showBottomNavigation()
-        super.onDetach()
-    }
 }
