@@ -12,8 +12,8 @@ import kotlinx.android.parcel.Parcelize
 data class DiaryEntry(
     val fdcId: Long,
     val description: String,
+    var consumedAmount : Int,
     var consumedOn: Long
-// TODO: amount field
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

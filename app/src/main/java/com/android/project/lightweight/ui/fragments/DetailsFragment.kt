@@ -16,6 +16,7 @@ import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 
@@ -71,6 +72,8 @@ class DetailsFragment : Fragment() {
 
         binding.btnPersistFood.setOnClickListener {
             if (diaryEntry.id == 0L) {
+                closeKeyboard(requireActivity())
+                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
                 detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)
