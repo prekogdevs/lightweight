@@ -11,10 +11,11 @@
     <string name="general_all">All</string>
     <string name="datepicker_icon">Datepicker icon</string>
     <string name="diary">Diary</string>
-    <string name="search_in_api">Search in API</string>
-    <string name="search_in_fav">Search in FAV</string>
+    <string name="search_in_api">Search Food</string>
+    <string name="search_in_fav">Favorites</string>
     <string name="profile">Profile</string>
     <string name="toolbarDefaultText">What did I eat on: %1$s</string>
     <string name="removeText">Remove</string>
     <string name="saveText">Save</string>
+    <string name="txtConsumedAmount">Consumed amount</string>
 </resources>

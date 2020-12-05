@@ -60,6 +60,41 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <LinearLayout
+            android:id="@+id/amountLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipGroup">
+
+            <TextView
+                android:id="@+id/txtAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtConsumedAmount"
+                android:layout_marginEnd="8dp"/>
+
+            <EditText
+                android:id="@+id/edtConsumedAmount"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textAlignment="center"
+                tools:text="150" />
+
+            <Spinner
+                android:id="@+id/consumedAmountUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/foodNutrientsRecyclerView"
             android:layout_width="0dp"
@@ -69,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup"
+            app:layout_constraintTop_toBottomOf="@+id/amountLayout"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food_nutrient" />
 
