@@ -47,6 +47,7 @@ class DetailsFragment : Fragment() {
                 detailsViewModel.getNutrientEntriesByDiaryEntryId(diaryEntry.id) // this will initiate a room query from detailsViewModel
                 binding.btnPersistFood.text = getString(R.string.removeText)
             }
+            binding.diaryEntry = diaryEntry
         }
         binding.foodNutrientsRecyclerView.apply {
             adapter = nutrientAdapter
@@ -74,6 +75,9 @@ class DetailsFragment : Fragment() {
             if (diaryEntry.id == 0L) {
                 closeKeyboard(requireActivity())
                 diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt() // TODO: Handle empty edittext
+                // TODO: For testing purposes (refactor later)
+                diaryEntry.unitName = "g"
+                diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
                 detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)

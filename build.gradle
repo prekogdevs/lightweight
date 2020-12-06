@@ -17,7 +17,7 @@ buildscript {
         version_recyclerview = "1.0.0"
         nav_version = "2.3.0"
         room_version = "2.2.5"
-        kotlin_version = '1.4.10'
+        kotlin_version = '1.4.20'
     }
     repositories {
         google()

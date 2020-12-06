@@ -24,21 +24,21 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/diary_entry_iamge"
             android:src="@drawable/ic_cabbage"
             app:layout_constraintBottom_toBottomOf="@+id/txtFoodName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/txtFoodName"
-            app:tint="#5DBB63"
-            android:contentDescription="@string/diary_entry_iamge" />
+            app:tint="#5DBB63" />
 
         <TextView
             android:id="@+id/txtFoodName"
             android:layout_width="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="@{diaryEntry.description}"
             android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imgFoodIcon"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,13 +49,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:consumedAmount="@{diaryEntry.consumedAmount}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/txtFoodName"
             app:layout_constraintStart_toStartOf="@+id/txtFoodName"
             app:layout_constraintTop_toBottomOf="@+id/txtFoodName"
-            app:consumedAmount="@{diaryEntry.consumedAmount}"
+            app:unitName="@{diaryEntry.unitName}"
             tools:text="100 g" />
 
+        <TextView
+            android:id="@+id/txtEnergyInFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:energyInFood="@{diaryEntry.kcal}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="412 KCAL" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

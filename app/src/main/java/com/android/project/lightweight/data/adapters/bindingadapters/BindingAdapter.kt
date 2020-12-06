@@ -14,7 +14,11 @@ fun TextView.setCurrentDate(pickedDate: String?) {
     }
 }
 
-@BindingAdapter("consumedAmount")
-fun TextView.setConsumedAmount(amount : Int) { // TODO: Add unit parameter? (Unit parameter is not in Food table yet)
-    text = "$amount g"
+@BindingAdapter("consumedAmount", "unitName")
+fun TextView.setConsumedAmount(amount : Int, unitName : String) {
+    text = "$amount $unitName"
+}
+@BindingAdapter("energyInFood")
+fun TextView.setEnergyInFood(kcal : Int) {
+    text = "$kcal KCAL"
 }
