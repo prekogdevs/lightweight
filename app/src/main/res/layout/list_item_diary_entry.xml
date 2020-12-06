@@ -19,17 +19,44 @@
         android:layout_height="wrap_content"
         android:onClick="@{() -> listener.onClick(diaryEntry)}">
 
+        <ImageView
+            android:id="@+id/imgFoodIcon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_cabbage"
+            app:layout_constraintBottom_toBottomOf="@+id/txtFoodName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txtFoodName"
+            app:tint="#5DBB63"
+            android:contentDescription="@string/diary_entry_iamge" />
+
         <TextView
             android:id="@+id/txtFoodName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"
             android:text="@{diaryEntry.description}"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgFoodIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Placeholder" />
+
+        <TextView
+            android:id="@+id/txtConsumedAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/txtFoodName"
+            app:layout_constraintStart_toStartOf="@+id/txtFoodName"
+            app:layout_constraintTop_toBottomOf="@+id/txtFoodName"
+            app:consumedAmount="@{diaryEntry.consumedAmount}"
+            tools:text="100 g" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

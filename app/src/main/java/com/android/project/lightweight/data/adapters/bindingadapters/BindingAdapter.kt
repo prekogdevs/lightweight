@@ -13,3 +13,8 @@ fun TextView.setCurrentDate(pickedDate: String?) {
         text = outputDateStr
     }
 }
+
+@BindingAdapter("consumedAmount")
+fun TextView.setConsumedAmount(amount : Int) { // TODO: Add unit parameter? (Unit parameter is not in Food table yet)
+    text = "$amount g"
+}

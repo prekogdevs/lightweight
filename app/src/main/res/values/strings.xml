@@ -18,4 +18,6 @@
     <string name="removeText">Remove</string>
     <string name="saveText">Save</string>
     <string name="txtConsumedAmount">Consumed amount</string>
+    <string name="diary_entry_iamge">diary_entry_iamge</string>
+    <string name="consumedAmountHint">Set amount</string>
 </resources>

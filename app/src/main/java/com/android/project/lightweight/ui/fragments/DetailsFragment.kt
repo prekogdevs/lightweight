@@ -73,7 +73,7 @@ class DetailsFragment : Fragment() {
         binding.btnPersistFood.setOnClickListener {
             if (diaryEntry.id == 0L) {
                 closeKeyboard(requireActivity())
-                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
+                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt() // TODO: Handle empty edittext
                 detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)

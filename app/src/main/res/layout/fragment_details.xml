@@ -83,8 +83,10 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:hint="@string/consumedAmountHint"
                 android:textAlignment="center"
-                tools:text="150" />
+                tools:text="150"
+                android:autofillHints="amount" />
 
             <Spinner
                 android:id="@+id/consumedAmountUnit"
