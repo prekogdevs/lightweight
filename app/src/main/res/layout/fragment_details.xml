@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="previousFragment"
             type="String" />
+
+        <variable
+            name="diaryEntry"
+            type="com.android.project.lightweight.persistence.entity.DiaryEntry" />
 
         <variable
             name="detailsViewModel"
@@ -20,7 +25,7 @@
 
         <include
             android:id="@+id/includedLayout"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_with_textview" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"
@@ -68,6 +73,7 @@
             android:gravity="center_horizontal"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
+            android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chipGroup">
 
@@ -83,8 +89,11 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:hint="@string/consumedAmountHint"
                 android:textAlignment="center"
-                tools:text="150" />
+                tools:text="150"
+                android:imeOptions="actionDone"
+                android:autofillHints="amount" />
 
             <Spinner
                 android:id="@+id/consumedAmountUnit"

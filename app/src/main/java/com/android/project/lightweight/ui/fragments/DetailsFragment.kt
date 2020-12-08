@@ -18,7 +18,7 @@ import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
 import kotlinx.android.synthetic.main.fragment_details.view.*
-import kotlinx.android.synthetic.main.toolbar.view.*
+import kotlinx.android.synthetic.main.toolbar_with_textview.view.*
 
 class DetailsFragment : Fragment() {
 
@@ -47,6 +47,7 @@ class DetailsFragment : Fragment() {
                 detailsViewModel.getNutrientEntriesByDiaryEntryId(diaryEntry.id) // this will initiate a room query from detailsViewModel
                 binding.btnPersistFood.text = getString(R.string.removeText)
             }
+            binding.diaryEntry = diaryEntry
         }
         binding.foodNutrientsRecyclerView.apply {
             adapter = nutrientAdapter
@@ -73,7 +74,10 @@ class DetailsFragment : Fragment() {
         binding.btnPersistFood.setOnClickListener {
             if (diaryEntry.id == 0L) {
                 closeKeyboard(requireActivity())
-                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
+                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt() // TODO: Handle empty edittext
+                // TODO: For testing purposes (refactor later)
+                diaryEntry.unitName = "g"
+                diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
                 detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)

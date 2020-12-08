@@ -17,7 +17,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="@string/toolbarDefaultText" />
+            android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

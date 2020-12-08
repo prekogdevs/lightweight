@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.api.FoodApi
 import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.utilities.AppConstants
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
@@ -14,9 +15,9 @@ class SearchViewModel : ViewModel() {
     val response: LiveData<List<Food>>
         get() = _response
 
-    fun getFoods(apiKey : String, query : String) {
+    fun getFoods(query : String) {
         viewModelScope.launch {
-            val getFoodsDeferred = FoodApi.retrofitService.getFoodsAsync(apiKey, query)
+            val getFoodsDeferred = FoodApi.retrofitService.getFoodsAsync(AppConstants.API_KEY, query)
             try {
                 val result = getFoodsDeferred.await()
                 _response.value = result.foods
