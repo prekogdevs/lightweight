@@ -25,7 +25,7 @@
 
         <include
             android:id="@+id/includedLayout"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_with_textview" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/chipGroup"

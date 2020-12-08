@@ -18,7 +18,7 @@ import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
 import kotlinx.android.synthetic.main.fragment_details.view.*
-import kotlinx.android.synthetic.main.toolbar.view.*
+import kotlinx.android.synthetic.main.toolbar_with_textview.view.*
 
 class DetailsFragment : Fragment() {
 
