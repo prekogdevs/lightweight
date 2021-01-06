@@ -17,6 +17,7 @@ import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_details.view.*
 import kotlinx.android.synthetic.main.toolbar_with_textview.view.*
 
@@ -74,15 +75,26 @@ class DetailsFragment : Fragment() {
         binding.btnPersistFood.setOnClickListener {
             if (diaryEntry.id == 0L) {
                 closeKeyboard(requireActivity())
-                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt() // TODO: Handle empty edittext
-                // TODO: For testing purposes (refactor later)
-                diaryEntry.unitName = "g"
-                diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
-                detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
+                val amountValue = binding.edtConsumedAmount.text.toString()
+                if(amountValue.isNotEmpty()) {
+                    // Saving new entry
+                    diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
+                    // TODO: For testing purposes (refactor later)
+                    diaryEntry.unitName = "g"
+                    diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
+                    detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
+                    Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_LONG).show()
+                    navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+                }
+                else {
+                    Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_LONG).show()
+                }
+            // Removing entry
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)
+                Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_LONG).show()
+                navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
             }
-            navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
 
         return binding.root
