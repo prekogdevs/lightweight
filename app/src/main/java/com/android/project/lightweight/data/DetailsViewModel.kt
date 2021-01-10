@@ -62,15 +62,15 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
             R.id.chip_vitamins -> filter(nutrientEntries, vitamins)
             R.id.chip_minerals -> filter(nutrientEntries, minerals)
             else -> {
-                nutrientEntries.filter { it.consumedAmount > 0 }
+                nutrientEntries
             }
         }
     }
 
     private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>): List<NutrientEntry> {
-        return nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) && nutrientEntry.consumedAmount > 0 }
+        return nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt())}
     }
 
     // TODO: For testing purposes (refactor later)
-    fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(kcal)).first().consumedAmount.toInt()
+    fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(kcal)).first().originalComponentValueInPortion.toInt()
 }

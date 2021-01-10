@@ -49,7 +49,6 @@
             android:id="@+id/foodRecyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="@{viewModel.response.size() > 0 ? View.VISIBLE : View.INVISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,19 +58,42 @@
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 
-        <TextView
-            android:id="@+id/no_results_textview"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_results"
-            android:textAlignment="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:visibility="invisible"
+            android:gravity="center_horizontal"
+            android:visibility="@{viewModel.response.size() == 0 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/foodRecyclerView"
-            app:layout_constraintStart_toStartOf="@+id/foodRecyclerView"
-            app:layout_constraintTop_toTopOf="@+id/toolbar" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/empty_diary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_food_results"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/empty_diary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/food_results_text"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/empty_diary"
+                app:layout_constraintStart_toStartOf="@+id/empty_diary"
+                app:layout_constraintTop_toBottomOf="@+id/empty_diary" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

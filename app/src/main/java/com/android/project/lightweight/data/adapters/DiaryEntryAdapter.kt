@@ -39,13 +39,11 @@ class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<D
 
 
 class DiaryEntryCallback : DiffUtil.ItemCallback<DiaryEntry>() {
-    override fun areItemsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {
-        return oldItem.fdcId == newItem.fdcId
-    }
+    override fun areItemsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry) =
+        oldItem.fdcId == newItem.fdcId
 
-    override fun areContentsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry): Boolean {
-        return oldItem == newItem
-    }
+    override fun areContentsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry) =
+        oldItem == newItem
 }
 
 interface OnDiaryEntryClickListener {

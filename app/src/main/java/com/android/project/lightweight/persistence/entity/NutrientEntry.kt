@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -22,7 +21,7 @@ import kotlinx.android.parcel.Parcelize
 data class NutrientEntry(
     var diaryEntryId: Long,
     val nutrientNumber: Double,
-    @Json(name = "value")
+    val originalComponentValueInPortion: Double,
     val consumedAmount: Double,
     val unitName: String,
     val nutrientName: String

@@ -49,20 +49,19 @@ class SearchFragment : Fragment() {
             adapter = foodAdapter
             setHasFixedSize(true)
         }
-        binding.searchView.queryHint = getString(R.string.what_did_i_consume)// TODO: This should work from XML?!
-        binding.searchView.onQueryTextChanged {
-            binding.progressbar.visibility = View.VISIBLE
-            searchViewModel.getFoods(it)
+        binding.searchView.apply {
+            queryHint = getString(R.string.what_did_i_consume)
+            onQueryTextChanged {
+                binding.progressbar.visibility = View.VISIBLE
+                binding.emptyView.visibility = View.GONE
+                searchViewModel.getFoods(it)
+            }
         }
 
         searchViewModel.response.observe(viewLifecycleOwner, {
             it?.let {
                 foodAdapter.submitList(it)
                 binding.progressbar.visibility = View.INVISIBLE
-                binding.noResultsTextview.visibility = when (it.isEmpty()) {
-                    true -> View.VISIBLE
-                    else -> View.INVISIBLE
-                }
             }
         })
         setHasOptionsMenu(true)
