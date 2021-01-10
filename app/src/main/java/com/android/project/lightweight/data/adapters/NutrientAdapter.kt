@@ -21,7 +21,7 @@ class NutrientAdapter(private var nutrientEntries: List<NutrientEntry>) : Recycl
     override fun getItemCount() = nutrientEntries.size
 
     fun setNutrients(nutrientEntries: List<NutrientEntry>) {
-        this.nutrientEntries = nutrientEntries
+        this.nutrientEntries = nutrientEntries.sortedBy { it.nutrientName }
         notifyDataSetChanged()
     }
 
