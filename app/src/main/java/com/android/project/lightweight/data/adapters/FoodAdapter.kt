@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.databinding.ListItemFoodBinding
 
-class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
+class FoodAdapter(var listener: OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodHolder {
         return FoodHolder.from(parent)
@@ -21,7 +21,7 @@ class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAd
 
     class FoodHolder private constructor(private val binding: ListItemFoodBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindFood(food: Food, listener : OnFoodClickListener) {
+        fun bindFood(food: Food, listener: OnFoodClickListener) {
             binding.food = food
             binding.listener = listener
         }
@@ -38,14 +38,13 @@ class FoodAdapter(var listener : OnFoodClickListener) : ListAdapter<Food, FoodAd
 }
 
 class FoodCallback : DiffUtil.ItemCallback<Food>() {
-    override fun areItemsTheSame(oldItem: Food, newItem: Food): Boolean {
-        return oldItem.fdcId == newItem.fdcId
-    }
-    override fun areContentsTheSame(oldItem: Food, newItem: Food): Boolean {
-        return oldItem == newItem
-    }
+    override fun areItemsTheSame(oldItem: Food, newItem: Food) =
+        oldItem.fdcId == newItem.fdcId
+
+    override fun areContentsTheSame(oldItem: Food, newItem: Food) =
+        oldItem == newItem
 }
 
 interface OnFoodClickListener {
-    fun onClick(food : Food)
+    fun onClick(food: Food)
 }

@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <variable
+            name="diaryViewModel"
+            type="com.android.project.lightweight.data.DiaryViewModel" />
+
         <variable
             name="pickedDate"
             type="String" />
@@ -73,6 +78,44 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/empty_result_root"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/empty_result_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_empty_recyclerview_diary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/empty_diary_image" />
+
+            <TextView
+                android:id="@+id/empty_result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/empty_diary_text"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/empty_result_image"
+                app:layout_constraintStart_toStartOf="@+id/empty_result_image"
+                app:layout_constraintTop_toBottomOf="@+id/empty_result_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

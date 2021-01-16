@@ -28,9 +28,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", 'ApiKey', API_KEY
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", 'ApiKey', API_KEY
         }
     }
 
@@ -68,6 +72,7 @@ dependencies {
 
     // MaterialDateTimePicker
     implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+    implementation 'com.google.android.material:material:1.2.1'
 
     // Moshi + Retrofit converter
     implementation "com.squareup.moshi:moshi:$version_moshi"

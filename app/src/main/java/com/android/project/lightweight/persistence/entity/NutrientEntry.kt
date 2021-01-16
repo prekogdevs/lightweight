@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
@@ -22,12 +21,12 @@ import kotlinx.android.parcel.Parcelize
 data class NutrientEntry(
     var diaryEntryId: Long,
     val nutrientNumber: Double,
-    @Json(name = "value")
-    val consumedAmount: Double,
+    val originalComponentValueInPortion: Double, // component value in 100g food e.g.: 1.93mg iron in 100g banana
     val unitName: String,
     val nutrientName: String
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+    var consumedAmount: Double = originalComponentValueInPortion
 }

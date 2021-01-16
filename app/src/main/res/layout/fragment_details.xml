@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -19,112 +20,166 @@
             type="com.android.project.lightweight.data.DetailsViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/includedLayout"
-            layout="@layout/toolbar_with_textview" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chipGroup"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/includedLayout"
-            app:singleSelection="true">
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_all"
-                android:layout_width="wrap_content"
+            <include
+                android:id="@+id/includedLayout"
+                layout="@layout/toolbar_with_textview" />
+
+            <LinearLayout
+                android:id="@+id/chip_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/general_all" />
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintBottom_toTopOf="@id/amountLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/includedLayout">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_general"
-                android:layout_width="wrap_content"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:foregroundGravity="center_horizontal"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/general_all" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_general"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/general_chip" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_vitamins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/general_vitamins" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_minerals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/general_minerals" />
+
+
+                </com.google.android.material.chip.ChipGroup>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/amountLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/general_chip" />
+                android:layout_marginTop="16dp"
+                android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chip_layout">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_vitamins"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txtAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_toStartOf="@id/edtConsumedAmount"
+                    android:text="@string/consumed_amount_text" />
+
+                <EditText
+                    android:id="@+id/edtConsumedAmount"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/txtAmount"
+                    android:layout_alignBottom="@id/txtAmount"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:autofillHints="amount"
+                    android:hint="@string/consumed_amount_hint"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:text="@string/default_amount_text"
+                    tools:text="150" />
+
+                <TextView
+                    android:id="@+id/txtServingSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edtConsumedAmount"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/serving_size_text" />
+
+                <Spinner
+                    android:id="@+id/consumedAmountUnit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/edtConsumedAmount"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:entries="@array/serving_sizes" />
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/nutrient_summary_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnPersistFood"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/amountLayout">
+
+                <TextView
+                    android:id="@+id/txtNutrientSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nutrient_summary_text"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toStartOf="@+id/foodNutrientsRecyclerView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/foodNutrientsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/txtNutrientSummary"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNutrientSummary"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/list_item_food_nutrient" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <Button
+                android:id="@+id/btnPersistFood"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/general_vitamins" />
+                android:background="@color/colorPrimary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_minerals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/general_minerals" />
-
-
-        </com.google.android.material.chip.ChipGroup>
-
-        <LinearLayout
-            android:id="@+id/amountLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal"
-            android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/chipGroup">
-
-            <TextView
-                android:id="@+id/txtAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txtConsumedAmount"
-                android:layout_marginEnd="8dp"/>
-
-            <EditText
-                android:id="@+id/edtConsumedAmount"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:hint="@string/consumedAmountHint"
-                android:textAlignment="center"
-                tools:text="150"
-                android:imeOptions="actionDone"
-                android:autofillHints="amount" />
-
-            <Spinner
-                android:id="@+id/consumedAmountUnit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
-
-        </LinearLayout>
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/foodNutrientsRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amountLayout"
-            tools:itemCount="10"
-            tools:listitem="@layout/list_item_food_nutrient" />
-
-        <Button
-            android:id="@+id/btnPersistFood"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@color/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/includedLayout" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

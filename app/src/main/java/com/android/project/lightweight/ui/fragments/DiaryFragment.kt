@@ -40,16 +40,18 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
-        binding.diaryRecyclerview.apply {
-            adapter = diaryEntryAdapter
-            setHasFixedSize(true)
-        }
+        binding.diaryViewModel = diaryViewModel
 
         diaryViewModel.consumedFoods.observe(viewLifecycleOwner, {
             it?.let {
                 diaryEntryAdapter.submitList(it)
             }
         })
+
+        binding.diaryRecyclerview.apply {
+            adapter = diaryEntryAdapter
+            setHasFixedSize(true)
+        }
 
         binding.btnPickDate.setOnClickListener {
             val dialog = UIUtils.createDatePickerDialog(requireContext(), this)
