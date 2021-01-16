@@ -1,6 +1,8 @@
 package com.android.project.lightweight.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +33,7 @@ class DetailsFragment : Fragment() {
         ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
-    private var nutrientAdapter = NutrientAdapter(emptyList())
+    private var nutrientAdapter = NutrientAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -43,10 +45,10 @@ class DetailsFragment : Fragment() {
             binding.includedLayout.toolbarTextView.text = getString(R.string.nutrients_in_food, diaryEntry.description)
             if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
                 nutrientAdapter.setNutrients(diaryEntry.nutrients)
-                binding.btnPersistFood.text = getString(R.string.saveText)
+                binding.btnPersistFood.text = getString(R.string.save_text)
             } else {
                 detailsViewModel.getNutrientEntriesByDiaryEntryId(diaryEntry.id) // this will initiate a room query from detailsViewModel
-                binding.btnPersistFood.text = getString(R.string.removeText)
+                binding.btnPersistFood.text = getString(R.string.remove_text)
             }
             binding.diaryEntry = diaryEntry
         }
@@ -54,6 +56,19 @@ class DetailsFragment : Fragment() {
             adapter = nutrientAdapter
             setHasFixedSize(true)
         }
+
+        binding.edtConsumedAmount.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: Editable) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                val amountValue = binding.edtConsumedAmount.text.toString()
+                if (amountValue.isNotEmpty()) {
+                    val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry, amountValue.toInt())
+                    diaryEntry.nutrients = consumedNutrientsBasedOnAmount
+                    nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
+                }
+            }
+        })
 
         detailsViewModel.nutrients.observe(viewLifecycleOwner, { nutrientEntryList ->
             nutrientEntryList?.let {
@@ -76,23 +91,21 @@ class DetailsFragment : Fragment() {
             if (diaryEntry.id == 0L) {
                 closeKeyboard(requireActivity())
                 val amountValue = binding.edtConsumedAmount.text.toString()
-                if(amountValue.isNotEmpty()) {
+                if (amountValue.isNotEmpty()) {
                     // Saving new entry
                     diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
-                    // TODO: For testing purposes (refactor later)
                     diaryEntry.unitName = "g"
                     diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
                     detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
-                    Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
                     navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+                } else {
+                    Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
                 }
-                else {
-                    Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_LONG).show()
-                }
-            // Removing entry
+                // Removing entry
             } else {
                 detailsViewModel.deleteDiaryEntry(diaryEntry.id)
-                Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_SHORT).show()
                 navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
             }
         }

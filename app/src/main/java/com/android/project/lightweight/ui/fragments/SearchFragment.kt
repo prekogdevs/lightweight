@@ -53,7 +53,7 @@ class SearchFragment : Fragment() {
             queryHint = getString(R.string.what_did_i_consume)
             onQueryTextChanged {
                 binding.progressbar.visibility = View.VISIBLE
-                binding.emptyView.visibility = View.GONE
+                binding.emptyResultImage.visibility = View.GONE
                 searchViewModel.getFoods(it)
             }
         }

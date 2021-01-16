@@ -21,12 +21,12 @@ import kotlinx.android.parcel.Parcelize
 data class NutrientEntry(
     var diaryEntryId: Long,
     val nutrientNumber: Double,
-    val originalComponentValueInPortion: Double,
-    val consumedAmount: Double,
+    val originalComponentValueInPortion: Double, // component value in 100g food e.g.: 1.93mg iron in 100g banana
     val unitName: String,
     val nutrientName: String
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+    var consumedAmount: Double = originalComponentValueInPortion
 }

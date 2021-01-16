@@ -67,10 +67,18 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>): List<NutrientEntry> {
-        return nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt())}
-    }
+    private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
+        nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 
-    // TODO: For testing purposes (refactor later)
-    fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(kcal)).first().originalComponentValueInPortion.toInt()
+
+    fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(kcal)).first().consumedAmount.toInt()
+
+    fun calculateConsumedNutrients(diaryEntry: DiaryEntry, amountValue: Int): List<NutrientEntry> {
+        val consumedNutrients = mutableListOf<NutrientEntry>()
+        for (nutrient in diaryEntry.nutrients) {
+            nutrient.consumedAmount = (nutrient.originalComponentValueInPortion * amountValue) / 100
+            consumedNutrients.add(nutrient)
+        }
+        return consumedNutrients
+    }
 }

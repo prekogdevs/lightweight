@@ -80,7 +80,7 @@
             tools:listitem="@layout/list_item_food" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/empty_view"
+            android:id="@+id/empty_result_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -91,7 +91,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/empty_diary"
+                android:id="@+id/empty_result_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -99,20 +99,21 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/empty_diary_image" />
 
             <TextView
-                android:id="@+id/empty_diary_text"
+                android:id="@+id/empty_result_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
-                android:text="@string/emptyDiaryText"
+                android:text="@string/empty_diary_text"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/empty_diary"
-                app:layout_constraintStart_toStartOf="@+id/empty_diary"
-                app:layout_constraintTop_toBottomOf="@+id/empty_diary" />
+                app:layout_constraintEnd_toEndOf="@+id/empty_result_image"
+                app:layout_constraintStart_toStartOf="@+id/empty_result_image"
+                app:layout_constraintTop_toBottomOf="@+id/empty_result_image" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

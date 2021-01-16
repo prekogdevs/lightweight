@@ -13,15 +13,18 @@
     <string name="search_in_fav">Favorites</string>
     <string name="profile">Profile</string>
     <string name="what_did_i_consume">What did I consume</string>
-    <string name="removeText">Remove</string>
-    <string name="saveText">Save</string>
-    <string name="txtConsumedAmount">Consumed amount</string>
+    <string name="remove_text">Remove</string>
+    <string name="save_text">Save</string>
+    <string name="consumed_amount_text">Consumed amount</string>
     <string name="diary_entry_iamge">diary_entry_iamge</string>
-    <string name="consumedAmountHint">Amount</string>
-    <string name="emptyDiaryText">Ouhh… Your diary is empty!</string>
+    <string name="consumed_amount_hint">Amount</string>
+    <string name="empty_diary_text">Ouhh… Your diary is empty!</string>
     <string name="food_results_text">Search results will be listed here</string>
     <string name="nutrient_summary_text">Nutrient Summary</string>
     <string name="serving_size_text">Serving size</string>
+    <string name="default_amount_text">100</string>
+    <string name="empty_diary_image">Empty diary image</string>
+    <string name="empty_result_image">Empty result image</string>
     <string-array name="serving_sizes">
         <item>g</item>
     </string-array>
