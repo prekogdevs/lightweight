@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.model.Food
 import com.android.project.lightweight.data.SearchViewModel
@@ -48,6 +49,13 @@ class SearchFragment : Fragment() {
         binding.foodRecyclerView.apply {
             adapter = foodAdapter
             setHasFixedSize(true)
+            // to detect when new items were added, and then scroll to the top of the recyclerview
+            foodAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+                override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                    super.onItemRangeInserted(positionStart, itemCount)
+                    smoothScrollToPosition(0)
+                }
+            })
         }
         binding.searchView.apply {
             queryHint = getString(R.string.what_did_i_consume)
