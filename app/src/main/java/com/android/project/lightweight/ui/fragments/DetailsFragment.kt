@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.ui.handleExpansion
 import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_details.view.*
@@ -109,7 +111,9 @@ class DetailsFragment : Fragment() {
                 navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
             }
         }
-
+        binding.txtNutrientSummary.setOnClickListener {
+            binding.nutrientSummaryExpandableLayout.handleExpansion(it as TextView)
+        }
         return binding.root
     }
 

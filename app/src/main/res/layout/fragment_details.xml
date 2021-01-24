@@ -109,8 +109,8 @@
                     android:hint="@string/consumed_amount_hint"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:textAlignment="center"
                     android:text="@string/default_amount_text"
+                    android:textAlignment="center"
                     tools:text="150" />
 
                 <TextView
@@ -135,12 +135,13 @@
 
             </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                 android:id="@+id/nutrient_summary_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                android:orientation="vertical"
                 app:layout_constraintBottom_toTopOf="@+id/btnPersistFood"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,23 +154,33 @@
                     android:text="@string/nutrient_summary_text"
                     android:textAlignment="center"
                     android:textSize="24sp"
+                    app:drawableEndCompat="@drawable/ic_down_arrow"
                     app:layout_constraintEnd_toStartOf="@+id/foodNutrientsRecyclerView"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/foodNutrientsRecyclerView"
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/nutrient_summary_expandable_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/txtNutrientSummary"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtNutrientSummary"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/list_item_food_nutrient" />
+                    android:layout_height="wrap_content"
+                    app:el_duration="1000"
+                    app:el_expanded="true">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/foodNutrientsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/txtNutrientSummary"
+                        android:layout_marginTop="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNutrientSummary"
+                        tools:itemCount="10"
+                        tools:listitem="@layout/list_item_food_nutrient" />
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnPersistFood"

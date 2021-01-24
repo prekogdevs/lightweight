@@ -90,4 +90,7 @@ dependencies {
 
     // optional - Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+
+    // Expendable Layout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 }
