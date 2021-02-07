@@ -24,6 +24,12 @@
     <string name="default_amount_text">100</string>
     <string name="empty_diary_image">Empty diary image</string>
     <string name="empty_result_image">Empty result image</string>
+    <string name="energy_text_view_header">Energy</string>
+    <string name="protein_text_view_header">Protein</string>
+    <string name="carbs_text_view_header">Carbs</string>
+    <string name="fats_text_view_header">Fats</string>
+    <string name="energy_text_view_default_value">0 KCAL</string>
+    <string name="default_consumed_amount_text">0 g</string>
     <string-array name="serving_sizes">
         <item>g</item>
     </string-array>
