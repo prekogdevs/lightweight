@@ -15,8 +15,11 @@ import com.android.project.lightweight.persistence.repository.NutrientRepository
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
+    private val protein = 203
+    private val carbs = 205
+    private val fats = 204
     private val kcal = 208
-    private val general = listOf(203, 204, 605, 606, 645, 646, 205, kcal, 291)
+    private val general = listOf(protein, fats, 605, 606, 645, 646, carbs, kcal, 291)
     private val vitamins = listOf(318, 323, 328, 430, 404, 405, 406, 410, 415, 418, 578, 431, 401, 421, 430)
     private val minerals = listOf(301, 312, 303, 304, 315, 305, 306, 317, 307, 309)
 
@@ -71,7 +74,11 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 
 
-    fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(kcal)).first().consumedAmount.toInt()
+    private fun givenNutrientInFood(nutrientEntries: List<NutrientEntry>, nutrientCode: Int) = filter(nutrientEntries, listOf(nutrientCode)).first().consumedAmount.toInt()
+    fun energyInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, kcal)
+    fun proteinInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, protein)
+    fun carbsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, carbs)
+    fun fatsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, fats)
 
     fun calculateConsumedNutrients(diaryEntry: DiaryEntry, amountValue: Int): List<NutrientEntry> {
         val consumedNutrients = mutableListOf<NutrientEntry>()

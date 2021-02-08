@@ -1,94 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/consumed_nutrients_summary"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_view_energy_consumed_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:padding="8dp"
-        android:text="@string/energy_text_view_header"
-        tools:text="Energy" />
+    <data>
 
-    <TextView
-        android:id="@+id/text_view_energy_consumed_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:textColor="#000000"
-        android:text="@string/energy_text_view_default_value"
-        tools:text="Energy consumed" />
+        <variable
+            name="diaryViewModel"
+            type="com.android.project.lightweight.data.DiaryViewModel" />
+    </data>
 
-    <TextView
-        android:id="@+id/text_view_protein_consumed_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_energy_consumed_header"
-        android:layout_marginStart="16dp"
-        android:padding="8dp"
-        android:text="@string/protein_text_view_header"
-        tools:text="Protein" />
+    <RelativeLayout
+        android:id="@+id/consumed_nutrients_summary_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/text_view_protein_consumed_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_energy_consumed_value"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:text="@string/default_consumed_amount_text"
-        android:textColor="#00FF00"
-        tools:text="Protein consumed" />
+        <TextView
+            android:id="@+id/text_view_energy_consumed_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
+            android:text="@string/energy_text_view_header"
+            tools:text="Energy" />
 
-    <TextView
-        android:id="@+id/text_view_carbs_consumed_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_protein_consumed_value"
-        android:layout_marginStart="16dp"
-        android:padding="8dp"
-        android:text="@string/carbs_text_view_header"
-        tools:text="Carbs" />
+        <TextView
+            android:id="@+id/text_view_energy_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:text="@{diaryViewModel.consumedFoods.size() > 0 ? String.valueOf(diaryViewModel.sumEnergy()).concat(` KCAL`) : String.valueOf(0)}"
+            android:textColor="#000000"
+            tools:text="Energy consumed" />
 
-    <TextView
-        android:id="@+id/text_view_carbs_consumed_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_protein_consumed_value"
-        android:layout_alignParentEnd="true"
-        android:text="@string/default_consumed_amount_text"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:textColor="#0000FF"
-        tools:text="Carbs consumed" />
+        <TextView
+            android:id="@+id/text_view_protein_consumed_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_energy_consumed_header"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
+            android:text="@string/protein_text_view_header"
+            tools:text="Protein" />
 
-    <TextView
-        android:id="@+id/text_view_fats_consumed_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/text_view_carbs_consumed_value"
-        android:layout_marginStart="16dp"
-        android:padding="8dp"
-        android:text="@string/fats_text_view_header"
-        tools:text="Fats" />
+        <TextView
+            android:id="@+id/text_view_protein_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_energy_consumed_value"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:text="@{diaryViewModel.consumedFoods.size() > 0 ? String.valueOf(diaryViewModel.sumProtein()).concat(` G`) : String.valueOf(0)}"
+            android:textColor="#00FF00"
+            tools:text="Protein consumed" />
 
-    <TextView
-        android:id="@+id/text_view_fats_consumed_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/default_consumed_amount_text"
-        android:layout_below="@id/text_view_carbs_consumed_value"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"
-        android:padding="8dp"
-        android:textColor="#FF0000"
-        tools:text="Fats consumed" />
+        <TextView
+            android:id="@+id/text_view_carbs_consumed_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_protein_consumed_value"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
+            android:text="@string/carbs_text_view_header"
+            tools:text="Carbs" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/text_view_carbs_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_protein_consumed_value"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:text="@{diaryViewModel.consumedFoods.size() > 0 ? String.valueOf(diaryViewModel.sumCarbs()).concat(` G`) : String.valueOf(0)}"
+            android:textColor="#0000FF"
+            tools:text="Carbs consumed" />
+
+        <TextView
+            android:id="@+id/text_view_fats_consumed_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_carbs_consumed_value"
+            android:layout_marginStart="16dp"
+            android:padding="8dp"
+            android:text="@string/fats_text_view_header"
+            tools:text="Fats" />
+
+        <TextView
+            android:id="@+id/text_view_fats_consumed_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_view_carbs_consumed_value"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            android:text="@{diaryViewModel.consumedFoods.size() > 0 ? String.valueOf(diaryViewModel.sumFats()).concat(` G`) : String.valueOf(0)}"
+            android:textColor="#FF0000"
+            tools:text="Fats consumed" />
+
+    </RelativeLayout>
+</layout>

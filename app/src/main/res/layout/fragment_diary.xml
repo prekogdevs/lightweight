@@ -70,14 +70,16 @@
         </androidx.appcompat.widget.Toolbar>
 
         <RelativeLayout
-            android:id="@+id/consumed_nutrients_summary"
+            android:id="@+id/consumed_nutrients_summary_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
-            <include
-                layout="@layout/consumed_nutrients_summary" />
+
+            <include layout="@layout/consumed_nutrients_summary"
+                app:diaryViewModel="@{diaryViewModel}"/>
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -88,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary"
+            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary_layout"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 
@@ -98,9 +100,11 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/diary_recyclerview"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <ImageView
                 android:id="@+id/empty_result_image"
@@ -110,6 +114,7 @@
                 android:src="@drawable/ic_empty_recyclerview_diary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView

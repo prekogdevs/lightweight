@@ -98,6 +98,9 @@ class DetailsFragment : Fragment() {
                     diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
                     diaryEntry.unitName = "g"
                     diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
+                    diaryEntry.protein = detailsViewModel.proteinInFood(diaryEntry.nutrients)
+                    diaryEntry.carbs = detailsViewModel.carbsInFood(diaryEntry.nutrients)
+                    diaryEntry.fats = detailsViewModel.fatsInFood(diaryEntry.nutrients)
                     detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
                     Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
                     navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())

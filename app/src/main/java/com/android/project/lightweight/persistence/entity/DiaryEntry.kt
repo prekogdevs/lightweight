@@ -15,7 +15,10 @@ data class DiaryEntry(
     var consumedOn: Long,
     var consumedAmount : Int = 0,
     var unitName : String = "g",
-    var kcal : Int = 0
+    var kcal : Int = 0,
+    var protein : Int = 0,
+    var carbs : Int = 0,
+    var fats: Int = 0
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

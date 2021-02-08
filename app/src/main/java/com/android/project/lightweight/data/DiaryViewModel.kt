@@ -14,7 +14,19 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
         DiaryDatabase(application).diaryDao().getEntries(DateFormatter.parseDateToLong(consumedOn))
     }
 
-    fun changeDate(date : String) {
+    fun changeDate(date: String) {
         consumedOn.value = date
     }
+
+    fun sumEnergy() =
+        consumedFoods.value!!.sumBy { it.kcal }
+
+    fun sumProtein() =
+        consumedFoods.value!!.sumBy { it.protein }
+
+    fun sumCarbs() =
+        consumedFoods.value!!.sumBy { it.carbs }
+
+    fun sumFats() =
+        consumedFoods.value!!.sumBy { it.fats }
 }
