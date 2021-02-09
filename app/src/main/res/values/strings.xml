@@ -9,8 +9,6 @@
     <string name="datepicker_icon">Datepicker icon</string>
     <string name="diary">Diary</string>
     <string name="search_in_api">Search Food</string>
-    <string name="search_in_fav">Favorites</string>
-    <string name="profile">Profile</string>
     <string name="what_did_i_consume">What did I consume</string>
     <string name="remove_text">Remove</string>
     <string name="save_text">Save</string>

@@ -97,7 +97,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_result_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
             android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/diary_recyclerview"
@@ -115,7 +115,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/empty_result_text"

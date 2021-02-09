@@ -59,6 +59,7 @@ class DetailsFragment : Fragment() {
             setHasFixedSize(true)
         }
 
+        // Live update to nutrients if value is changing in the editText
         binding.edtConsumedAmount.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable) {}
@@ -96,6 +97,7 @@ class DetailsFragment : Fragment() {
                 if (amountValue.isNotEmpty()) {
                     // Saving new entry
                     diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
+                    // TODO: Refactor
                     diaryEntry.unitName = "g"
                     diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
                     diaryEntry.protein = detailsViewModel.proteinInFood(diaryEntry.nutrients)
