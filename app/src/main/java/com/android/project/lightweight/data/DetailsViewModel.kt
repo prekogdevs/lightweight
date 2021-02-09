@@ -27,7 +27,7 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     private val nutrientRepository: NutrientRepository
 
     private var diaryEntryId = MutableLiveData<Long>()
-    // TODO: Refactor to get the diaryEntry, because it will contain the diaryEntry and nutrients as well
+    // TODO: #2 Refactor to get the diaryEntry, because it will contain the diaryEntry and nutrients as well
     val nutrients = Transformations.switchMap(diaryEntryId) {
         DiaryDatabase(application).nutrientDao().getNutrientEntriesByDiaryEntryId(diaryEntryId.value!!)
     }

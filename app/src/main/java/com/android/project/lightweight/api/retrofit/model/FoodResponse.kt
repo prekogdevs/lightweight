@@ -1,4 +1,4 @@
-package com.android.project.lightweight.api.model
+package com.android.project.lightweight.api.retrofit.model
 
 // Returned from Retrofit query.
 data class FoodResponse(

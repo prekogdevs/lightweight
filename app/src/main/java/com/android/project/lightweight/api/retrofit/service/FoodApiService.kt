@@ -1,6 +1,6 @@
 package com.android.project.lightweight.api
 
-import com.android.project.lightweight.api.model.FoodResponse
+import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.utilities.AppConstants.Companion.BASE_URL
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi

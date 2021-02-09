@@ -1,4 +1,4 @@
-package com.android.project.lightweight.api.model
+package com.android.project.lightweight.api.retrofit.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

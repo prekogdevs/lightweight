@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.api.FoodApi
-import com.android.project.lightweight.api.model.Food
+import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.utilities.AppConstants
 import kotlinx.coroutines.launch
 

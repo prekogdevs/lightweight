@@ -11,7 +11,7 @@
 
         <variable
             name="food"
-            type="com.android.project.lightweight.api.model.Food" />
+            type="com.android.project.lightweight.api.retrofit.model.Food" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

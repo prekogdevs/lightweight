@@ -97,7 +97,7 @@ class DetailsFragment : Fragment() {
                 if (amountValue.isNotEmpty()) {
                     // Saving new entry
                     diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
-                    // TODO: Refactor
+                    // TODO: Refactor - remove unnecessary fields from diaryEntry
                     diaryEntry.unitName = "g"
                     diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
                     diaryEntry.protein = detailsViewModel.proteinInFood(diaryEntry.nutrients)
