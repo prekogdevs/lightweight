@@ -70,7 +70,7 @@
         </androidx.appcompat.widget.Toolbar>
 
         <RelativeLayout
-            android:id="@+id/consumed_nutrients_summary_layout"
+            android:id="@+id/consumed_nutrients_summary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.VISIBLE : View.GONE}"
@@ -90,7 +90,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary_layout"
+            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 
