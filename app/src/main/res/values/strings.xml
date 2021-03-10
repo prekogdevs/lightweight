@@ -15,6 +15,7 @@
     <string name="empty_diary_text">Ouhh… Your diary is empty!</string>
     <string name="food_results_text">Search results will be listed here</string>
     <string name="nutrient_summary_text">Nutrient Summary</string>
+    <string name="consumed_foods_header">Consumed Foods</string>
     <string name="serving_size_text">Serving size</string>
     <string name="default_amount_text">100</string>
     <string name="empty_diary_image">Empty diary image</string>
@@ -23,6 +24,7 @@
     <string name="protein_text_view_header">Protein</string>
     <string name="carbs_text_view_header">Carbs</string>
     <string name="fats_text_view_header">Fats</string>
+    <string name="menu_save_text">Save</string>
     <string-array name="serving_sizes">
         <item>g</item>
     </string-array>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
 import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.ui.handleExpansion
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
@@ -22,13 +24,10 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentDiaryBinding
-    private val navController by lazy {
-        findNavController()
-    }
     private val diaryEntryAdapter by lazy {
         DiaryEntryAdapter(object : OnDiaryEntryClickListener {
             override fun onClick(diaryEntry: DiaryEntry) {
-                navController.navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
+                findNavController().navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
             }
         })
     }
@@ -41,6 +40,17 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
         binding.diaryViewModel = diaryViewModel
+        binding.diaryRecyclerview.apply {
+            adapter = diaryEntryAdapter
+            setHasFixedSize(true)
+        }
+        binding.consumedNutrientsSummaryIncluded.txtNutrientSummary.setOnClickListener {
+            binding.consumedNutrientsSummaryIncluded.nutrientSummaryExpandableLayout.handleExpansion(it as TextView)
+        }
+        binding.btnPickDate.setOnClickListener {
+            val dialog = UIUtils.createDatePickerDialog(requireContext(), this)
+            dialog.show(parentFragmentManager, "Datepickerdialog")
+        }
 
         diaryViewModel.consumedFoods.observe(viewLifecycleOwner, {
             it?.let {
@@ -48,15 +58,6 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             }
         })
 
-        binding.diaryRecyclerview.apply {
-            adapter = diaryEntryAdapter
-            setHasFixedSize(true)
-        }
-
-        binding.btnPickDate.setOnClickListener {
-            val dialog = UIUtils.createDatePickerDialog(requireContext(), this)
-            dialog.show(parentFragmentManager, "Datepickerdialog")
-        }
         return binding.root
     }
 

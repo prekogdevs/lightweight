@@ -116,20 +116,14 @@ class DetailsFragment : Fragment() {
             if (amountValue.isNotEmpty()) {
                 // Saving new entry
                 diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
-                // TODO: Refactor - remove unnecessary fields from diaryEntry
-                diaryEntry.unitName = "g"
-                diaryEntry.kcal = detailsViewModel.energyInFood(diaryEntry.nutrients)
-                diaryEntry.protein = detailsViewModel.proteinInFood(diaryEntry.nutrients)
-                diaryEntry.carbs = detailsViewModel.carbsInFood(diaryEntry.nutrients)
-                diaryEntry.fats = detailsViewModel.fatsInFood(diaryEntry.nutrients)
                 detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
                 Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
                 navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
             } else {
                 Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
             }
-            // Removing entry
         } else {
+            // Removing entry
             detailsViewModel.deleteDiaryEntry(diaryEntry.id)
             Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_SHORT).show()
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())

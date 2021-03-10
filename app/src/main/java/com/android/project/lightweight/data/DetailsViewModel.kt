@@ -27,7 +27,6 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
     private val nutrientRepository: NutrientRepository
 
     private var diaryEntryId = MutableLiveData<Long>()
-    // TODO: #2 Refactor to get the diaryEntry, because it will contain the diaryEntry and nutrients as well
     val nutrients = Transformations.switchMap(diaryEntryId) {
         DiaryDatabase(application).nutrientDao().getNutrientEntriesByDiaryEntryId(diaryEntryId.value!!)
     }
@@ -50,10 +49,15 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         nutrientRepository.insertNutrientEntries(nutrientEntries)
     }
 
-    fun insertDiaryEntryWithNutrientEntries(entry: DiaryEntry) = viewModelScope.launch {
-        val diaryEntryId = insertDiaryEntry(entry)
-        entry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList() // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
-        insertNutrientEntriesToEntry(entry.nutrients)
+    fun insertDiaryEntryWithNutrientEntries(diaryEntry: DiaryEntry) = viewModelScope.launch {
+        diaryEntry.unitName = "g"
+        diaryEntry.kcal = energyInFood(diaryEntry.nutrients)
+        diaryEntry.protein = proteinInFood(diaryEntry.nutrients)
+        diaryEntry.carbs = carbsInFood(diaryEntry.nutrients)
+        diaryEntry.fats = fatsInFood(diaryEntry.nutrients)
+        val diaryEntryId = insertDiaryEntry(diaryEntry)
+        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList() // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
+        insertNutrientEntriesToEntry(diaryEntry.nutrients)
     }
 
     fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
@@ -76,10 +80,10 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
 
 
     private fun givenNutrientInFood(nutrientEntries: List<NutrientEntry>, nutrientCode: Int) = filter(nutrientEntries, listOf(nutrientCode)).first().consumedAmount.toInt()
-    fun energyInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, kcal)
-    fun proteinInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, protein)
-    fun carbsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, carbs)
-    fun fatsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, fats)
+    private fun energyInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, kcal)
+    private fun proteinInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, protein)
+    private fun carbsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, carbs)
+    private fun fatsInFood(nutrientEntries: List<NutrientEntry>) = givenNutrientInFood(nutrientEntries, fats)
 
     fun calculateConsumedNutrients(diaryEntry: DiaryEntry, amountValue: Int): List<NutrientEntry> {
         val consumedNutrients = mutableListOf<NutrientEntry>()

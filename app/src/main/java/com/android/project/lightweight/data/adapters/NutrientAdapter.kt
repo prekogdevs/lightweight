@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 
-//TODO: ListAdapter?
 class NutrientAdapter(private var nutrientEntries: List<NutrientEntry>) : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodNutrientHolder {

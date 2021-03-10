@@ -70,27 +70,44 @@
         </androidx.appcompat.widget.Toolbar>
 
         <RelativeLayout
-            android:id="@+id/consumed_nutrients_summary"
+            android:id="@+id/consumed_nutrients_summary_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <include layout="@layout/consumed_nutrients_summary"
-                app:diaryViewModel="@{diaryViewModel}"/>
+            <include
+                android:id="@+id/consumed_nutrients_summary_included"
+                layout="@layout/consumed_nutrients_summary"
+                app:diaryViewModel="@{diaryViewModel}" />
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtConsumedFoods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/consumed_foods_header"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:visibility="@{diaryViewModel.consumedFoods.size() > 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/consumed_nutrients_summary_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/diary_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary"
+            app:layout_constraintTop_toBottomOf="@+id/consumed_nutrients_summary_layout"
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 

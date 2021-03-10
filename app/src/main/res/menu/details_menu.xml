@@ -6,5 +6,5 @@
         android:icon="@drawable/ic_save_24"
         app:showAsAction="always"
         android:iconTint="@color/mdtp_white"
-        android:title="Save" />
+        android:title="@string/menu_save_text" />
 </menu>
