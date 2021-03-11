@@ -1,4 +1,4 @@
-package com.android.project.lightweight.ui
+package com.android.project.lightweight.ui.extensions
 
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView

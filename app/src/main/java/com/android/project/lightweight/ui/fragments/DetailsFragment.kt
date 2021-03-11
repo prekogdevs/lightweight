@@ -1,14 +1,13 @@
 package com.android.project.lightweight.ui.fragments
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.forEach
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,7 @@ import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.ui.handleExpansion
+import com.android.project.lightweight.ui.extensions.handleExpansion
 import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
 import com.google.android.material.snackbar.Snackbar
 
@@ -54,18 +53,14 @@ class DetailsFragment : Fragment() {
         }
 
         // Live update to nutrients if value is changing in the editText
-        binding.edtConsumedAmount.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val amountValue = binding.edtConsumedAmount.text.toString()
-                if (amountValue.isNotEmpty()) {
-                    val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry, amountValue.toInt())
-                    diaryEntry.nutrients = consumedNutrientsBasedOnAmount
-                    nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
-                }
+        binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
+            val amountValue = binding.edtConsumedAmount.text.toString()
+            if (amountValue.isNotEmpty()) {
+                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry, amountValue.toInt())
+                diaryEntry.nutrients = consumedNutrientsBasedOnAmount
+                nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
             }
-        })
+        }
 
         detailsViewModel.nutrients.observe(viewLifecycleOwner, { nutrientEntryList ->
             nutrientEntryList?.let {

@@ -17,7 +17,7 @@ import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.transformer.EntityTransformer
-import com.android.project.lightweight.ui.onQueryTextChanged
+import com.android.project.lightweight.ui.extensions.onQueryTextChanged
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils

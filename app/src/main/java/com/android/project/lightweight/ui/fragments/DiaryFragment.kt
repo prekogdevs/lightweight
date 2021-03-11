@@ -15,7 +15,7 @@ import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
 import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.ui.handleExpansion
+import com.android.project.lightweight.ui.extensions.handleExpansion
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
