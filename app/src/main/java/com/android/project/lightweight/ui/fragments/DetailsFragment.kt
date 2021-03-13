@@ -104,6 +104,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    // TODO: Move to DetailsViewModel?
     private fun persistFood() {
         if (diaryEntry.id == 0L) {
             closeKeyboard(requireActivity())

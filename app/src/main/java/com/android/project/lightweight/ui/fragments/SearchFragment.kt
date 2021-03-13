@@ -32,8 +32,9 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
+                val filtered = searchViewModel.filterOutNotRequiredNutrients(food)
                 val diaryEntry = DiaryEntry(food.fdcId, food.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
-                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(food.foodNutrients, diaryEntry.id)
+                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(filtered, diaryEntry.id)
                 UIUtils.closeKeyboard(requireActivity())
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
             }

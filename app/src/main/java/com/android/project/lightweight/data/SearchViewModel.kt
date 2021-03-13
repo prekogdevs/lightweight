@@ -26,4 +26,7 @@ class SearchViewModel : ViewModel() {
             }
         }
     }
+
+    fun filterOutNotRequiredNutrients(food: Food) =
+        food.foodNutrients.filter { AppConstants.all.contains(it.nutrientNumber.toInt()) }
 }
