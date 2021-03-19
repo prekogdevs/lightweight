@@ -17,7 +17,6 @@
     <string name="nutrient_summary_text">Nutrient Summary</string>
     <string name="consumed_foods_header">Consumed Foods</string>
     <string name="serving_size_text">Serving size</string>
-    <string name="default_amount_text">100</string>
     <string name="empty_diary_image">Empty diary image</string>
     <string name="empty_result_image">Empty result image</string>
     <string name="energy_text_view_header">Energy</string>

@@ -52,8 +52,8 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             dialog.show(parentFragmentManager, "Datepickerdialog")
         }
 
-        diaryViewModel.consumedFoods.observe(viewLifecycleOwner, {
-            it?.let {
+        diaryViewModel.consumedFoods.observe(viewLifecycleOwner, { diaryEntries ->
+            diaryEntries?.let {
                 diaryEntryAdapter.submitList(it)
             }
         })

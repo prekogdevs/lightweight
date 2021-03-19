@@ -33,8 +33,9 @@ class SearchFragment : Fragment() {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
                 val filtered = searchViewModel.filterOutNotRequiredNutrients(food)
-                val diaryEntry = DiaryEntry(food.fdcId, food.description, DateFormatter.parseDateToLong(CurrentDate.currentDate))
-                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(filtered, diaryEntry.id)
+                val consumedOn = DateFormatter.parseDateToLong(CurrentDate.currentDate)
+                val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn)
+                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(filtered, diaryEntry)
                 UIUtils.closeKeyboard(requireActivity())
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
             }

@@ -20,6 +20,7 @@ import kotlinx.android.parcel.Parcelize
 )
 data class NutrientEntry(
     var diaryEntryId: Long,
+    var consumedOn: Long,
     val nutrientNumber: Double,
     val originalComponentValueInPortion: Double, // component value in 100g food e.g.: 1.93mg iron in 100g banana
     val unitName: String,
@@ -28,5 +29,6 @@ data class NutrientEntry(
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+    @IgnoredOnParcel
     var consumedAmount: Double = originalComponentValueInPortion
 }

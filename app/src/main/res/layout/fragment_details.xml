@@ -117,7 +117,6 @@
                     android:hint="@string/consumed_amount_hint"
                     android:imeOptions="actionDone"
                     android:inputType="number"
-                    android:text="@string/default_amount_text"
                     android:textAlignment="center"
                     tools:text="150" />
 

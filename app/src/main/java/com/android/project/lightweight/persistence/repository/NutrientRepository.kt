@@ -7,4 +7,5 @@ import com.android.project.lightweight.persistence.entity.NutrientEntry
 class NutrientRepository(private val nutrientDao: NutrientDao) {
     suspend fun insertNutrientEntries(nutrientEntries: List<NutrientEntry>) = nutrientDao.insertNutrientEntries(nutrientEntries)
     fun getNutrientEntriesByDiaryEntryId(diaryEntryId: Long): LiveData<List<NutrientEntry>> = nutrientDao.getNutrientEntriesByDiaryEntryId(diaryEntryId)
+    fun sumConsumedAmountByNutrients(consumedOn: Long, nutrientNumber: Int): LiveData<Double> = nutrientDao.sumConsumedAmountByNutrient(consumedOn, nutrientNumber)
 }

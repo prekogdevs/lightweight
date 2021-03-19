@@ -18,7 +18,7 @@ import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.ui.extensions.handleExpansion
-import com.android.project.lightweight.utilities.UIUtils.closeKeyboard
+import com.android.project.lightweight.utilities.UIUtils
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
@@ -97,32 +97,29 @@ class DetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action -> {
-                persistFood()
+                if (diaryEntry.id == 0L) saveDiaryEntry() // New entry
+                else deleteFood()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    // TODO: Move to DetailsViewModel?
-    private fun persistFood() {
-        if (diaryEntry.id == 0L) {
-            closeKeyboard(requireActivity())
-            val amountValue = binding.edtConsumedAmount.text.toString()
-            if (amountValue.isNotEmpty()) {
-                // Saving new entry
-                diaryEntry.consumedAmount = binding.edtConsumedAmount.text.toString().toInt()
-                detailsViewModel.insertDiaryEntryWithNutrientEntries(diaryEntry)
-                Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
-                navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
-            } else {
-                Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
-            }
-        } else {
-            // Removing entry
-            detailsViewModel.deleteDiaryEntry(diaryEntry.id)
-            Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_SHORT).show()
+    private fun saveDiaryEntry() {
+        val consumedAmountText = binding.edtConsumedAmount.text.toString()
+        if (consumedAmountText.isNotEmpty()) {
+            UIUtils.closeKeyboard(requireActivity())
+            diaryEntry.consumedAmount = consumedAmountText.toInt()
+            detailsViewModel.saveDiaryEntry(diaryEntry)
+            Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         }
+        Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun deleteFood() {
+        detailsViewModel.deleteDiaryEntry(diaryEntry.id)
+        Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_SHORT).show()
+        navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }
 }

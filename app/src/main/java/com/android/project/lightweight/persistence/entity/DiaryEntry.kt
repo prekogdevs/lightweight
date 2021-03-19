@@ -13,11 +13,14 @@ data class DiaryEntry(
     val fdcId: Long,
     val description: String,
     var consumedOn: Long,
-    var consumedAmount : Int = 0
+    var consumedAmount: Int = 0,
+    var consumedKCAL: Double = 0.0,
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
     @Ignore
-    var nutrients : List<NutrientEntry> = emptyList()
+    @IgnoredOnParcel
+    var nutrients: List<NutrientEntry> = emptyList()
 }

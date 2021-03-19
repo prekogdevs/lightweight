@@ -10,6 +10,7 @@ import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
 import com.android.project.lightweight.utilities.AppConstants
+import com.android.project.lightweight.utilities.AppConstants.energyNutrientNumber
 import kotlinx.coroutines.launch
 
 class DetailsViewModel(application: Application) : AndroidViewModel(application) {
@@ -24,22 +25,12 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         diaryRepository = DiaryRepository(diaryDao)
         nutrientRepository = NutrientRepository(nutrientDao)
         nutrients = Transformations.switchMap(diaryEntryId) {
-            nutrientRepository.getNutrientEntriesByDiaryEntryId(diaryEntryId.value!!)
+            nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
         }
     }
 
     fun getNutrientEntriesByDiaryEntryId(id: Long) {
         diaryEntryId.value = id
-    }
-
-    fun insertDiaryEntryWithNutrientEntries(diaryEntry: DiaryEntry) = viewModelScope.launch {
-        val diaryEntryId = insertDiaryEntry(diaryEntry)
-        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList() // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
-        insertNutrientEntriesToEntry(diaryEntry.nutrients)
-    }
-
-    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
-        diaryRepository.deleteDiaryEntry(diaryEntryId)
     }
 
     fun filterFoodNutrients(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
@@ -62,12 +53,26 @@ class DetailsViewModel(application: Application) : AndroidViewModel(application)
         return consumedNutrients
     }
 
+    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
+        diaryRepository.deleteDiaryEntry(diaryEntryId)
+    }
+
+    fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
+        diaryEntry.consumedKCAL = energyInFood(diaryEntry.nutrients)
+        val diaryEntryId = insertDiaryEntry(diaryEntry)
+        // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
+        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList()
+        insertNutrientEntriesToEntry(diaryEntry.nutrients)
+    }
+
     private fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
         nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 
+    private fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(energyNutrientNumber)).first().consumedAmount
+
     private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
 
-    private suspend fun insertNutrientEntriesToEntry(nutrientEntries: List<NutrientEntry>) {
+    private suspend fun insertNutrientEntriesToEntry(nutrientEntries: List<NutrientEntry>) =
         nutrientRepository.insertNutrientEntries(nutrientEntries)
-    }
+
 }
