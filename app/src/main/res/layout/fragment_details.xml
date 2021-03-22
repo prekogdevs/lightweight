@@ -85,7 +85,6 @@
                 </com.google.android.material.chip.ChipGroup>
             </LinearLayout>
 
-            <!-- TODO: Replace with TextInputLayout -->
             <RelativeLayout
                 android:id="@+id/amountLayout"
                 android:layout_width="match_parent"

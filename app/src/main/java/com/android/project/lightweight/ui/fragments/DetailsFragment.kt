@@ -113,8 +113,9 @@ class DetailsFragment : Fragment() {
             detailsViewModel.saveDiaryEntry(diaryEntry)
             Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+        } else {
+            Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
         }
-        Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
     }
 
     private fun deleteFood() {

@@ -32,7 +32,7 @@ class DiaryViewModel(application: Application) : AndroidViewModel(application) {
         diaryRepository = DiaryRepository(diaryDao)
         nutrientRepository = NutrientRepository(nutrientDao)
         consumedFoods = Transformations.switchMap(consumedOn) { consumedOn ->
-            diaryRepository.getEntries(DateFormatter.parseDateToLong(consumedOn)) // TODO: Parse?
+            diaryRepository.getEntries(DateFormatter.parseDateToLong(consumedOn))
         }
         consumedEnergy = Transformations.switchMap(consumedOn) { consumedOn ->
             nutrientRepository.sumConsumedAmountByNutrients(DateFormatter.parseDateToLong(consumedOn), energyNutrientNumber)
