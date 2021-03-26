@@ -111,16 +111,16 @@ class DetailsFragment : Fragment() {
             UIUtils.closeKeyboard(requireActivity())
             diaryEntry.consumedAmount = consumedAmountText.toInt()
             detailsViewModel.saveDiaryEntry(diaryEntry)
-            Snackbar.make(requireView(), "Diary entry has been saved", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
-            Snackbar.make(requireView(), "Please add consumption amount", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(requireView(), getString(R.string.amount_missing_snackbar_text), Snackbar.LENGTH_SHORT).show()
         }
     }
 
     private fun deleteFood() {
         detailsViewModel.deleteDiaryEntry(diaryEntry.id)
-        Snackbar.make(requireView(), "Diary entry has been removed", Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(requireView(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
         navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }
 }

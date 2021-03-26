@@ -16,6 +16,7 @@ import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.ui.extensions.handleExpansion
+import com.android.project.lightweight.utilities.AppConstants.DATE_PICKER_DIALOG_TAG
 import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
@@ -49,7 +50,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         }
         binding.btnPickDate.setOnClickListener {
             val dialog = UIUtils.createDatePickerDialog(requireContext(), this)
-            dialog.show(parentFragmentManager, "Datepickerdialog")
+            dialog.show(parentFragmentManager, DATE_PICKER_DIALOG_TAG)
         }
 
         diaryViewModel.consumedFoods.observe(viewLifecycleOwner, { diaryEntries ->

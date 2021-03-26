@@ -24,6 +24,9 @@
     <string name="carbs_text_view_header">Carbs</string>
     <string name="fats_text_view_header">Fats</string>
     <string name="menu_save_text">Save</string>
+    <string name="diaryentry_removed_snackbar_text">Diary entry has been removed</string>
+    <string name="diaryentry_added_snackbar_text">Diary entry has been saved</string>
+    <string name="amount_missing_snackbar_text">Please add consumption amount</string>
     <string-array name="serving_sizes">
         <item>g</item>
     </string-array>
