@@ -4,29 +4,25 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.*
 import com.android.project.lightweight.R
-import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
 import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.AppConstants.energyNutrientNumber
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailsViewModel(application: Application) : AndroidViewModel(application) {
-    private val diaryRepository: DiaryRepository
-    private val nutrientRepository: NutrientRepository
+@HiltViewModel
+class DetailsViewModel @Inject constructor(
+    private val diaryRepository: DiaryRepository,
+    private val nutrientRepository: NutrientRepository,
+    application: Application
+) : AndroidViewModel(application) {
     private var diaryEntryId = MutableLiveData<Long>()
-    val nutrients: LiveData<List<NutrientEntry>>
-
-    init {
-        val diaryDao = DiaryDatabase(application).diaryDao()
-        val nutrientDao = DiaryDatabase(application).nutrientDao()
-        diaryRepository = DiaryRepository(diaryDao)
-        nutrientRepository = NutrientRepository(nutrientDao)
-        nutrients = Transformations.switchMap(diaryEntryId) {
-            nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
-        }
+    val nutrients: LiveData<List<NutrientEntry>> = Transformations.switchMap(diaryEntryId) {
+        nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
     }
 
     fun getNutrientEntriesByDiaryEntryId(id: Long) {

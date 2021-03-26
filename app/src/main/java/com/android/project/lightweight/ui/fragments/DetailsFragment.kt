@@ -10,7 +10,7 @@ import androidx.core.view.forEach
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DetailsViewModel
@@ -20,16 +20,16 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.ui.extensions.handleExpansion
 import com.android.project.lightweight.utilities.UIUtils
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var diaryEntry: DiaryEntry
     private val navController by lazy { findNavController() }
 
-    private val detailsViewModel: DetailsViewModel by lazy {
-        ViewModelProvider(this).get(DetailsViewModel::class.java)
-    }
+    private val detailsViewModel: DetailsViewModel by viewModels()
 
     private var nutrientAdapter = NutrientAdapter(mutableListOf())
 

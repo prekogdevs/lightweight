@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
 import com.android.project.lightweight.data.DiaryViewModel
@@ -20,7 +20,9 @@ import com.android.project.lightweight.utilities.CurrentDate
 import com.android.project.lightweight.utilities.DateFormatter
 import com.android.project.lightweight.utilities.UIUtils
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentDiaryBinding
@@ -31,9 +33,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             }
         })
     }
-    private val diaryViewModel: DiaryViewModel by lazy {
-        ViewModelProvider(this).get(DiaryViewModel::class.java)
-    }
+    private val diaryViewModel: DiaryViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)

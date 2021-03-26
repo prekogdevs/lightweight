@@ -3,6 +3,7 @@ package com.android.project.lightweight.utilities
 import com.android.project.lightweight.BuildConfig
 
 object AppConstants {
+    const val DIARY_DATABASE_NAME = "diary_database"
     const val BASE_URL = "https://api.nal.usda.gov/fdc/v1/"
     const val API_KEY = BuildConfig.ApiKey
     const val energyNutrientNumber = 208
