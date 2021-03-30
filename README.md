@@ -7,3 +7,5 @@ Used techonologies
 - Room: https://developer.android.com/training/data-storage/room
 - Retrofit: https://github.com/square/retrofit
 - Moshi: https://github.com/square/moshi
+- Dagger Hilt: https://dagger.dev/hilt/
+- Google Truth: https://truth.dev/
