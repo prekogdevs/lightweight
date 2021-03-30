@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.Food
-import com.android.project.lightweight.data.SearchViewModel
+import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.data.adapters.FoodAdapter
 import com.android.project.lightweight.data.adapters.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding

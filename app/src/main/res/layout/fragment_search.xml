@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.android.project.lightweight.data.SearchViewModel" />
+            type="com.android.project.lightweight.data.viewmodel.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

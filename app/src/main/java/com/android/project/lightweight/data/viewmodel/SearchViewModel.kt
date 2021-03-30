@@ -1,4 +1,4 @@
-package com.android.project.lightweight.data
+package com.android.project.lightweight.data.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

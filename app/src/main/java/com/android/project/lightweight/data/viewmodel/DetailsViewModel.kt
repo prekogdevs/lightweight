@@ -1,4 +1,4 @@
-package com.android.project.lightweight.data
+package com.android.project.lightweight.data.viewmodel
 
 import android.app.Application
 import android.view.View
@@ -26,7 +26,7 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun getNutrientEntriesByDiaryEntryId(id: Long) {
-        diaryEntryId.value = id
+        diaryEntryId.postValue(id)
     }
 
     fun filterFoodNutrients(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {

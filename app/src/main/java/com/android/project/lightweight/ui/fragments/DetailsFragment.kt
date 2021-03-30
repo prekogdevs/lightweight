@@ -13,8 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
-import com.android.project.lightweight.data.DetailsViewModel
 import com.android.project.lightweight.data.adapters.NutrientAdapter
+import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.ui.extensions.handleExpansion

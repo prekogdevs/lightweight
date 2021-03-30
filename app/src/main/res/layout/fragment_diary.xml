@@ -9,7 +9,7 @@
 
         <variable
             name="diaryViewModel"
-            type="com.android.project.lightweight.data.DiaryViewModel" />
+            type="com.android.project.lightweight.data.viewmodel.DiaryViewModel" />
 
         <variable
             name="pickedDate"

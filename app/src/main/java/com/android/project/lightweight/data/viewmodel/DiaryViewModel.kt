@@ -1,4 +1,4 @@
-package com.android.project.lightweight.data
+package com.android.project.lightweight.data.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

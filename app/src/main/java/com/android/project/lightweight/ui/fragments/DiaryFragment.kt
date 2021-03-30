@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
-import com.android.project.lightweight.data.DiaryViewModel
+import com.android.project.lightweight.data.viewmodel.DiaryViewModel
 import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
 import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
