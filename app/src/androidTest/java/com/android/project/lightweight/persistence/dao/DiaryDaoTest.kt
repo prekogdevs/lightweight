@@ -25,7 +25,7 @@ class DiaryDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var database: DiaryDatabase
-    private lateinit var dao: DiaryDao
+    private lateinit var diaryDao: DiaryDao
 
     @Before
     fun setup() {
@@ -33,7 +33,7 @@ class DiaryDaoTest {
             ApplicationProvider.getApplicationContext(),
             DiaryDatabase::class.java
         ).allowMainThreadQueries().build()
-        dao = database.diaryDao()
+        diaryDao = database.diaryDao()
     }
 
     @After
@@ -43,10 +43,28 @@ class DiaryDaoTest {
 
     @Test
     fun insertDiaryEntryTest() = runBlockingTest {
-        val diaryEntry = DiaryEntry(100, "Banana, raw", 23131231, 30, 200.0)
-        dao.insertDiaryEntry(diaryEntry)
+        // GIVEN
+        val diaryEntry = DiaryEntry(100, "Banana, raw", 20200120, 30, 200.0)
 
-        val diaryEntries = dao.getEntries(23131231).getOrAwaitValue()
+        // WHEN
+        diaryDao.insertDiaryEntry(diaryEntry)
+
+        // THEN
+        val diaryEntries = diaryDao.getEntries(20200120).getOrAwaitValue()
         assertThat(diaryEntries).contains(diaryEntry)
+    }
+
+    @Test
+    fun deleteDiaryEntryTest() = runBlockingTest {
+        // GIVEN
+        val diaryEntry = DiaryEntry(100, "Banana, raw", 20200120, 30, 200.0)
+
+        // WHEN
+        val insertedDiaryEntryID = diaryDao.insertDiaryEntry(diaryEntry)
+        diaryDao.deleteDiaryEntry(insertedDiaryEntryID)
+
+        // THEN
+        val diaryEntries = diaryDao.getEntries(20200120).getOrAwaitValue()
+        assertThat(diaryEntries).doesNotContain(diaryEntry)
     }
 }
