@@ -17,7 +17,9 @@ import com.android.project.lightweight.data.adapters.NutrientAdapter
 import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
+import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.ui.extensions.handleExpansion
+import com.android.project.lightweight.utilities.AppConstants
 import com.android.project.lightweight.utilities.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,9 +73,9 @@ class DetailsFragment : Fragment() {
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
                 val filteredNutrients = if (diaryEntry.id == 0L) {
-                    detailsViewModel.filterFoodNutrients(chip, diaryEntry.nutrients)
+                    filterByNutrient(chip, diaryEntry.nutrients)
                 } else {
-                    detailsViewModel.filterFoodNutrients(chip, detailsViewModel.nutrients.value!!)
+                    filterByNutrient(chip, detailsViewModel.nutrients.value!!)
                 }
                 nutrientAdapter.setNutrients(filteredNutrients)
             }
@@ -92,6 +94,17 @@ class DetailsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>) : List<NutrientEntry> {
+        return when (view.id) {
+            R.id.chip_general -> detailsViewModel.filter(nutrientEntries, AppConstants.general)
+            R.id.chip_vitamins -> detailsViewModel.filter(nutrientEntries, AppConstants.vitamins)
+            R.id.chip_minerals -> detailsViewModel.filter(nutrientEntries, AppConstants.minerals)
+            else -> {
+                nutrientEntries
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
