@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.api.retrofit.service.FoodApi
-import com.android.project.lightweight.utilities.AppConstants
+import com.android.project.lightweight.util.AppConstants
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {

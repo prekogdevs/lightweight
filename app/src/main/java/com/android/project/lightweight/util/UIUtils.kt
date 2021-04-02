@@ -1,4 +1,4 @@
-package com.android.project.lightweight.utilities
+package com.android.project.lightweight.util
 
 import android.app.Activity
 import android.content.Context

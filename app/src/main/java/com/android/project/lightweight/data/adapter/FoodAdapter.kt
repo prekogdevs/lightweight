@@ -1,4 +1,4 @@
-package com.android.project.lightweight.data.adapters
+package com.android.project.lightweight.data.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

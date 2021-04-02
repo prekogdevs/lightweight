@@ -17,7 +17,7 @@ buildscript {
         version_recyclerview = "1.0.0"
         nav_version = "2.3.0"
         room_version = "2.2.6"
-        kotlin_version = '1.4.31'
+        kotlin_version = '1.4.32'
         dagger_hilt_version = '2.33-beta'
         gradle_version = '4.1.3'
     }

@@ -1,8 +1,8 @@
-package com.android.project.lightweight.data.adapters.bindingadapters
+package com.android.project.lightweight.data.adapter.bindingadapter
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.android.project.lightweight.utilities.DateFormatter
+import com.android.project.lightweight.util.DateFormatter
 
 
 @BindingAdapter("currentDate")

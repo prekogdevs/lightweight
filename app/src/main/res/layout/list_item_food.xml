@@ -7,7 +7,7 @@
 
         <variable
             name="listener"
-            type="com.android.project.lightweight.data.adapters.OnFoodClickListener" />
+            type="com.android.project.lightweight.data.adapter.OnFoodClickListener" />
 
         <variable
             name="food"

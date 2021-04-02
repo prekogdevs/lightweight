@@ -6,7 +6,7 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
-import com.android.project.lightweight.utilities.AppConstants.energyNutrientNumber
+import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

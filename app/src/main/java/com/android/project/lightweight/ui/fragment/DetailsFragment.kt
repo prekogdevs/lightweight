@@ -1,4 +1,4 @@
-package com.android.project.lightweight.ui.fragments
+package com.android.project.lightweight.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,14 +13,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
-import com.android.project.lightweight.data.adapters.NutrientAdapter
+import com.android.project.lightweight.data.adapter.NutrientAdapter
 import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
-import com.android.project.lightweight.ui.extensions.handleExpansion
-import com.android.project.lightweight.utilities.AppConstants
-import com.android.project.lightweight.utilities.UIUtils
+import com.android.project.lightweight.ui.extension.handleExpansion
+import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

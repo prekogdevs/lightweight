@@ -1,6 +1,6 @@
 package com.android.project.lightweight.api.retrofit.service
 
-import com.android.project.lightweight.utilities.AppConstants
+import com.android.project.lightweight.util.AppConstants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

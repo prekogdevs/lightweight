@@ -8,12 +8,12 @@ import androidx.lifecycle.Transformations
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.repository.DiaryRepository
 import com.android.project.lightweight.persistence.repository.NutrientRepository
-import com.android.project.lightweight.utilities.AppConstants.carbsNutrientNumber
-import com.android.project.lightweight.utilities.AppConstants.energyNutrientNumber
-import com.android.project.lightweight.utilities.AppConstants.fatsNutrientNumber
-import com.android.project.lightweight.utilities.AppConstants.proteinNutrientNumber
-import com.android.project.lightweight.utilities.CurrentDate
-import com.android.project.lightweight.utilities.DateFormatter
+import com.android.project.lightweight.util.AppConstants.carbsNutrientNumber
+import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
+import com.android.project.lightweight.util.AppConstants.fatsNutrientNumber
+import com.android.project.lightweight.util.AppConstants.proteinNutrientNumber
+import com.android.project.lightweight.util.CurrentDate
+import com.android.project.lightweight.util.DateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

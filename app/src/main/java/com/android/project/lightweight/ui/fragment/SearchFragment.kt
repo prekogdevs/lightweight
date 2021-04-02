@@ -1,4 +1,4 @@
-package com.android.project.lightweight.ui.fragments
+package com.android.project.lightweight.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,15 +12,15 @@ import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.data.viewmodel.SearchViewModel
-import com.android.project.lightweight.data.adapters.FoodAdapter
-import com.android.project.lightweight.data.adapters.OnFoodClickListener
+import com.android.project.lightweight.data.adapter.FoodAdapter
+import com.android.project.lightweight.data.adapter.OnFoodClickListener
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.transformer.EntityTransformer
-import com.android.project.lightweight.ui.extensions.onQueryTextChanged
-import com.android.project.lightweight.utilities.CurrentDate
-import com.android.project.lightweight.utilities.DateFormatter
-import com.android.project.lightweight.utilities.UIUtils
+import com.android.project.lightweight.ui.extension.onQueryTextChanged
+import com.android.project.lightweight.util.CurrentDate
+import com.android.project.lightweight.util.DateFormatter
+import com.android.project.lightweight.util.UIUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

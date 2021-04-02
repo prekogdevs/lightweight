@@ -1,4 +1,4 @@
-package com.android.project.lightweight.utilities
+package com.android.project.lightweight.util
 
 object CurrentDate {
     var currentDate = DateFormatter.today()

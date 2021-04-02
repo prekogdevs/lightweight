@@ -1,4 +1,4 @@
-package com.android.project.lightweight.ui.fragments
+package com.android.project.lightweight.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,16 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.android.project.lightweight.R
+import com.android.project.lightweight.data.adapter.DiaryEntryAdapter
+import com.android.project.lightweight.data.adapter.OnDiaryEntryClickListener
 import com.android.project.lightweight.data.viewmodel.DiaryViewModel
-import com.android.project.lightweight.data.adapters.DiaryEntryAdapter
-import com.android.project.lightweight.data.adapters.OnDiaryEntryClickListener
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.ui.extensions.handleExpansion
-import com.android.project.lightweight.utilities.AppConstants.DATE_PICKER_DIALOG_TAG
-import com.android.project.lightweight.utilities.CurrentDate
-import com.android.project.lightweight.utilities.DateFormatter
-import com.android.project.lightweight.utilities.UIUtils
+import com.android.project.lightweight.ui.extension.handleExpansion
+import com.android.project.lightweight.util.AppConstants.DATE_PICKER_DIALOG_TAG
+import com.android.project.lightweight.util.CurrentDate
+import com.android.project.lightweight.util.DateFormatter
+import com.android.project.lightweight.util.UIUtils
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
 

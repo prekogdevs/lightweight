@@ -3,7 +3,7 @@ package com.android.project.lightweight.di
 import android.content.Context
 import androidx.room.Room
 import com.android.project.lightweight.persistence.DiaryDatabase
-import com.android.project.lightweight.utilities.AppConstants.DIARY_DATABASE_NAME
+import com.android.project.lightweight.util.AppConstants.DIARY_DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
