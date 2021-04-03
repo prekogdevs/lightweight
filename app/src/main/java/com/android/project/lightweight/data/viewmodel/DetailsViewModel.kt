@@ -1,11 +1,10 @@
 package com.android.project.lightweight.data.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.*
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
-import com.android.project.lightweight.persistence.repository.DiaryRepository
-import com.android.project.lightweight.persistence.repository.NutrientRepository
+import com.android.project.lightweight.persistence.repository.AbstractDiaryRepository
+import com.android.project.lightweight.persistence.repository.AbstractNutrientRepository
 import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,10 +12,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val diaryRepository: DiaryRepository,
-    private val nutrientRepository: NutrientRepository,
-    application: Application
-) : AndroidViewModel(application) {
+    private val diaryRepository: AbstractDiaryRepository,
+    private val nutrientRepository: AbstractNutrientRepository
+) : ViewModel() {
     private var diaryEntryId = MutableLiveData<Long>()
     val nutrients: LiveData<List<NutrientEntry>> = Transformations.switchMap(diaryEntryId) {
         nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
