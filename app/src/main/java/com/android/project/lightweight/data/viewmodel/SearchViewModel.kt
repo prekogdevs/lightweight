@@ -5,28 +5,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.api.retrofit.model.Food
+import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.persistence.repository.AbstractSearchRepository
 import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.Event
+import com.android.project.lightweight.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val searchRepository: AbstractSearchRepository) : ViewModel() {
-
-    private val _response = MutableLiveData<List<Food>>()
-    val response: LiveData<List<Food>>
-        get() = _response
+    private val _foodResponse = MutableLiveData<Event<Resource<FoodResponse>>>()
+    val foodResponse: LiveData<Event<Resource<FoodResponse>>> = _foodResponse
 
     fun searchForFood(query: String) {
+        if (query.isEmpty()) {
+            return
+        }
+        _foodResponse.value = Event(Resource.loading(null))
         viewModelScope.launch {
             val result = searchRepository.searchForFood(AppConstants.API_KEY, query)
-            if(result.isSuccessful) {
-                _response.value = result.body()?.foods
-            }
-            else {
-                _response.value = listOf()
-            }
+            _foodResponse.value = Event(result)
         }
     }
 

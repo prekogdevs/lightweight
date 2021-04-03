@@ -67,10 +67,10 @@ class SearchFragment : Fragment() {
                 searchViewModel.searchForFood(it)
             }
         }
-
-        searchViewModel.response.observe(viewLifecycleOwner, {
-            it?.let {
-                foodAdapter.submitList(it)
+        searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->
+            val foodResponse = event.peekContent().data
+            foodResponse?.let {
+                foodAdapter.submitList(it.foods)
                 binding.progressbar.visibility = View.INVISIBLE
             }
         })

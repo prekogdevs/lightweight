@@ -58,12 +58,13 @@
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 
+        <!-- TODO: Fix visibility -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_result_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:visibility="@{viewModel.response.size() == 0 ? View.VISIBLE : View.INVISIBLE}"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,12 +75,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/empty_result_image"
                 android:src="@drawable/ic_food_results"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/empty_result_image" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/empty_result_text"

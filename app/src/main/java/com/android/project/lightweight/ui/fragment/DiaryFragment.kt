@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +14,6 @@ import com.android.project.lightweight.data.adapter.OnDiaryEntryClickListener
 import com.android.project.lightweight.data.viewmodel.DiaryViewModel
 import com.android.project.lightweight.databinding.FragmentDiaryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.ui.extension.handleExpansion
 import com.android.project.lightweight.util.AppConstants.DATE_PICKER_DIALOG_TAG
 import com.android.project.lightweight.util.CurrentDate
 import com.android.project.lightweight.util.DateFormatter
@@ -45,9 +43,10 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             adapter = diaryEntryAdapter
             setHasFixedSize(true)
         }
-        binding.consumedNutrientsSummaryIncluded.txtNutrientSummary.setOnClickListener {
-            binding.consumedNutrientsSummaryIncluded.nutrientSummaryExpandableLayout.handleExpansion(it as TextView)
-        }
+//        TODO: This should be fixed.
+//        binding.consumedNutrientsSummaryIncluded.txtNutrientSummary.setOnClickListener {
+//            binding.consumedNutrientsSummaryIncluded.nutrientSummaryExpandableLayout.handleExpansion(it as TextView)
+//        }
         binding.btnPickDate.setOnClickListener {
             val dialog = UIUtils.createDatePickerDialog(requireContext(), this)
             dialog.show(parentFragmentManager, DATE_PICKER_DIALOG_TAG)
