@@ -20,11 +20,11 @@ class SearchViewModel @Inject constructor(private val searchRepository: Abstract
 
     fun searchForFood(query: String) {
         viewModelScope.launch {
-            val getFoodsDeferred = searchRepository.searchForFood(AppConstants.API_KEY, query)
-            try {
-                val result = getFoodsDeferred.await()
-                _response.value = result.foods
-            } catch (e: Exception) {
+            val result = searchRepository.searchForFood(AppConstants.API_KEY, query)
+            if(result.isSuccessful) {
+                _response.value = result.body()?.foods
+            }
+            else {
                 _response.value = listOf()
             }
         }

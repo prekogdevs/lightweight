@@ -9,16 +9,13 @@ import com.android.project.lightweight.persistence.dao.NutrientDao
 import com.android.project.lightweight.persistence.repository.*
 import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.AppConstants.DIARY_DATABASE_NAME
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -39,8 +36,7 @@ object AppModule {
     fun provideUsdaAPI(): UsdaAPI =
         Retrofit
             .Builder()
-            .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(AppConstants.BASE_URL)
             .build()
             .create(UsdaAPI::class.java)

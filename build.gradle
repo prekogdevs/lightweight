@@ -20,6 +20,7 @@ buildscript {
         kotlin_version = '1.4.32'
         dagger_hilt_version = '2.33-beta'
         gradle_version = '4.1.3'
+        gson_version = '2.9.0'
     }
     repositories {
         google()
