@@ -6,6 +6,6 @@ Used techonologies
 - Navigation Components: https://developer.android.com/guide/navigation
 - Room: https://developer.android.com/training/data-storage/room
 - Retrofit: https://github.com/square/retrofit
-- Moshi: https://github.com/square/moshi
+- Gson: https://github.com/google/gson
 - Dagger Hilt: https://dagger.dev/hilt/
 - Google Truth: https://truth.dev/
