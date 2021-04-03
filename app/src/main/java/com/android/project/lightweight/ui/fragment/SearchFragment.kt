@@ -11,9 +11,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.Food
-import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.data.adapter.FoodAdapter
 import com.android.project.lightweight.data.adapter.OnFoodClickListener
+import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.transformer.EntityTransformer
@@ -64,7 +64,7 @@ class SearchFragment : Fragment() {
             onQueryTextChanged {
                 binding.progressbar.visibility = View.VISIBLE
                 binding.emptyResultImage.visibility = View.GONE
-                searchViewModel.getFoods(it)
+                searchViewModel.searchForFood(it)
             }
         }
 

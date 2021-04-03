@@ -2,19 +2,23 @@ package com.android.project.lightweight.di
 
 import android.content.Context
 import androidx.room.Room
+import com.android.project.lightweight.api.retrofit.service.UsdaAPI
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.dao.DiaryDao
 import com.android.project.lightweight.persistence.dao.NutrientDao
-import com.android.project.lightweight.persistence.repository.AbstractDiaryRepository
-import com.android.project.lightweight.persistence.repository.AbstractNutrientRepository
-import com.android.project.lightweight.persistence.repository.DiaryRepository
-import com.android.project.lightweight.persistence.repository.NutrientRepository
+import com.android.project.lightweight.persistence.repository.*
+import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.AppConstants.DIARY_DATABASE_NAME
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -32,7 +36,22 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideUsdaAPI(): UsdaAPI =
+        Retrofit
+            .Builder()
+            .addConverterFactory(MoshiConverterFactory.create(Moshi.Builder().add(KotlinJsonAdapterFactory()).build()))
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .baseUrl(AppConstants.BASE_URL)
+            .build()
+            .create(UsdaAPI::class.java)
+
+    @Singleton
+    @Provides
     fun provideDiaryRepository(dao: DiaryDao) = DiaryRepository(dao) as AbstractDiaryRepository
+
+    @Singleton
+    @Provides
+    fun provideSearchRepository(usdaAPI: UsdaAPI) = SearchRepository(usdaAPI) as AbstractSearchRepository
 
     @Singleton
     @Provides
