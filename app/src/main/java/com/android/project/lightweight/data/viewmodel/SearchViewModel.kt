@@ -20,9 +20,6 @@ class SearchViewModel @Inject constructor(private val searchRepository: Abstract
     val foodResponse: LiveData<Event<Resource<FoodResponse>>> = _foodResponse
 
     fun searchForFood(query: String) {
-        if (query.isEmpty()) {
-            return
-        }
         _foodResponse.value = Event(Resource.loading(null, query))
         viewModelScope.launch {
             val result = searchRepository.searchForFood(AppConstants.API_KEY, query)
