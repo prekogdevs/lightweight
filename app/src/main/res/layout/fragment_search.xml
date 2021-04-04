@@ -4,11 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <import type="android.view.View" />
-
         <variable
-            name="viewModel"
+            name="searchViewModel"
             type="com.android.project.lightweight.data.viewmodel.SearchViewModel" />
     </data>
 
@@ -32,6 +29,7 @@
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:queryHint="@string/search_for_food"
                 app:iconifiedByDefault="false" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -58,13 +56,11 @@
             tools:itemCount="10"
             tools:listitem="@layout/list_item_food" />
 
-        <!-- TODO: Fix visibility -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/empty_result_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

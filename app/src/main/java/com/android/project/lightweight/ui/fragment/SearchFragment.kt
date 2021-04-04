@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
-        binding.viewModel = searchViewModel
+        binding.searchViewModel = searchViewModel
 
         binding.foodRecyclerView.apply {
             adapter = foodAdapter
@@ -60,11 +60,10 @@ class SearchFragment : Fragment() {
             })
         }
         binding.searchView.apply {
-            queryHint = getString(R.string.what_did_i_consume)
-            onQueryTextChanged {
+            onQueryTextChanged { query ->
                 binding.progressbar.visibility = View.VISIBLE
-                binding.emptyResultImage.visibility = View.GONE
-                searchViewModel.searchForFood(it)
+                binding.emptyResultRoot.visibility = View.GONE
+                searchViewModel.searchForFood(query)
             }
         }
         searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->

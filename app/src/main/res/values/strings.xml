@@ -8,7 +8,7 @@
     <string name="datepicker_icon">Datepicker icon</string>
     <string name="diary">Diary</string>
     <string name="search_in_api">Search Food</string>
-    <string name="what_did_i_consume">What did I consume</string>
+    <string name="search_for_food">Search for food</string>
     <string name="consumed_amount_text">Consumed amount</string>
     <string name="diary_entry_iamge">diary_entry_iamge</string>
     <string name="consumed_amount_hint">Amount</string>
