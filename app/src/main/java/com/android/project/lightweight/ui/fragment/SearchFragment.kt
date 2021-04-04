@@ -61,8 +61,6 @@ class SearchFragment : Fragment() {
         }
         binding.searchView.apply {
             onQueryTextChanged { query ->
-                binding.progressbar.visibility = View.VISIBLE
-                binding.emptyResultRoot.visibility = View.GONE
                 searchViewModel.searchForFood(query)
             }
         }
@@ -70,7 +68,6 @@ class SearchFragment : Fragment() {
             val foodResponse = event.peekContent().data
             foodResponse?.let {
                 foodAdapter.submitList(it.foods)
-                binding.progressbar.visibility = View.INVISIBLE
             }
         })
         setHasOptionsMenu(true)

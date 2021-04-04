@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Lightweight</string>
     <string name="nutrient_with_amount">%1$.2f %2$s</string>
+    <string name="no_result_with_given_query">No result with given query\n%1$s</string>
     <string name="general_chip">General</string>
     <string name="general_vitamins">Vitamins</string>
     <string name="general_minerals">Minerals</string>

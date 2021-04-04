@@ -11,13 +11,13 @@ class SearchRepository @Inject constructor(private val usdaAPI: UsdaAPI) : Abstr
             val response = usdaAPI.searchForFood(apiKey, query)
             if (response.isSuccessful) {
                 response.body()?.let { foodResponse ->
-                    return@let Resource.success(foodResponse)
-                } ?: Resource.error("Unknown error occured - response body is null", null)
+                    return@let Resource.success(foodResponse, query)
+                } ?: Resource.error("Unknown error occured - response body is null", null, query)
             } else {
-                Resource.error("An unknown error occured - response was not successful", null)
+                Resource.error("An unknown error occured - response was not successful", null, query)
             }
         } catch (e: Exception) {
-            Resource.error("Couldn't reach the server. Check you internet connection", null)
+            Resource.error("Couldn't reach the server. Check you internet connection", null, query)
         }
     }
 }

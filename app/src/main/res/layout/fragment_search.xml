@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="searchViewModel"
             type="com.android.project.lightweight.data.viewmodel.SearchViewModel" />
@@ -29,19 +30,19 @@
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:queryHint="@string/search_for_food"
-                app:iconifiedByDefault="false" />
+                app:iconifiedByDefault="false"
+                app:queryHint="@string/search_for_food" />
         </androidx.appcompat.widget.Toolbar>
 
         <ProgressBar
             android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/foodRecyclerView"
             app:layout_constraintStart_toStartOf="@+id/foodRecyclerView"
-            app:layout_constraintTop_toTopOf="@+id/foodRecyclerView" />
+            app:layout_constraintTop_toTopOf="@+id/foodRecyclerView"
+            app:visibility="@{searchViewModel.foodResponse.peekContent().status}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/foodRecyclerView"
@@ -64,7 +65,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:resource="@{searchViewModel.foodResponse.peekContent()}">
 
             <ImageView
                 android:id="@+id/empty_result_image"
@@ -84,9 +86,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
+                android:textAlignment="center"
                 android:text="@string/food_results_text"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/empty_result_image"
                 app:layout_constraintStart_toStartOf="@+id/empty_result_image"
                 app:layout_constraintTop_toBottomOf="@+id/empty_result_image" />
