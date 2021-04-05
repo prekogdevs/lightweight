@@ -25,7 +25,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.android.project.lightweight.HiltTestRunner"
     }
 
     buildTypes {
@@ -93,4 +93,6 @@ dependencies {
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
     testImplementation "com.google.truth:truth:1.0.1"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.33-beta'
+    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.33-beta'
 }
