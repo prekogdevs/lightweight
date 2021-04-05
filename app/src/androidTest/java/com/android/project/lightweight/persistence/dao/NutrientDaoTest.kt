@@ -45,21 +45,6 @@ class NutrientDaoTest {
     }
 
     @Test
-    fun insertNutrientEntryTest() = runBlockingTest {
-        // GIVEN
-        val diaryEntry = DiaryEntry(100, "Protein shake", 20200120, 30, 200.0)
-        val diaryEntryId = diaryDao.insertDiaryEntry(diaryEntry)
-        val nutrientEntry = NutrientEntry(diaryEntryId, 20200120, 203.0, 34.0, "g", "Protein")
-
-        // WHEN
-        nutrientDao.insertNutrientEntry(nutrientEntry)
-
-        // THEN
-        val nutrientEntries = nutrientDao.getNutrientEntriesByDiaryEntryId(1).getOrAwaitValue()
-        assertThat(nutrientEntries).contains(nutrientEntry)
-    }
-
-    @Test
     fun insertNutrientEntriesTest() = runBlockingTest {
         // GIVEN
         val diaryEntry = DiaryEntry(100, "Fruit shake with protein powder and almonds", 20200120, 30, 200.0)

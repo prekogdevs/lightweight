@@ -38,21 +38,14 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
-        diaryEntry.consumedKCAL = energyInFood(diaryEntry.nutrients)
-        val diaryEntryId = insertDiaryEntry(diaryEntry)
-        // If the entry is inserted, the foreign key must be updated to the new diary entry's id.
-        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }.toList()
-        insertNutrientEntriesToEntry(diaryEntry.nutrients)
+        diaryEntry.consumedKCAL = filter(diaryEntry.nutrients, listOf(energyNutrientNumber)).first().consumedAmount
+        val diaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
+        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }
+        nutrientRepository.insertNutrientEntries(diaryEntry.nutrients)
     }
 
     fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
         nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 
-    private fun energyInFood(nutrientEntries: List<NutrientEntry>) = filter(nutrientEntries, listOf(energyNutrientNumber)).first().consumedAmount
-
-    private suspend fun insertDiaryEntry(entry: DiaryEntry) = diaryRepository.insertDiaryEntry(entry)
-
-    private suspend fun insertNutrientEntriesToEntry(nutrientEntries: List<NutrientEntry>) =
-        nutrientRepository.insertNutrientEntries(nutrientEntries)
 
 }

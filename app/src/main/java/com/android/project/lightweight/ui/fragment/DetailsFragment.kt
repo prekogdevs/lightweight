@@ -96,7 +96,7 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
-    private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>) : List<NutrientEntry> {
+    private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
         return when (view.id) {
             R.id.chip_general -> detailsViewModel.filter(nutrientEntries, AppConstants.general)
             R.id.chip_vitamins -> detailsViewModel.filter(nutrientEntries, AppConstants.vitamins)
