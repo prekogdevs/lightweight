@@ -56,7 +56,7 @@ class DetailsFragment : Fragment() {
         binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
             val amountValue = binding.edtConsumedAmount.text.toString()
             if (amountValue.isNotEmpty()) {
-                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry, amountValue.toInt())
+                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrients, amountValue.toInt())
                 diaryEntry.nutrients = consumedNutrientsBasedOnAmount
                 nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
             }

@@ -14,7 +14,7 @@ data class DiaryEntry constructor(
     val description: String,
     val consumedOn: Long,
     var consumedAmount: Int = 0, // Consumed amount in grams e.g.: 150g banana
-    var consumedKCAL: Double = 0.0,
+    var consumedCalories: Double = 0.0,
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)

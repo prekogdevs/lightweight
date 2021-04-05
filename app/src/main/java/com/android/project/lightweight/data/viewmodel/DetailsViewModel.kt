@@ -22,18 +22,16 @@ class DetailsViewModel @Inject constructor(
         }
     }
 
-    fun setDiaryEntryId(id: Long) {
-        diaryEntryId.value = id
-    }
+    fun setDiaryEntryId(id: Long) = diaryEntryId.postValue(id)
 
     fun setConsumptionDetails(diaryEntry: DiaryEntry, consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
-        diaryEntry.consumedKCAL = filter(diaryEntry.nutrients, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
+        diaryEntry.consumedCalories = filter(diaryEntry.nutrients, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
     }
 
-    fun calculateConsumedNutrients(diaryEntry: DiaryEntry, amountValue: Int): List<NutrientEntry> {
+    fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, amountValue: Int): List<NutrientEntry> {
         val consumedNutrients = mutableListOf<NutrientEntry>()
-        for (nutrient in diaryEntry.nutrients) {
+        for (nutrient in nutrients) {
             nutrient.consumedAmount = (nutrient.originalComponentValueInPortion * amountValue) / 100
             consumedNutrients.add(nutrient)
         }
