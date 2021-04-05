@@ -7,7 +7,10 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.FakeDiaryRepository
 import com.android.project.lightweight.persistence.repository.FakeNutrientRepository
+import com.android.project.lightweight.util.AppConstants.carbsNutrientNumber
 import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
+import com.android.project.lightweight.util.AppConstants.fatsNutrientNumber
+import com.android.project.lightweight.util.AppConstants.proteinNutrientNumber
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
@@ -35,7 +38,7 @@ class DetailsViewModelTest {
         val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
         diaryEntry.id = 1
         diaryEntry.nutrients = listOf(
-            NutrientEntry(1, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
+            NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
         )
 
         // WHEN
@@ -68,7 +71,7 @@ class DetailsViewModelTest {
         val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
         diaryEntry.id = 1
         diaryEntry.nutrients = listOf(
-            NutrientEntry(1, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
+            NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
         )
         val consumptionAmount = 100
         val consumedKCAL = 14
@@ -88,7 +91,7 @@ class DetailsViewModelTest {
         val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
         diaryEntry.id = 1
         diaryEntry.nutrients = listOf(
-            NutrientEntry(1, 20200120, energyNutrientNumber.toDouble(), 50.0, "G", "Energy")
+            NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 50.0, "G", "Energy")
         )
         val consumptionAmount = 32
         val consumedKCAL = 14
@@ -100,5 +103,25 @@ class DetailsViewModelTest {
         // THEN
         assertThat(diaryEntry.consumedCalories).isNotEqualTo(consumedKCAL)
 
+    }
+
+    @Test
+    fun `filter diary entry nutrients should pass`() {
+        // GIVEN
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
+        diaryEntry.id = 1
+        diaryEntry.nutrients = listOf(
+            NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 5.0, "G", "Energy"),
+            NutrientEntry(diaryEntry.id, 20200120, proteinNutrientNumber.toDouble(), 150.0, "G", "Protein"),
+            NutrientEntry(diaryEntry.id, 20200120, carbsNutrientNumber.toDouble(), 30.0, "G", "Carbs"),
+            NutrientEntry(diaryEntry.id, 20200120, fatsNutrientNumber.toDouble(), 22.0, "G", "Fat")
+        )
+        val expectedFilteredResult = listOf(NutrientEntry(diaryEntry.id, 20200120, proteinNutrientNumber.toDouble(), 150.0, "G", "Protein"))
+
+        // WHEN
+        val filteredNutrients = detailsViewModel.filter(diaryEntry.nutrients, listOf(proteinNutrientNumber))
+
+        // THEN
+        assertThat(filteredNutrients).isEqualTo(expectedFilteredResult)
     }
 }
