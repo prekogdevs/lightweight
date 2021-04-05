@@ -20,7 +20,7 @@ import kotlinx.parcelize.Parcelize
 )
 data class NutrientEntry(
     var diaryEntryId: Long,
-    var consumedOn: Long,
+    val consumedOn: Long,
     val nutrientNumber: Double,
     val originalComponentValueInPortion: Double, // component value in 100g food e.g.: 1.93mg iron in 100g banana
     val unitName: String,

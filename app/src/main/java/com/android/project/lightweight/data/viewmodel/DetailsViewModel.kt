@@ -15,12 +15,16 @@ class DetailsViewModel @Inject constructor(
     private val diaryRepository: AbstractDiaryRepository,
     private val nutrientRepository: AbstractNutrientRepository
 ) : ViewModel() {
-    private var diaryEntryId = MutableLiveData<Long>()
+    private val diaryEntryId = MutableLiveData<Long>()
     val nutrients: LiveData<List<NutrientEntry>> = Transformations.switchMap(diaryEntryId) {
-        nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
+        it?.let {
+            nutrientRepository.getNutrientEntriesByDiaryEntryId(it)
+        }
     }
 
-    fun getNutrientEntriesByDiaryEntryId(id: Long) = diaryEntryId.postValue(id)
+    fun setDiaryEntryId(id: Long) {
+        diaryEntryId.value = id
+    }
 
     fun setConsumptionDetails(diaryEntry: DiaryEntry, consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
@@ -41,8 +45,8 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
-        val diaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
-        diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }
+        val insertedDiaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
+        diaryEntry.nutrients.map { it.diaryEntryId = insertedDiaryEntryId }
         nutrientRepository.insertNutrientEntries(diaryEntry.nutrients)
     }
 

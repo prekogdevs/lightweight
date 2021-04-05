@@ -30,9 +30,7 @@ class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var diaryEntry: DiaryEntry
     private val navController by lazy { findNavController() }
-
     private val detailsViewModel: DetailsViewModel by viewModels()
-
     private var nutrientAdapter = NutrientAdapter(mutableListOf())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -45,7 +43,7 @@ class DetailsFragment : Fragment() {
             if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
                 nutrientAdapter.setNutrients(diaryEntry.nutrients)
             } else {
-                detailsViewModel.getNutrientEntriesByDiaryEntryId(diaryEntry.id) // this will initiate a room query from detailsViewModel
+                detailsViewModel.setDiaryEntryId(diaryEntry.id) // this will trigger a room query from detailsViewModel
             }
             binding.diaryEntry = diaryEntry
         }
