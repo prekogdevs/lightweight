@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 data class DiaryEntry constructor(
     val fdcId: Long,
     val description: String,
-    var consumedOn: Long,
+    val consumedOn: Long,
     var consumedAmount: Int = 0, // Consumed amount in grams e.g.: 150g banana
     var consumedKCAL: Double = 0.0,
 ) : Parcelable {

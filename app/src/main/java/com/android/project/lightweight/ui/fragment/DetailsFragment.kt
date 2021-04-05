@@ -122,7 +122,7 @@ class DetailsFragment : Fragment() {
         val consumedAmountText = binding.edtConsumedAmount.text.toString()
         if (consumedAmountText.isNotEmpty()) {
             UIUtils.closeKeyboard(requireActivity())
-            diaryEntry.consumedAmount = consumedAmountText.toInt()
+            detailsViewModel.setConsumptionDetails(diaryEntry, consumedAmountText.toInt())
             detailsViewModel.saveDiaryEntry(diaryEntry)
             Snackbar.make(requireView(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())

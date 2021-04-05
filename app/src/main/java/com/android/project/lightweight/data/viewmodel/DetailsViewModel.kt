@@ -5,7 +5,7 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.AbstractDiaryRepository
 import com.android.project.lightweight.persistence.repository.AbstractNutrientRepository
-import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
+import com.android.project.lightweight.util.AppConstants
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +20,11 @@ class DetailsViewModel @Inject constructor(
         nutrientRepository.getNutrientEntriesByDiaryEntryId(it!!)
     }
 
-    fun getNutrientEntriesByDiaryEntryId(id: Long) {
-        diaryEntryId.postValue(id)
+    fun getNutrientEntriesByDiaryEntryId(id: Long) = diaryEntryId.postValue(id)
+
+    fun setConsumptionDetails(diaryEntry: DiaryEntry, consumptionAmount: Int) {
+        diaryEntry.consumedAmount = consumptionAmount
+        diaryEntry.consumedKCAL = filter(diaryEntry.nutrients, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
     }
 
     fun calculateConsumedNutrients(diaryEntry: DiaryEntry, amountValue: Int): List<NutrientEntry> {
@@ -38,7 +41,6 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
-        diaryEntry.consumedKCAL = filter(diaryEntry.nutrients, listOf(energyNutrientNumber)).first().consumedAmount
         val diaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
         diaryEntry.nutrients.map { it.diaryEntryId = diaryEntryId }
         nutrientRepository.insertNutrientEntries(diaryEntry.nutrients)
@@ -46,6 +48,4 @@ class DetailsViewModel @Inject constructor(
 
     fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
         nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
-
-
 }
