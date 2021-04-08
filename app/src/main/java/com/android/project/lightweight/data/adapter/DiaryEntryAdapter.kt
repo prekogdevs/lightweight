@@ -8,7 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemDiaryEntryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 
-class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHolder>(DiaryEntryCallback()) {
+class DiaryEntryAdapter : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHolder>(DiaryEntryCallback()) {
+
+    private lateinit var onItemClickListener: OnDiaryEntryClickListener
+    fun setOnItemClickListener(listener: OnDiaryEntryClickListener) {
+        onItemClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryEntryHolder {
         return DiaryEntryHolder.from(parent)
@@ -16,14 +21,14 @@ class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<D
 
     override fun onBindViewHolder(holder: DiaryEntryHolder, position: Int) {
         val entry = getItem(position)
-        holder.bindDiaryEntry(entry, listener)
+        holder.bindDiaryEntry(entry, onItemClickListener)
     }
 
     class DiaryEntryHolder private constructor(private val binding: ListItemDiaryEntryBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindDiaryEntry(diaryEntry: DiaryEntry, listener: OnDiaryEntryClickListener) {
+        fun bindDiaryEntry(diaryEntry: DiaryEntry, onItemClickListener: OnDiaryEntryClickListener) {
             binding.diaryEntry = diaryEntry
-            binding.listener = listener
+            binding.listener = onItemClickListener
         }
 
         companion object {

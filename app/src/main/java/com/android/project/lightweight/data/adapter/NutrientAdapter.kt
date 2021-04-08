@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 
-class NutrientAdapter(private var nutrientEntries: List<NutrientEntry>) : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>() {
+class NutrientAdapter : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>() {
+    private var nutrientEntries = listOf<NutrientEntry>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodNutrientHolder {
         return FoodNutrientHolder.from(parent)

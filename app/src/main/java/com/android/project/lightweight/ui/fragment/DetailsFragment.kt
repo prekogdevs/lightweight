@@ -31,7 +31,7 @@ class DetailsFragment : Fragment() {
     private lateinit var diaryEntry: DiaryEntry
     private val navController by lazy { findNavController() }
     private val detailsViewModel: DetailsViewModel by viewModels()
-    private var nutrientAdapter = NutrientAdapter(mutableListOf())
+    private var nutrientAdapter = NutrientAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
