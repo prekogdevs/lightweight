@@ -26,7 +26,7 @@ class DetailsViewModel @Inject constructor(
 
     fun setConsumptionDetails(diaryEntry: DiaryEntry, consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
-        diaryEntry.consumedCalories = filter(diaryEntry.nutrients, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
+        diaryEntry.consumedCalories = filter(diaryEntry.nutrientEntries, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
     }
 
     fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, amountValue: Int): List<NutrientEntry> {
@@ -44,8 +44,8 @@ class DetailsViewModel @Inject constructor(
 
     fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
         val insertedDiaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
-        diaryEntry.nutrients.map { it.diaryEntryId = insertedDiaryEntryId }
-        nutrientRepository.insertNutrientEntries(diaryEntry.nutrients)
+        diaryEntry.nutrientEntries.map { it.diaryEntryId = insertedDiaryEntryId }
+        nutrientRepository.insertNutrientEntries(diaryEntry.nutrientEntries)
     }
 
     fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =

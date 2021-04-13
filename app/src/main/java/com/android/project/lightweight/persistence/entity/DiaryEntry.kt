@@ -13,8 +13,8 @@ data class DiaryEntry constructor(
     val fdcId: Long,
     val description: String,
     val consumedOn: Long,
-    var consumedAmount: Int = 0, // Consumed amount in grams e.g.: 150g banana
-    var consumedCalories: Double = 0.0,
+    var consumedAmount: Int, // Consumed amount in grams e.g.: 150g banana
+    var consumedCalories: Double
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
@@ -22,5 +22,5 @@ data class DiaryEntry constructor(
 
     @Ignore
     @IgnoredOnParcel
-    var nutrients: List<NutrientEntry> = emptyList()
+    var nutrientEntries: List<NutrientEntry> = emptyList()
 }

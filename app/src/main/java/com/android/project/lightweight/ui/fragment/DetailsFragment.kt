@@ -41,7 +41,7 @@ class DetailsFragment : Fragment() {
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
             diaryEntry = argsBundle.diaryEntry
             if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
-                nutrientAdapter.setNutrients(diaryEntry.nutrients)
+                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
             } else {
                 detailsViewModel.setDiaryEntryId(diaryEntry.id) // this will trigger a room query from detailsViewModel
             }
@@ -56,8 +56,8 @@ class DetailsFragment : Fragment() {
         binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
             val amountValue = binding.edtConsumedAmount.text.toString()
             if (amountValue.isNotEmpty()) {
-                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrients, amountValue.toInt())
-                diaryEntry.nutrients = consumedNutrientsBasedOnAmount
+                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, amountValue.toInt())
+                diaryEntry.nutrientEntries = consumedNutrientsBasedOnAmount
                 nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
             }
         }
@@ -71,7 +71,7 @@ class DetailsFragment : Fragment() {
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
                 val filteredNutrients = if (diaryEntry.id == 0L) {
-                    filterByNutrient(chip, diaryEntry.nutrients)
+                    filterByNutrient(chip, diaryEntry.nutrientEntries)
                 } else {
                     filterByNutrient(chip, detailsViewModel.nutrients.value!!)
                 }

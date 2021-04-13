@@ -15,11 +15,7 @@ import com.android.project.lightweight.data.adapter.FoodAdapter
 import com.android.project.lightweight.data.adapter.OnFoodClickListener
 import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.databinding.FragmentSearchBinding
-import com.android.project.lightweight.persistence.entity.DiaryEntry
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.ui.extension.onQueryTextChanged
-import com.android.project.lightweight.util.CurrentDate
-import com.android.project.lightweight.util.DateFormatter
 import com.android.project.lightweight.util.UIUtils
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,10 +28,7 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                val filtered = searchViewModel.filterOutNotRequiredNutrients(food)
-                val consumedOn = DateFormatter.parseDateToLong(CurrentDate.currentDate)
-                val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn)
-                diaryEntry.nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(filtered, diaryEntry)
+                val diaryEntry = searchViewModel.createDiaryEntryFromFood(food)
                 UIUtils.closeKeyboard(requireActivity())
                 findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
             }

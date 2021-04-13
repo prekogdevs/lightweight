@@ -35,9 +35,9 @@ class DetailsViewModelTest {
     @Test
     fun `save diary entry with given nutrients test should pass`() {
         // GIVEN
-        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
         diaryEntry.id = 1
-        diaryEntry.nutrients = listOf(
+        diaryEntry.nutrientEntries = listOf(
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
         )
 
@@ -46,7 +46,7 @@ class DetailsViewModelTest {
         detailsViewModel.setDiaryEntryId(diaryEntry.id)
 
         // THEN
-        assertThat(detailsViewModel.nutrients.getOrAwaitValueTest()).isEqualTo(diaryEntry.nutrients)
+        assertThat(detailsViewModel.nutrients.getOrAwaitValueTest()).isEqualTo(diaryEntry.nutrientEntries)
     }
 
     @Test
@@ -68,16 +68,16 @@ class DetailsViewModelTest {
     @Test
     fun `set diary entry consumed calories test should pass`() {
         // GIVEN
-        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
         diaryEntry.id = 1
-        diaryEntry.nutrients = listOf(
+        diaryEntry.nutrientEntries = listOf(
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
         )
         val consumptionAmount = 100
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrients, consumptionAmount)
+        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
 
         // THEN
@@ -88,16 +88,16 @@ class DetailsViewModelTest {
     @Test
     fun `set diary entry consumed calories test should pass when expecting wrong value`() {
         // GIVEN
-        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
         diaryEntry.id = 1
-        diaryEntry.nutrients = listOf(
+        diaryEntry.nutrientEntries = listOf(
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 50.0, "G", "Energy")
         )
         val consumptionAmount = 32
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrients, consumptionAmount)
+        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
 
         // THEN
@@ -108,9 +108,9 @@ class DetailsViewModelTest {
     @Test
     fun `filter diary entry nutrients should pass`() {
         // GIVEN
-        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100)
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
         diaryEntry.id = 1
-        diaryEntry.nutrients = listOf(
+        diaryEntry.nutrientEntries = listOf(
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 5.0, "G", "Energy"),
             NutrientEntry(diaryEntry.id, 20200120, proteinNutrientNumber.toDouble(), 150.0, "G", "Protein"),
             NutrientEntry(diaryEntry.id, 20200120, carbsNutrientNumber.toDouble(), 30.0, "G", "Carbs"),
@@ -119,7 +119,7 @@ class DetailsViewModelTest {
         val expectedFilteredResult = listOf(NutrientEntry(diaryEntry.id, 20200120, proteinNutrientNumber.toDouble(), 150.0, "G", "Protein"))
 
         // WHEN
-        val filteredNutrients = detailsViewModel.filter(diaryEntry.nutrients, listOf(proteinNutrientNumber))
+        val filteredNutrients = detailsViewModel.filter(diaryEntry.nutrientEntries, listOf(proteinNutrientNumber))
 
         // THEN
         assertThat(filteredNutrients).isEqualTo(expectedFilteredResult)
