@@ -1,6 +1,7 @@
 package com.android.project.lightweight.persistence.entity
 
 import android.os.Parcelable
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -19,6 +20,7 @@ import kotlinx.parcelize.Parcelize
     ]
 )
 data class NutrientEntry(
+    @ColumnInfo(index = true)
     var diaryEntryId: Long,
     val consumedOn: Long,
     val nutrientNumber: Double,
@@ -29,6 +31,7 @@ data class NutrientEntry(
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
+
     @IgnoredOnParcel
     var consumedAmount: Double = originalComponentValueInPortion
 }

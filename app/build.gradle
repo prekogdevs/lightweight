@@ -40,9 +40,7 @@ android {
     }
 
     buildFeatures {
-        dataBinding {
-            enabled = true
-        }
+        dataBinding = true
     }
 }
 
@@ -60,8 +58,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit: $version_retrofit"
@@ -90,9 +88,9 @@ dependencies {
 
     testImplementation "androidx.arch.core:core-testing:2.1.0"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
-    androidTestImplementation "com.google.truth:truth:1.0.1"
+    androidTestImplementation 'com.google.truth:truth:1.1.2'
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
-    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation 'com.google.truth:truth:1.1.2'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.33-beta'
     kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.33-beta'
