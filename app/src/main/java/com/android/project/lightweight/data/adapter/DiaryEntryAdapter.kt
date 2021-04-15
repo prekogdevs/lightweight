@@ -8,12 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemDiaryEntryBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 
-class DiaryEntryAdapter : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHolder>(DiaryEntryCallback()) {
-
-    private lateinit var onItemClickListener: OnDiaryEntryClickListener
-    fun setOnItemClickListener(listener: OnDiaryEntryClickListener) {
-        onItemClickListener = listener
-    }
+class DiaryEntryAdapter(var listener: OnDiaryEntryClickListener) : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHolder>(DiaryEntryCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiaryEntryHolder {
         return DiaryEntryHolder.from(parent)
@@ -21,7 +16,7 @@ class DiaryEntryAdapter : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHo
 
     override fun onBindViewHolder(holder: DiaryEntryHolder, position: Int) {
         val entry = getItem(position)
-        holder.bindDiaryEntry(entry, onItemClickListener)
+        holder.bindDiaryEntry(entry, listener)
     }
 
     class DiaryEntryHolder private constructor(private val binding: ListItemDiaryEntryBinding) :
@@ -45,7 +40,7 @@ class DiaryEntryAdapter : ListAdapter<DiaryEntry, DiaryEntryAdapter.DiaryEntryHo
 
 class DiaryEntryCallback : DiffUtil.ItemCallback<DiaryEntry>() {
     override fun areItemsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry) =
-        oldItem.fdcId == newItem.fdcId
+        oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: DiaryEntry, newItem: DiaryEntry) =
         oldItem == newItem

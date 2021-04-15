@@ -28,20 +28,19 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentDiaryBinding
     private val diaryViewModel: DiaryViewModel by viewModels()
-    private val diaryEntryAdapter by lazy { DiaryEntryAdapter() }
+    private val diaryEntryAdapter by lazy {
+        DiaryEntryAdapter(object : OnDiaryEntryClickListener {
+            override fun onClick(diaryEntry: DiaryEntry) {
+                findNavController().navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
+            }
+        })
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
         binding.lifecycleOwner = this
         binding.pickedDate = CurrentDate.currentDate
         binding.diaryViewModel = diaryViewModel
-        diaryEntryAdapter.setOnItemClickListener(
-            object : OnDiaryEntryClickListener {
-                override fun onClick(diaryEntry: DiaryEntry) {
-                    findNavController().navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
-                }
-            }
-        )
         binding.diaryRecyclerview.apply {
             adapter = diaryEntryAdapter
             setHasFixedSize(true)
