@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.data.adapter.FoodAdapter
@@ -16,8 +16,13 @@ import com.android.project.lightweight.data.adapter.OnFoodClickListener
 import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.databinding.FragmentSearchBinding
 import com.android.project.lightweight.ui.extension.onQueryTextChanged
+import com.android.project.lightweight.util.AppConstants.SEARCH_FOR_FOOD_DELAY
 import com.android.project.lightweight.util.UIUtils
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -45,16 +50,22 @@ class SearchFragment : Fragment() {
             adapter = foodAdapter
             setHasFixedSize(true)
             // to detect when new items were added, and then scroll to the top of the recyclerview
-            foodAdapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            foodAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
                 override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                     super.onItemRangeInserted(positionStart, itemCount)
                     smoothScrollToPosition(0)
                 }
             })
         }
+
+        var searchJob: Job? = null
         binding.searchView.apply {
             onQueryTextChanged { query ->
-                searchViewModel.searchForFood(query)
+                searchJob?.cancel()
+                searchJob = MainScope().launch {
+                    delay(SEARCH_FOR_FOOD_DELAY)
+                    searchViewModel.searchForFood(query)
+                }
             }
         }
         searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->

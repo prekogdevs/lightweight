@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.view.forEach
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
@@ -18,7 +17,6 @@ import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
-import com.android.project.lightweight.ui.extension.handleExpansion
 import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
@@ -29,7 +27,6 @@ class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var diaryEntry: DiaryEntry
-    private val navController by lazy { findNavController() }
     private val detailsViewModel: DetailsViewModel by viewModels()
     private var nutrientAdapter = NutrientAdapter()
 
@@ -78,9 +75,6 @@ class DetailsFragment : Fragment() {
                 nutrientAdapter.setNutrients(filteredNutrients)
             }
         }
-        binding.txtNutrientSummary.setOnClickListener {
-            binding.nutrientSummaryExpandableLayout.handleExpansion(it as TextView)
-        }
         binding.toolbar.apply {
             inflateMenu(R.menu.details_menu)
             setOnMenuItemClickListener {
@@ -123,7 +117,7 @@ class DetailsFragment : Fragment() {
             detailsViewModel.setConsumptionDetails(diaryEntry, consumedAmountText.toInt())
             detailsViewModel.saveDiaryEntry(diaryEntry)
             Snackbar.make(requireView(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
-            navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
             Snackbar.make(requireView(), getString(R.string.amount_missing_snackbar_text), Snackbar.LENGTH_SHORT).show()
         }
@@ -132,6 +126,6 @@ class DetailsFragment : Fragment() {
     private fun deleteFood() {
         detailsViewModel.deleteDiaryEntry(diaryEntry.id)
         Snackbar.make(requireView(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
-        navController.navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
+        findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }
 }

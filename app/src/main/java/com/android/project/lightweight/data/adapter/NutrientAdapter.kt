@@ -1,6 +1,5 @@
 package com.android.project.lightweight.data.adapter
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +27,6 @@ class NutrientAdapter : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>
 
     class FoodNutrientHolder private constructor(private val binding: ListItemFoodNutrientBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
         fun bindFoodNutrient(nutrientEntry: NutrientEntry) {
             binding.nutrientEntry = nutrientEntry
         }

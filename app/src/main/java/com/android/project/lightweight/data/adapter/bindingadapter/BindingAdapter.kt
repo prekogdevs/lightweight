@@ -19,7 +19,7 @@ fun setCurrentDate(view: TextView, pickedDate: String?) {
     }
 }
 
-@BindingAdapter("resource")
+@BindingAdapter("visibility")
 fun setVisibility(root: ConstraintLayout, resource: Resource<FoodResponse>?) {
     val status = resource?.status
     status?.let {
