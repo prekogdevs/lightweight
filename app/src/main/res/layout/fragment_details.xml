@@ -51,27 +51,35 @@
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_all"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/general_all" />
+                        android:text="@string/general_all"
+                        app:checkedIconEnabled="true" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_general"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/general_chip" />
+                        android:text="@string/general_chip"
+                        app:checkedIconEnabled="true" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_vitamins"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/general_vitamins" />
+                        android:text="@string/general_vitamins"
+                        app:checkedIconEnabled="true" />
 
                     <com.google.android.material.chip.Chip
                         android:id="@+id/chip_minerals"
+                        style="@style/Widget.MaterialComponents.Chip.Choice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/general_minerals" />
+                        android:text="@string/general_minerals"
+                        app:checkedIconEnabled="true" />
 
 
                 </com.google.android.material.chip.ChipGroup>
@@ -91,17 +99,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:counterEnabled="true"
-                    app:suffixText="g"
-                    app:counterMaxLength="8">
+                    app:counterMaxLength="8"
+                    app:suffixText="g">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/edtConsumedAmount"
                         android:layout_width="match_parent"
-                        android:maxLength="8"
                         android:layout_height="wrap_content"
-                        android:imeOptions="actionDone|flagNoExtractUi"
                         android:hint="@string/consumed_amount_hint"
-                        android:inputType="number" />
+                        android:imeOptions="actionDone|flagNoExtractUi"
+                        android:inputType="number"
+                        android:maxLength="8" />
                 </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
