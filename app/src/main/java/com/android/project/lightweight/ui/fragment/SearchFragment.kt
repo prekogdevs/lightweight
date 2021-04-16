@@ -45,7 +45,23 @@ class SearchFragment : Fragment() {
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
         binding.lifecycleOwner = this
         binding.searchViewModel = searchViewModel
+        setupRecyclerView()
+        setupSearchView()
+        setHasOptionsMenu(true)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->
+            val foodResponse = event.peekContent().data
+            foodResponse?.let {
+                foodAdapter.submitList(it.foods)
+            }
+        })
+    }
+
+    private fun setupRecyclerView() {
         binding.foodRecyclerView.apply {
             adapter = foodAdapter
             setHasFixedSize(true)
@@ -57,7 +73,9 @@ class SearchFragment : Fragment() {
                 }
             })
         }
+    }
 
+    private fun setupSearchView() {
         var searchJob: Job? = null
         binding.searchView.apply {
             onQueryTextChanged { query ->
@@ -68,13 +86,5 @@ class SearchFragment : Fragment() {
                 }
             }
         }
-        searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->
-            val foodResponse = event.peekContent().data
-            foodResponse?.let {
-                foodAdapter.submitList(it.foods)
-            }
-        })
-        setHasOptionsMenu(true)
-        return binding.root
     }
 }

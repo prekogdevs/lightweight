@@ -87,49 +87,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chip_layout">
 
-                <TextView
-                    android:id="@+id/txtAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_toStartOf="@id/edtConsumedAmount"
-                    android:text="@string/consumed_amount_text" />
-
-                <EditText
-                    android:id="@+id/edtConsumedAmount"
-                    android:layout_width="100dp"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/txtAmount"
-                    android:layout_alignBottom="@id/txtAmount"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="8dp"
-                    android:autofillHints="amount"
-                    android:hint="@string/consumed_amount_hint"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    tools:text="150" />
+                    app:counterEnabled="true"
+                    app:suffixText="g"
+                    app:counterMaxLength="8">
 
-                <TextView
-                    android:id="@+id/txtServingSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edtConsumedAmount"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/serving_size_text" />
-
-                <Spinner
-                    android:id="@+id/consumedAmountUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edtConsumedAmount"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:entries="@array/serving_sizes" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edtConsumedAmount"
+                        android:layout_width="match_parent"
+                        android:maxLength="8"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone|flagNoExtractUi"
+                        android:hint="@string/consumed_amount_hint"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
 
             </RelativeLayout>
 
