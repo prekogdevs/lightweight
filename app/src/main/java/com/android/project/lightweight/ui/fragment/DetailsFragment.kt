@@ -2,7 +2,6 @@ package com.android.project.lightweight.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.forEach
@@ -77,12 +76,6 @@ class DetailsFragment : Fragment() {
                 nutrientAdapter.setNutrients(filteredNutrients)
             }
         }
-        binding.toolbar.apply {
-            inflateMenu(R.menu.details_menu)
-            setOnMenuItemClickListener {
-                onOptionsItemSelected(it)
-            }
-        }
 
         return binding.root
     }
@@ -95,22 +88,6 @@ class DetailsFragment : Fragment() {
             else -> {
                 nutrientEntries
             }
-        }
-    }
-
-    override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
-        return when (menuItem.itemId) {
-            R.id.action -> {
-                if (diaryEntry.id == 0L) {
-                    menuItem.setIcon(R.drawable.ic_save_24)
-                    saveDiaryEntry()
-                } else {
-                    menuItem.setIcon(R.drawable.ic_remove_24)
-                    deleteDiaryEntry()
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(menuItem)
         }
     }
 

@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="previousFragment"
-            type="String" />
-
-        <variable
             name="diaryEntry"
             type="com.android.project.lightweight.persistence.entity.DiaryEntry" />
 
@@ -20,163 +16,178 @@
             type="com.android.project.lightweight.data.viewmodel.DetailsViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:title="@{diaryEntry.description}"
-                app:titleTextColor="@color/mdtp_white" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/chip_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center_horizontal"
-                app:layout_constraintBottom_toTopOf="@id/amountLayout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chipGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:foregroundGravity="center_horizontal"
-                    app:singleSelection="true">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_all"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/general_all" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_general"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/general_chip" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_vitamins"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/general_vitamins" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_minerals"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/general_minerals" />
-
-
-                </com.google.android.material.chip.ChipGroup>
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/amountLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/chip_layout">
-
-                <TextView
-                    android:id="@+id/txtAmount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_toStartOf="@id/edtConsumedAmount"
-                    android:text="@string/consumed_amount_text" />
-
-                <EditText
-                    android:id="@+id/edtConsumedAmount"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/txtAmount"
-                    android:layout_alignBottom="@id/txtAmount"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="8dp"
-                    android:autofillHints="amount"
-                    android:hint="@string/consumed_amount_hint"
-                    android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:textAlignment="center"
-                    tools:text="150" />
-
-                <TextView
-                    android:id="@+id/txtServingSize"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edtConsumedAmount"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/serving_size_text" />
-
-                <Spinner
-                    android:id="@+id/consumedAmountUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/edtConsumedAmount"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:entries="@array/serving_sizes" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/nutrient_summary_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/amountLayout">
-
-                <TextView
-                    android:id="@+id/txtNutrientSummary"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/nutrient_summary_text"
-                    android:textAlignment="center"
-                    android:textSize="24sp"
-                    app:layout_constraintEnd_toStartOf="@+id/foodNutrientsRecyclerView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/foodNutrientsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:background="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtNutrientSummary"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/list_item_food_nutrient" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:title="ABC"
+                    app:titleTextColor="@color/mdtp_white" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/chip_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/amountLayout"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:foregroundGravity="center_horizontal"
+                        app:singleSelection="true">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_all"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_all" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_general"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_chip" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_vitamins"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_vitamins" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_minerals"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/general_minerals" />
+
+
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/amountLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/chip_layout">
+
+                    <TextView
+                        android:id="@+id/txtAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_toStartOf="@id/edtConsumedAmount"
+                        android:text="@string/consumed_amount_text" />
+
+                    <EditText
+                        android:id="@+id/edtConsumedAmount"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/txtAmount"
+                        android:layout_alignBottom="@id/txtAmount"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="8dp"
+                        android:autofillHints="amount"
+                        android:hint="@string/consumed_amount_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        tools:text="150" />
+
+                    <TextView
+                        android:id="@+id/txtServingSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edtConsumedAmount"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/serving_size_text" />
+
+                    <Spinner
+                        android:id="@+id/consumedAmountUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/edtConsumedAmount"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:entries="@array/serving_sizes" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/nutrient_summary_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/amountLayout">
+
+                    <TextView
+                        android:id="@+id/txtNutrientSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nutrient_summary_text"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toStartOf="@+id/foodNutrientsRecyclerView"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/foodNutrientsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/txtNutrientSummary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        tools:itemCount="10"
+                        tools:listitem="@layout/list_item_food_nutrient" />
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{diaryEntry.id == 0L ? `Add to diary`: `Remove from diary`}"
+            android:textAllCaps="true"
+            tools:text="Add to Diary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
