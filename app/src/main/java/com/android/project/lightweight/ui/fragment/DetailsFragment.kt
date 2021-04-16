@@ -44,10 +44,7 @@ class DetailsFragment : Fragment() {
             }
             binding.diaryEntry = diaryEntry
         }
-        binding.foodNutrientsRecyclerView.apply {
-            adapter = nutrientAdapter
-            setHasFixedSize(true)
-        }
+        setupRecyclerView()
 
         // Live update to nutrients if value is changing in the editText
         binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
@@ -86,6 +83,13 @@ class DetailsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun setupRecyclerView() {
+        binding.foodNutrientsRecyclerView.apply {
+            adapter = nutrientAdapter
+            setHasFixedSize(true)
+        }
     }
 
     private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {

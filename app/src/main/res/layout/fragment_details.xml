@@ -8,16 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="previousFragment"
-            type="String" />
-
-        <variable
             name="diaryEntry"
             type="com.android.project.lightweight.persistence.entity.DiaryEntry" />
-
-        <variable
-            name="detailsViewModel"
-            type="com.android.project.lightweight.data.viewmodel.DetailsViewModel" />
     </data>
 
     <ScrollView
