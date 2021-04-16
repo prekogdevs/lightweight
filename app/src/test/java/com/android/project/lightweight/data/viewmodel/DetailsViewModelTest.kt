@@ -2,7 +2,6 @@ package com.android.project.lightweight.data.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.android.project.lightweight.MainCoroutineRule
-import com.android.project.lightweight.getOrAwaitValueTest
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.FakeDiaryRepository
@@ -59,7 +58,7 @@ class DetailsViewModelTest {
         expectedConsumedNutrient.consumedAmount = 30.0
 
         // WHEN
-        val result = detailsViewModel.calculateConsumedNutrients(listOf(originalNutrient), 300)
+        val result = detailsViewModel.updateNutrients(listOf(originalNutrient), 300)
 
         // THEN
         assertThat(listOf(expectedConsumedNutrient)).isEqualTo(result)
@@ -77,7 +76,7 @@ class DetailsViewModelTest {
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
+        detailsViewModel.updateNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
 
         // THEN
@@ -97,7 +96,7 @@ class DetailsViewModelTest {
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
+        detailsViewModel.updateNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
 
         // THEN

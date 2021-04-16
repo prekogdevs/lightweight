@@ -33,9 +33,9 @@ class SearchFragment : Fragment() {
     private val foodAdapter by lazy {
         FoodAdapter(object : OnFoodClickListener {
             override fun onClick(food: Food) {
-                val diaryEntry = searchViewModel.createDiaryEntryFromFood(food)
+//                val diaryEntry = searchViewModel.createDiaryEntryFromFood(food)
                 UIUtils.closeKeyboard(requireActivity())
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(diaryEntry))
+                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToDetailsFragment(null, food))
             }
         })
     }

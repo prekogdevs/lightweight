@@ -22,7 +22,12 @@
             app:destination="@id/diaryFragment" />
         <argument
             android:name="diaryEntry"
-            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry" />
+            app:argType="com.android.project.lightweight.persistence.entity.DiaryEntry"
+            app:nullable="true" />
+        <argument
+            android:name="food"
+            app:argType="com.android.project.lightweight.api.retrofit.model.Food"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/diaryFragment"

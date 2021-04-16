@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.databinding.ListItemFoodNutrientBinding
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 
-class NutrientAdapter : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>() {
+class NutrientAdapter : RecyclerView.Adapter<NutrientAdapter.NutrientEntryHolder>() {
     private var nutrientEntries = listOf<NutrientEntry>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodNutrientHolder {
-        return FoodNutrientHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NutrientEntryHolder {
+        return NutrientEntryHolder.from(parent)
     }
 
-    override fun onBindViewHolder(holder: FoodNutrientHolder, position: Int) {
+    override fun onBindViewHolder(holder: NutrientEntryHolder, position: Int) {
         val foodNutrient = nutrientEntries[position]
         holder.bindFoodNutrient(foodNutrient)
     }
@@ -25,17 +25,17 @@ class NutrientAdapter : RecyclerView.Adapter<NutrientAdapter.FoodNutrientHolder>
         notifyDataSetChanged()
     }
 
-    class FoodNutrientHolder private constructor(private val binding: ListItemFoodNutrientBinding) : RecyclerView.ViewHolder(binding.root) {
+    class NutrientEntryHolder private constructor(private val binding: ListItemFoodNutrientBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindFoodNutrient(nutrientEntry: NutrientEntry) {
             binding.nutrientEntry = nutrientEntry
         }
 
         companion object {
-            fun from(parent: ViewGroup): FoodNutrientHolder {
+            fun from(parent: ViewGroup): NutrientEntryHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemFoodNutrientBinding.inflate(layoutInflater, parent, false)
-                return FoodNutrientHolder(binding)
+                return NutrientEntryHolder(binding)
             }
         }
     }

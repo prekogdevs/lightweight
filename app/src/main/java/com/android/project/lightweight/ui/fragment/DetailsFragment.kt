@@ -17,7 +17,10 @@ import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
+import com.android.project.lightweight.persistence.transformer.EntityTransformer
 import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.CurrentDate
+import com.android.project.lightweight.util.DateFormatter
 import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,52 +29,51 @@ import dagger.hilt.android.AndroidEntryPoint
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var diaryEntry: DiaryEntry
     private val detailsViewModel: DetailsViewModel by viewModels()
     private var nutrientAdapter = NutrientAdapter()
+    private var diaryEntry = DiaryEntry()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
-
         arguments?.let { bundle ->
             val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            diaryEntry = argsBundle.diaryEntry
-            if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
-                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
-            } else {
-                detailsViewModel.setDiaryEntryId(diaryEntry.id) // this will trigger a room query from detailsViewModel
-            }
-            binding.diaryEntry = diaryEntry
+            detailsViewModel.triggerInitialization(argsBundle.diaryEntry, argsBundle.food)
         }
         binding.foodNutrientsRecyclerView.apply {
             adapter = nutrientAdapter
             setHasFixedSize(true)
         }
 
-        // Live update to nutrients if value is changing in the editText
-        binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
-            val amountValue = binding.edtConsumedAmount.text.toString()
-            if (amountValue.isNotEmpty()) {
-                val consumedNutrientsBasedOnAmount = detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, amountValue.toInt())
-                diaryEntry.nutrientEntries = consumedNutrientsBasedOnAmount
-                nutrientAdapter.setNutrients(consumedNutrientsBasedOnAmount)
-            }
-        }
-
-        detailsViewModel.nutrients.observe(viewLifecycleOwner, { nutrientEntryList ->
-            nutrientEntryList?.let {
-                nutrientAdapter.setNutrients(it)
+        detailsViewModel.diaryEntryWithNutrients.observe(viewLifecycleOwner, { diaryEntryWithNutrients ->
+            diaryEntryWithNutrients?.let {
+                diaryEntry = it.diaryEntry
+                diaryEntry.nutrientEntries = it.nutrients
+                binding.diaryEntry = diaryEntry
+                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
             }
         })
 
+        detailsViewModel.foodie.observe(viewLifecycleOwner, { diaryEntryWithNutrients ->
+            diaryEntryWithNutrients?.let {
+                val nutrients = EntityTransformer.transformFoodNutrientsToNutrientEntries(DateFormatter.parseDateToLong(CurrentDate.currentDate), it.foodNutrients)
+                nutrientAdapter.setNutrients(nutrients)
+            }
+        })
+
+
+        // TODO: Add Delay
+        binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
+            val amountValue = binding.edtConsumedAmount.text.toString()
+            if (amountValue.isNotEmpty()) {
+//                detailsViewModel.updateNutrients(amountValue.toInt())
+//                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
+            }
+        }
+
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-                val filteredNutrients = if (diaryEntry.id == 0L) {
-                    filterByNutrient(chip, diaryEntry.nutrientEntries)
-                } else {
-                    filterByNutrient(chip, detailsViewModel.nutrients.value!!)
-                }
+                val filteredNutrients = filterByNutrient(chip, diaryEntry.nutrientEntries)
                 nutrientAdapter.setNutrients(filteredNutrients)
             }
         }
@@ -80,9 +82,6 @@ class DetailsFragment : Fragment() {
             setOnMenuItemClickListener {
                 onOptionsItemSelected(it)
             }
-            val menuItem = menu.findItem(R.id.action)
-            if (diaryEntry.id == 0L) menuItem.setIcon(R.drawable.ic_save_24)
-            else menuItem.setIcon(R.drawable.ic_remove_24)
         }
 
         return binding.root
@@ -99,14 +98,19 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+    override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
             R.id.action -> {
-                if (diaryEntry.id == 0L) saveDiaryEntry() // New entry
-                else deleteFood()
+                if (diaryEntry.id == 0L) {
+                    menuItem.setIcon(R.drawable.ic_save_24)
+                    saveDiaryEntry()
+                } else {
+                    menuItem.setIcon(R.drawable.ic_remove_24)
+                    deleteDiaryEntry()
+                }
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> super.onOptionsItemSelected(menuItem)
         }
     }
 
@@ -114,8 +118,8 @@ class DetailsFragment : Fragment() {
         val consumedAmountText = binding.edtConsumedAmount.text.toString()
         if (consumedAmountText.isNotEmpty()) {
             UIUtils.closeKeyboard(requireActivity())
-            detailsViewModel.setConsumptionDetails(diaryEntry, consumedAmountText.toInt())
-            detailsViewModel.saveDiaryEntry(diaryEntry)
+//            detailsViewModel.setConsumptionDetails(consumedAmountText.toInt()) // TODO: Update and not set
+            detailsViewModel.saveDiaryEntry()
             Snackbar.make(requireView(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
@@ -123,8 +127,8 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun deleteFood() {
-        detailsViewModel.deleteDiaryEntry(diaryEntry.id)
+    private fun deleteDiaryEntry() {
+        detailsViewModel.deleteDiaryEntry()
         Snackbar.make(requireView(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
         findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }

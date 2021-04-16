@@ -1,5 +1,6 @@
 package com.android.project.lightweight.persistence.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 
@@ -20,4 +21,8 @@ class FakeDiaryRepository : AbstractDiaryRepository {
     }
 
     override fun getEntries(consumedOn: Long) = observableDiaryEntries
+
+    override fun getDiaryEntryById(diaryEntryId: Long): LiveData<DiaryEntry> {
+        TODO("Not yet implemented")
+    }
 }

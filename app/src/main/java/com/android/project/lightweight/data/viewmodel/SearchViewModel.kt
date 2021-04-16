@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.api.retrofit.model.FoodResponse
-import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.repository.AbstractSearchRepository
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
-import com.android.project.lightweight.util.*
+import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.Event
+import com.android.project.lightweight.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,14 +27,14 @@ class SearchViewModel @Inject constructor(private val searchRepository: Abstract
         }
     }
 
-    fun createDiaryEntryFromFood(food: Food): DiaryEntry {
-        val requiredNutrients = filterOutNotRequiredNutrients(food)
-        val consumedOn = DateFormatter.parseDateToLong(CurrentDate.currentDate)
-        val nutrientEntries = EntityTransformer.transformFoodNutrientsToNutrientEntries(consumedOn, requiredNutrients)
-        val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn, 0, 0.0)
-        diaryEntry.nutrientEntries = nutrientEntries
-        return diaryEntry
-    }
+//    fun createDiaryEntryFromFood(food: Food): DiaryEntry {
+//        val requiredNutrients = filterOutNotRequiredNutrients(food)
+//        val consumedOn = DateFormatter.todayInNumberFormat()
+//        val nutrientEntries = EntityTransformer.transformFoodNutrientsToNutrientEntries(consumedOn, requiredNutrients)
+//        val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn, 0, 0.0)
+//        diaryEntry.nutrientEntries = nutrientEntries
+//        return diaryEntry
+//    }
 
     private fun filterOutNotRequiredNutrients(food: Food) =
         food.foodNutrients.filter { AppConstants.all.contains(it.nutrientNumber.toInt()) }

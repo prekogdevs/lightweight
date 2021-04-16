@@ -10,11 +10,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "Diary")
 data class DiaryEntry constructor(
-    val fdcId: Long,
-    val description: String,
-    val consumedOn: Long,
-    var consumedAmount: Int, // Consumed amount in grams e.g.: 150g banana
-    var consumedCalories: Double
+    val fdcId: Long = 0,
+    val description: String = "",
+    val consumedOn: Long = 0,
+    var consumedAmount: Int = 0, // Consumed amount in grams e.g.: 150g banana
+    var consumedCalories: Double = 0.0
 ) : Parcelable {
     @IgnoredOnParcel
     @PrimaryKey(autoGenerate = true)
