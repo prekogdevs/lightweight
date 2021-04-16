@@ -19,7 +19,6 @@ import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.UIUtils
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -134,16 +133,16 @@ class DetailsFragment : Fragment() {
             UIUtils.closeKeyboard(requireActivity())
             detailsViewModel.setConsumptionDetails(diaryEntry, consumedAmountText.toInt())
             detailsViewModel.saveDiaryEntry(diaryEntry)
-            Snackbar.make(requireView(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
+            UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text)).show()
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
-            Snackbar.make(requireView(), getString(R.string.amount_missing_snackbar_text), Snackbar.LENGTH_SHORT).show()
+            UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.amount_missing_snackbar_text)).show()
         }
     }
 
     private fun deleteDiaryEntry() {
         detailsViewModel.deleteDiaryEntry(diaryEntry.id)
-        Snackbar.make(requireView(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
+        UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_removed_snackbar_text)).show()
         findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }
 }

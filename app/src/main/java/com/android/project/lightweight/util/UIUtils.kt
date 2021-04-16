@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.android.project.lightweight.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import java.util.*
 
@@ -23,5 +25,12 @@ object UIUtils {
         val dialog = DatePickerDialog.newInstance(listener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         dialog.accentColor = ContextCompat.getColor(context, R.color.mdtp_dark_gray)
         return dialog
+    }
+
+    fun createAnchoredSnackbar(activity: Activity, text: String): Snackbar {
+        val bottomNavigationView = activity.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val snack = Snackbar.make(bottomNavigationView, text, Snackbar.LENGTH_SHORT)
+        snack.anchorView = bottomNavigationView
+        return snack
     }
 }

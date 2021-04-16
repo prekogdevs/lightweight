@@ -22,7 +22,6 @@ import com.android.project.lightweight.util.AppConstants.DATE_PICKER_DIALOG_TAG
 import com.android.project.lightweight.util.CurrentDate
 import com.android.project.lightweight.util.DateFormatter
 import com.android.project.lightweight.util.UIUtils
-import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -85,7 +84,7 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 val position = viewHolder.adapterPosition
                 val diaryEntry = diaryEntryAdapter.currentList[position]
                 diaryViewModel.deleteDiaryEntry(diaryEntry.id)
-                Snackbar.make(requireView(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
+                UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_removed_snackbar_text)).show()
             }
         }
 
