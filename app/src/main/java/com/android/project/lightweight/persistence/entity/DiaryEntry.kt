@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "Diary")
-data class DiaryEntry constructor(
+data class DiaryEntry (
     val fdcId: Long,
     val description: String,
     val consumedOn: Long,

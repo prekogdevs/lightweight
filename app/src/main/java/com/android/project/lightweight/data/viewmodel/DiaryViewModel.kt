@@ -1,9 +1,6 @@
 package com.android.project.lightweight.data.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.repository.AbstractDiaryRepository
 import com.android.project.lightweight.persistence.repository.AbstractNutrientRepository
@@ -14,6 +11,7 @@ import com.android.project.lightweight.util.AppConstants.proteinNutrientNumber
 import com.android.project.lightweight.util.CurrentDate
 import com.android.project.lightweight.util.DateFormatter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,4 +37,8 @@ class DiaryViewModel @Inject constructor(
     }
 
     fun changeDate(date: String) = consumedOn.postValue(date)
+
+    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
+        diaryRepository.deleteDiaryEntry(diaryEntryId)
+    }
 }

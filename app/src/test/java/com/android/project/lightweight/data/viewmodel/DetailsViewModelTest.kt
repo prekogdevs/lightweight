@@ -43,7 +43,7 @@ class DetailsViewModelTest {
 
         // WHEN
         detailsViewModel.saveDiaryEntry(diaryEntry)
-        detailsViewModel.setDiaryEntryId(diaryEntry.id)
+        detailsViewModel.setDiaryEntry(diaryEntry)
 
         // THEN
         assertThat(detailsViewModel.nutrients.getOrAwaitValueTest()).isEqualTo(diaryEntry.nutrientEntries)
