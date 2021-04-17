@@ -26,4 +26,6 @@
     <string name="diaryentry_removed_snackbar_text">Diary entry has been removed</string>
     <string name="diaryentry_added_snackbar_text">Diary entry has been saved</string>
     <string name="amount_missing_snackbar_text">Please add consumption amount</string>
+    <string name="snackbar_offline_text">You are offline, for this feature network connection is required</string>
+    <string name="snackbar_offline_action_text">Enable</string>
 </resources>

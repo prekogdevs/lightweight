@@ -1,5 +1,7 @@
 package com.android.project.lightweight.ui.fragment
 
+import android.content.Context
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.android.project.lightweight.data.adapter.FoodAdapter
 import com.android.project.lightweight.data.adapter.OnFoodClickListener
 import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.databinding.FragmentSearchBinding
+import com.android.project.lightweight.network.NetworkBroadcastReceiver
 import com.android.project.lightweight.ui.extension.onQueryTextChanged
 import com.android.project.lightweight.util.AppConstants.SEARCH_FOR_FOOD_DELAY
 import com.android.project.lightweight.util.UIUtils
@@ -86,5 +89,17 @@ class SearchFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        IntentFilter("android.net.conn.CONNECTIVITY_CHANGE").also {
+            context.registerReceiver(NetworkBroadcastReceiver, it)
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        requireContext().unregisterReceiver(NetworkBroadcastReceiver)
     }
 }

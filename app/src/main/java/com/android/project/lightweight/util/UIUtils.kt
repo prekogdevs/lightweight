@@ -27,9 +27,9 @@ object UIUtils {
         return dialog
     }
 
-    fun createAnchoredSnackbar(activity: Activity, text: String): Snackbar {
+    fun createAnchoredSnackbar(activity: Activity, text: String, length : Int): Snackbar {
         val bottomNavigationView = activity.findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        val snack = Snackbar.make(bottomNavigationView, text, Snackbar.LENGTH_SHORT)
+        val snack = Snackbar.make(bottomNavigationView, text, length)
         snack.anchorView = bottomNavigationView
         return snack
     }
