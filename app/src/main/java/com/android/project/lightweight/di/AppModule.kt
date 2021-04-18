@@ -3,6 +3,7 @@ package com.android.project.lightweight.di
 import android.content.Context
 import androidx.room.Room
 import com.android.project.lightweight.api.retrofit.service.UsdaAPI
+import com.android.project.lightweight.data.adapter.FoodAdapter
 import com.android.project.lightweight.persistence.DiaryDatabase
 import com.android.project.lightweight.persistence.dao.DiaryDao
 import com.android.project.lightweight.persistence.dao.NutrientDao
@@ -60,4 +61,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNutrientDao(db: DiaryDatabase) = db.nutrientDao()
+
+    @Singleton
+    @Provides
+    fun provideFoodAdapter() = FoodAdapter()
 }

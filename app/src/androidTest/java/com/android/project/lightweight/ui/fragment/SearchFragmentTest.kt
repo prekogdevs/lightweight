@@ -6,13 +6,11 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
-
 
 @MediumTest
 @HiltAndroidTest
 @ExperimentalCoroutinesApi
-class DiaryFragmentTest {
+class SearchFragmentTest {
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
@@ -21,10 +19,6 @@ class DiaryFragmentTest {
         hiltRule.inject()
     }
 
-    @Test
-    fun clickOnDiaryEntryInRecyclerView_navigateToDetailsFragment() {
-
-    }
 
 
 }

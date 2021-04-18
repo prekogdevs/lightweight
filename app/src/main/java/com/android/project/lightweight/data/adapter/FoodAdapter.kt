@@ -8,7 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.databinding.ListItemFoodBinding
 
-class FoodAdapter(var listener: OnFoodClickListener) : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
+class FoodAdapter : ListAdapter<Food, FoodAdapter.FoodHolder>(FoodCallback()) {
+
+    private lateinit var listener: OnFoodClickListener
+    fun setOnItemClickListener(onItemClickListener: OnFoodClickListener) {
+        listener = onItemClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodHolder {
         return FoodHolder.from(parent)

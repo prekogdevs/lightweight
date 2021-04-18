@@ -131,7 +131,6 @@ class DetailsFragment : Fragment() {
     private fun saveDiaryEntry() {
         val consumedAmountText = binding.edtConsumedAmount.text.toString()
         if (consumedAmountText.isNotEmpty()) {
-            UIUtils.closeKeyboard(requireActivity())
             detailsViewModel.saveDiaryEntry(diaryEntry)
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
