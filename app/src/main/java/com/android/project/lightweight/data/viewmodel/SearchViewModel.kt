@@ -31,11 +31,13 @@ class SearchViewModel @Inject constructor(private val searchRepository: Abstract
     }
 
     fun createDiaryEntryFromFood(food: Food): DiaryEntry {
-        val requiredNutrients = food.foodNutrients.filter { AppConstants.all.contains(it.nutrientNumber.toInt()) }
+        val requiredNutrients = filterNotRequiredNutrients(food)
         val consumedOn = DateFormatter.parseDateToLong(CurrentDate.currentDate)
         val nutrientEntries = EntityTransformer.transformFoodNutrientsToNutrientEntries(consumedOn, requiredNutrients)
         val diaryEntry = DiaryEntry(food.fdcId, food.description, consumedOn, 0, 0.0)
         diaryEntry.nutrientEntries = nutrientEntries
         return diaryEntry
     }
+
+    private fun filterNotRequiredNutrients(food: Food) = food.foodNutrients.filter { AppConstants.all.contains(it.nutrientNumber.toInt()) }
 }
