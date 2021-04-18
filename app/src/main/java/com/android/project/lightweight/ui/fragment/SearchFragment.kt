@@ -56,8 +56,8 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->
-            val foodResponse = event.peekContent().data
+        searchViewModel.foodResponse.observe(viewLifecycleOwner, { resource ->
+            val foodResponse = resource.data
             foodResponse?.let {
                 foodAdapter.submitList(it.foods)
             }

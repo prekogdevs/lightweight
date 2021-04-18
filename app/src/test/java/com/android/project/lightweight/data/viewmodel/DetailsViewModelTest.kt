@@ -52,19 +52,19 @@ class DetailsViewModelTest {
     @Test
     fun `set diary entry consumed calories test should pass`() {
         // GIVEN
-        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
+        val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 200, 0.0)
         diaryEntry.id = 1
         diaryEntry.nutrientEntries = listOf(
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 14.0, "G", "Energy")
         )
-        val consumptionAmount = 100
-        val consumedKCAL = 14
+        val consumptionAmount = 200
+        val expectedConsumedCalories = 28
 
         // WHEN
         detailsViewModel.updateDiaryEntry(diaryEntry, consumptionAmount)
 
         // THEN
-        assertThat(diaryEntry.consumedCalories).isEqualTo(consumedKCAL)
+        assertThat(diaryEntry.consumedCalories).isEqualTo(expectedConsumedCalories)
 
     }
 
