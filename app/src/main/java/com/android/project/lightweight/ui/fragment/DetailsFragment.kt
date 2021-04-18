@@ -87,7 +87,7 @@ class DetailsFragment : Fragment() {
         binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
             val amountValue = binding.edtConsumedAmount.text.toString()
             if (amountValue.isNotEmpty()) {
-                diaryEntry.nutrientEntries = detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, amountValue.toInt())
+                detailsViewModel.updateDiaryEntry(diaryEntry, amountValue.toInt())
                 nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
             }
         }
@@ -132,7 +132,6 @@ class DetailsFragment : Fragment() {
         val consumedAmountText = binding.edtConsumedAmount.text.toString()
         if (consumedAmountText.isNotEmpty()) {
             UIUtils.closeKeyboard(requireActivity())
-            detailsViewModel.setConsumptionDetails(diaryEntry, consumedAmountText.toInt())
             detailsViewModel.saveDiaryEntry(diaryEntry)
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())

@@ -50,22 +50,6 @@ class DetailsViewModelTest {
     }
 
     @Test
-    fun `calculate consumed amount for given nutrient test should pass`() {
-        // GIVEN
-        val originalNutrient =
-            NutrientEntry(1, 20200120, energyNutrientNumber.toDouble(), 10.0, "G", "Energy")
-
-        val expectedConsumedNutrient = originalNutrient.copy()
-        expectedConsumedNutrient.consumedAmount = 30.0
-
-        // WHEN
-        val result = detailsViewModel.calculateConsumedNutrients(listOf(originalNutrient), 300)
-
-        // THEN
-        assertThat(listOf(expectedConsumedNutrient)).isEqualTo(result)
-    }
-
-    @Test
     fun `set diary entry consumed calories test should pass`() {
         // GIVEN
         val diaryEntry = DiaryEntry(1234, "Banana, raw", 20200120, 100, 0.0)
@@ -77,8 +61,7 @@ class DetailsViewModelTest {
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
-        detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
+        detailsViewModel.updateDiaryEntry(diaryEntry, consumptionAmount)
 
         // THEN
         assertThat(diaryEntry.consumedCalories).isEqualTo(consumedKCAL)
@@ -97,8 +80,7 @@ class DetailsViewModelTest {
         val consumedKCAL = 14
 
         // WHEN
-        detailsViewModel.calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
-        detailsViewModel.setConsumptionDetails(diaryEntry, consumptionAmount)
+        detailsViewModel.updateDiaryEntry(diaryEntry, consumptionAmount)
 
         // THEN
         assertThat(diaryEntry.consumedCalories).isNotEqualTo(consumedKCAL)

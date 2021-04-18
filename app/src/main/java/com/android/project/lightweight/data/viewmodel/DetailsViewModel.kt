@@ -24,15 +24,19 @@ class DetailsViewModel @Inject constructor(
 
     fun setDiaryEntry(entry: DiaryEntry) = diaryEntry.postValue(entry)
 
-    fun setConsumptionDetails(diaryEntry: DiaryEntry, consumptionAmount: Int) {
+    fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
+        nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
+
+    fun updateDiaryEntry(diaryEntry: DiaryEntry, consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
+        diaryEntry.nutrientEntries = calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         diaryEntry.consumedCalories = filter(diaryEntry.nutrientEntries, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
     }
 
-    fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, amountValue: Int): List<NutrientEntry> {
+    private fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, consumptionAmount: Int): List<NutrientEntry> {
         val consumedNutrients = mutableListOf<NutrientEntry>()
         for (nutrient in nutrients) {
-            nutrient.consumedAmount = (nutrient.originalComponentValueInPortion * amountValue) / 100
+            nutrient.consumedAmount = (nutrient.originalComponentValueInPortion * consumptionAmount) / 100
             consumedNutrients.add(nutrient)
         }
         return consumedNutrients
@@ -47,7 +51,4 @@ class DetailsViewModel @Inject constructor(
         diaryEntry.nutrientEntries.map { it.diaryEntryId = insertedDiaryEntryId }
         nutrientRepository.insertNutrientEntries(diaryEntry.nutrientEntries)
     }
-
-    fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
-        nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 }
