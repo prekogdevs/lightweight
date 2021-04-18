@@ -77,13 +77,13 @@ class DetailsViewModelTest {
             NutrientEntry(diaryEntry.id, 20200120, energyNutrientNumber.toDouble(), 50.0, "G", "Energy")
         )
         val consumptionAmount = 32
-        val consumedKCAL = 14
+        val expectedConsumedCalories = 14
 
         // WHEN
         detailsViewModel.updateDiaryEntry(diaryEntry, consumptionAmount)
 
         // THEN
-        assertThat(diaryEntry.consumedCalories).isNotEqualTo(consumedKCAL)
+        assertThat(diaryEntry.consumedCalories).isNotEqualTo(expectedConsumedCalories)
 
     }
 
