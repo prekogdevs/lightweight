@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="@+id/foodRecyclerView"
             app:layout_constraintStart_toStartOf="@+id/foodRecyclerView"
             app:layout_constraintTop_toTopOf="@+id/foodRecyclerView"
-            app:visibility="@{searchViewModel.foodResponse.status}" />
+            app:visibility="@{searchViewModel.foodResponse.peekContent().status}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/foodRecyclerView"
@@ -63,13 +63,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            app:data="@{searchViewModel.foodResponse.data}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:query="@{searchViewModel.foodResponse.query}"
-            app:status="@{searchViewModel.foodResponse.status}">
+            app:resource="@{searchViewModel.foodResponse}">
 
             <ImageView
                 android:id="@+id/empty_result_image"

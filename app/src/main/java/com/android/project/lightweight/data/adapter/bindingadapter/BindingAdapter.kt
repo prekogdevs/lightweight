@@ -10,6 +10,8 @@ import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.util.DateFormatter
+import com.android.project.lightweight.util.Event
+import com.android.project.lightweight.util.Resource
 import com.android.project.lightweight.util.Status
 
 
@@ -20,18 +22,22 @@ fun setCurrentDate(view: TextView, pickedDate: String?) {
     }
 }
 
-@BindingAdapter("status", "data", "query")
-fun setVisibility(root: ConstraintLayout, status: Status?, data: FoodResponse?, query: String?) {
-    status?.let {
-        if (status == Status.SUCCESS) {
-            val foods = data?.foods
-            foods?.let {
-                if (foods.isEmpty()) {
-                    root.visibility = View.VISIBLE
-                    val textView = root.findViewById<TextView>(R.id.empty_result_text)
-                    textView.text = root.context.getString(R.string.no_result_with_given_query, query)
-                } else {
-                    root.visibility = View.GONE
+@BindingAdapter("resource")
+fun setVisibility(root: ConstraintLayout, event: Event<Resource<FoodResponse>>?) {
+    val content = event?.getContentIfNotHandled()
+    content?.let { resource ->
+        val status = resource.status
+        status.let {
+            if (status == Status.SUCCESS) {
+                val foods = resource.data?.foods
+                foods?.let {
+                    if (foods.isEmpty()) {
+                        root.visibility = View.VISIBLE
+                        val textView = root.findViewById<TextView>(R.id.empty_result_text)
+                        textView.text = root.context.getString(R.string.no_result_with_given_query, resource.query)
+                    } else {
+                        root.visibility = View.GONE
+                    }
                 }
             }
         }

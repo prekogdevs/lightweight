@@ -9,24 +9,21 @@ import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.repository.AbstractSearchRepository
 import com.android.project.lightweight.persistence.transformer.EntityTransformer
-import com.android.project.lightweight.util.AppConstants
-import com.android.project.lightweight.util.CurrentDate
-import com.android.project.lightweight.util.DateFormatter
-import com.android.project.lightweight.util.Resource
+import com.android.project.lightweight.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val searchRepository: AbstractSearchRepository) : ViewModel() {
-    private val _foodResponse = MutableLiveData<Resource<FoodResponse>>()
-    val foodResponse: LiveData<Resource<FoodResponse>> = _foodResponse
+    private val _foodResponse = MutableLiveData<Event<Resource<FoodResponse>>>()
+    val foodResponse: LiveData<Event<Resource<FoodResponse>>> = _foodResponse
 
     fun searchForFood(query: String) {
-        _foodResponse.value = Resource.loading(null, query)
+        _foodResponse.value = Event(Resource.loading(null, query))
         viewModelScope.launch {
             val result = searchRepository.searchForFood(AppConstants.API_KEY, query)
-            _foodResponse.value = result
+            _foodResponse.value = Event(result)
         }
     }
 

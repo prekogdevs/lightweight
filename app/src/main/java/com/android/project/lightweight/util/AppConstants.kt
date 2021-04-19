@@ -7,7 +7,7 @@ object AppConstants {
     const val DATE_PICKER_DIALOG_TAG = "DatePickerDialog"
     const val BASE_URL = "https://api.nal.usda.gov/fdc/v1/"
     const val API_KEY = BuildConfig.ApiKey
-    const val SEARCH_FOR_FOOD_DELAY = 400L
+    const val SEARCH_FOR_FOOD_DELAY = 250L
     const val energyNutrientNumber = 208
     const val proteinNutrientNumber = 203
     const val carbsNutrientNumber = 205

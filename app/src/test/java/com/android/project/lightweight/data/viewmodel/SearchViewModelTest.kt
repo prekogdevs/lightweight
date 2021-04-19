@@ -34,7 +34,7 @@ class SearchViewModelTest {
         searchViewModel.searchForFood("wrong test query")
 
         //THEN
-        assertThat(searchViewModel.foodResponse.getOrAwaitValueTest().status).isEqualTo(Status.ERROR)
+        assertThat(searchViewModel.foodResponse.getOrAwaitValueTest().getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
     }
 
     @Test
