@@ -130,6 +130,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
         if (consumedAmountText.isNotEmpty()) {
             detailsViewModel.saveDiaryEntry(diaryEntry)
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
+            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.please_add_consumption_amount), Snackbar.LENGTH_SHORT).show()
         }

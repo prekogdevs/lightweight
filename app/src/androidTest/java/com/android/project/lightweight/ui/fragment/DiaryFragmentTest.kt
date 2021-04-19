@@ -2,8 +2,8 @@ package com.android.project.lightweight.ui.fragment
 
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.filters.MediumTest
@@ -17,7 +17,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import javax.inject.Inject
 
 
@@ -36,21 +37,22 @@ class DiaryFragmentTest {
         hiltRule.inject()
     }
 
+    // TODO: Test date change
+
+    // TODO: Fix this test
     @Test
     fun clickOnDiaryEntryInRecyclerView_navigateToDetailsFragment() {
-        val navController = Mockito.mock(NavController::class.java)
+        val navController = mock(NavController::class.java)
         val diaryEntry = DiaryEntry(100, "TEST-DIARY-ENTRY", 20201010, 0, 0.0)
         launchFragmentInHiltContainer<DiaryFragment>(fragmentFactory = fragmentFactory) {
             Navigation.setViewNavController(requireView(), navController)
             diaryEntryAdapter.submitList(listOf(diaryEntry))
         }
-        Espresso.onView(ViewMatchers.withId(R.id.diary_recyclerview)).perform(
+        onView(ViewMatchers.withId(R.id.diary_recyclerview)).perform(
             RecyclerViewActions.actionOnItemAtPosition<DiaryEntryAdapter.DiaryEntryHolder>(
-                0, ViewActions.click()
+                0, click()
             )
         )
-        Mockito.verify(navController).navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
+        verify(navController).navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
     }
-
-
 }
