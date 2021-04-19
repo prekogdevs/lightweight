@@ -22,10 +22,11 @@
     <string name="protein_text_view_header">Protein</string>
     <string name="carbs_text_view_header">Carbs</string>
     <string name="fats_text_view_header">Fats</string>
-    <string name="menu_save_text">Save</string>
+    <string name="save_diary_menu_text">Save</string>
+    <string name="delete_diary_menu_text">Delete</string>
     <string name="diaryentry_removed_snackbar_text">Diary entry has been removed</string>
     <string name="diaryentry_added_snackbar_text">Diary entry has been saved</string>
-    <string name="amount_missing_snackbar_text">Please add consumption amount</string>
+    <string name="please_add_consumption_amount">Please add consumption amount</string>
     <string name="snackbar_offline_text">You are offline, for this feature network connection is required</string>
     <string name="snackbar_offline_action_text">Enable</string>
 </resources>

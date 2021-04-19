@@ -7,12 +7,12 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.MediumTest
-import com.android.project.lightweight.FakeSearchRepositoryAndroidTest
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.data.adapter.FoodAdapter
 import com.android.project.lightweight.data.viewmodel.SearchViewModel
 import com.android.project.lightweight.launchFragmentInHiltContainer
+import com.android.project.lightweight.repository.FakeSearchRepositoryAndroidTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.ExperimentalCoroutinesApi

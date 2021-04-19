@@ -1,4 +1,4 @@
-package com.android.project.lightweight
+package com.android.project.lightweight.repository
 
 import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.persistence.repository.AbstractSearchRepository

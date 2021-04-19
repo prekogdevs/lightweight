@@ -21,14 +21,14 @@ import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class DetailsFragment : Fragment() {
+class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientAdapter) : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var diaryEntry: DiaryEntry
     private val detailsViewModel: DetailsViewModel by viewModels()
-    private var nutrientAdapter = NutrientAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -71,14 +71,8 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupToolbar() {
-        binding.toolbar.apply {
-            inflateMenu(R.menu.details_menu)
-            setOnMenuItemClickListener {
-                onOptionsItemSelected(it)
-            }
-            val menuItem = menu.findItem(R.id.action)
-            if (diaryEntry.id == 0L) menuItem.setIcon(R.drawable.ic_save_24)
-            else menuItem.setIcon(R.drawable.ic_remove_24)
+        binding.toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
         }
     }
 
@@ -119,9 +113,12 @@ class DetailsFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action -> {
-                if (diaryEntry.id == 0L) saveDiaryEntry() // New entry
-                else deleteDiaryEntry()
+            R.id.save_diary_menu -> {
+                saveDiaryEntry()
+                true
+            }
+            R.id.delete_diary_menu -> {
+                deleteDiaryEntry()
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -133,9 +130,8 @@ class DetailsFragment : Fragment() {
         if (consumedAmountText.isNotEmpty()) {
             detailsViewModel.saveDiaryEntry(diaryEntry)
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
-            findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
-            UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.amount_missing_snackbar_text), Snackbar.LENGTH_SHORT).show()
+            UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.please_add_consumption_amount), Snackbar.LENGTH_SHORT).show()
         }
     }
 

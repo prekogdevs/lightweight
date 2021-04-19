@@ -25,19 +25,13 @@ import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class DiaryFragment @Inject constructor(val diaryEntryAdapter: DiaryEntryAdapter) : Fragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding: FragmentDiaryBinding
     private val diaryViewModel: DiaryViewModel by viewModels()
-    private val diaryEntryAdapter by lazy {
-        DiaryEntryAdapter(object : OnDiaryEntryClickListener {
-            override fun onClick(diaryEntry: DiaryEntry) {
-                findNavController().navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
-            }
-        })
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diary, container, false)
@@ -70,6 +64,13 @@ class DiaryFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     private fun setupRecyclerView() {
+        diaryEntryAdapter.setOnItemClickListener(
+            object : OnDiaryEntryClickListener {
+                override fun onClick(diaryEntry: DiaryEntry) {
+                    findNavController().navigate(DiaryFragmentDirections.actionDiaryFragmentToDetailsFragment(diaryEntry))
+                }
+            }
+        )
         binding.diaryRecyclerview.apply {
             adapter = diaryEntryAdapter
             setHasFixedSize(true)

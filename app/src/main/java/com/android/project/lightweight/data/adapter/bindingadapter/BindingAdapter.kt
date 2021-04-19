@@ -3,10 +3,12 @@ package com.android.project.lightweight.data.adapter.bindingadapter
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.android.project.lightweight.R
 import com.android.project.lightweight.api.retrofit.model.FoodResponse
+import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.util.DateFormatter
 import com.android.project.lightweight.util.Status
 
@@ -19,7 +21,7 @@ fun setCurrentDate(view: TextView, pickedDate: String?) {
 }
 
 @BindingAdapter("status", "data", "query")
-fun setVisibility(root: ConstraintLayout, status : Status?, data : FoodResponse?, query : String?) {
+fun setVisibility(root: ConstraintLayout, status: Status?, data: FoodResponse?, query: String?) {
     status?.let {
         if (status == Status.SUCCESS) {
             val foods = data?.foods
@@ -43,6 +45,18 @@ fun setVisibility(view: ProgressBar, status: Status?) {
             view.visibility = View.VISIBLE
         } else {
             view.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("detailsMenu")
+fun setMenu(toolbar: Toolbar, diaryEntry: DiaryEntry?) {
+    diaryEntry?.let { entry ->
+        toolbar.title = entry.description
+        if (entry.id == 0L) {
+            toolbar.inflateMenu(R.menu.details_menu_save)
+        } else {
+            toolbar.inflateMenu(R.menu.details_menu_delete)
         }
     }
 }

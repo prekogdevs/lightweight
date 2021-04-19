@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action"
-        android:icon="@drawable/ic_save_24"
+        android:id="@+id/delete_diary_menu"
+        android:icon="@drawable/ic_remove_24"
         app:showAsAction="always"
         android:iconTint="@color/mdtp_white"
-        android:title="@string/menu_save_text" />
+        android:title="@string/delete_diary_menu_text" />
 </menu>
