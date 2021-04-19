@@ -36,7 +36,6 @@ class SearchFragment @Inject constructor(val foodAdapter: FoodAdapter) : Fragmen
         binding.searchViewModel = searchViewModel
         setupRecyclerView()
         setupSearchView()
-        setHasOptionsMenu(true)
         return binding.root
     }
 
