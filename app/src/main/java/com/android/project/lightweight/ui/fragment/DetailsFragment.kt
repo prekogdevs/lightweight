@@ -15,7 +15,6 @@ import com.android.project.lightweight.R
 import com.android.project.lightweight.data.adapter.NutrientAdapter
 import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
-import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.util.AppConstants
 import com.android.project.lightweight.util.UIUtils
@@ -27,17 +26,32 @@ import javax.inject.Inject
 class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientAdapter) : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var diaryEntry: DiaryEntry
     private val detailsViewModel: DetailsViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
-        handleNavigationArguments()
-        setupRecyclerView()
-        setupToolbar()
-        updateNutrientSummary()
-        setupChipClickListener()
+        binding.detailsViewModel = detailsViewModel
+        binding.foodNutrientsRecyclerView.apply {
+            adapter = nutrientAdapter
+            setHasFixedSize(true)
+        }
+        binding.toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
+        binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
+            val amountValue = binding.edtConsumedAmount.text.toString()
+            if (amountValue.isNotEmpty()) {
+                detailsViewModel.updateDiaryEntry(amountValue.toInt())
+                nutrientAdapter.setNutrients(detailsViewModel.diaryEntry.nutrientEntries)
+            }
+        }
+        binding.chipGroup.forEach {
+            it.setOnClickListener { chip ->
+                val filteredNutrients = filterByNutrient(chip, detailsViewModel.nutrients.value!!)
+                nutrientAdapter.setNutrients(filteredNutrients)
+            }
+        }
         return binding.root
     }
 
@@ -50,56 +64,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
         })
     }
 
-    private fun handleNavigationArguments() {
-        arguments?.let { bundle ->
-            val argsBundle = DetailsFragmentArgs.fromBundle(bundle)
-            diaryEntry = argsBundle.diaryEntry
-            if (diaryEntry.id == 0L) { // this means that the entry is not in database yet
-                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
-            } else {
-                detailsViewModel.setDiaryEntry(diaryEntry) // this will trigger a room query from detailsViewModel
-            }
-            binding.diaryEntry = diaryEntry
-        }
-    }
-
-    private fun setupRecyclerView() {
-        binding.foodNutrientsRecyclerView.apply {
-            adapter = nutrientAdapter
-            setHasFixedSize(true)
-        }
-    }
-
-    private fun setupToolbar() {
-        binding.toolbar.setOnMenuItemClickListener {
-            onOptionsItemSelected(it)
-        }
-    }
-
-    // Live update to nutrients if value is changing in the editText
-    private fun updateNutrientSummary() {
-        binding.edtConsumedAmount.doOnTextChanged { _: CharSequence?, _: Int, _: Int, _: Int ->
-            val amountValue = binding.edtConsumedAmount.text.toString()
-            if (amountValue.isNotEmpty()) {
-                detailsViewModel.updateDiaryEntry(diaryEntry, amountValue.toInt())
-                nutrientAdapter.setNutrients(diaryEntry.nutrientEntries)
-            }
-        }
-    }
-
-    private fun setupChipClickListener() {
-        binding.chipGroup.forEach {
-            it.setOnClickListener { chip ->
-                val filteredNutrients = if (diaryEntry.id == 0L) {
-                    filterByNutrient(chip, diaryEntry.nutrientEntries)
-                } else {
-                    filterByNutrient(chip, detailsViewModel.nutrients.value!!)
-                }
-                nutrientAdapter.setNutrients(filteredNutrients)
-            }
-        }
-    }
-
+    // TODO: Refactor this approach (call from XML with binding?)
     private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
         return when (view.id) {
             R.id.chip_general -> detailsViewModel.filter(nutrientEntries, AppConstants.general)
@@ -128,7 +93,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
     private fun saveDiaryEntry() {
         val consumedAmountText = binding.edtConsumedAmount.text.toString()
         if (consumedAmountText.isNotEmpty()) {
-            detailsViewModel.saveDiaryEntry(diaryEntry)
+            detailsViewModel.saveDiaryEntry()
             UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_added_snackbar_text), Snackbar.LENGTH_SHORT).show()
             findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
         } else {
@@ -137,7 +102,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
     }
 
     private fun deleteDiaryEntry() {
-        detailsViewModel.deleteDiaryEntry(diaryEntry.id)
+        detailsViewModel.deleteDiaryEntry()
         UIUtils.createAnchoredSnackbar(requireActivity(), getString(R.string.diaryentry_removed_snackbar_text), Snackbar.LENGTH_SHORT).show()
         findNavController().navigate(DetailsFragmentDirections.actionDetailsFragmentToDiaryFragment())
     }

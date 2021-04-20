@@ -13,26 +13,33 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val diaryRepository: AbstractDiaryRepository,
-    private val nutrientRepository: AbstractNutrientRepository
+    private val nutrientRepository: AbstractNutrientRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val diaryEntry = MutableLiveData<DiaryEntry>()
-    val nutrients: LiveData<List<NutrientEntry>> = Transformations.switchMap(diaryEntry) {
-        it?.let {entry ->
-            nutrientRepository.getNutrientEntriesByDiaryEntryId(entry.id)
+    val diaryEntry: DiaryEntry = savedStateHandle.get<DiaryEntry>("diaryEntry")!!
+    private val _nutrients = MutableLiveData<List<NutrientEntry>>()
+    val nutrients: LiveData<List<NutrientEntry>> = _nutrients
+
+    init {
+        if(diaryEntry.id == 0L) {
+            _nutrients.postValue(diaryEntry.nutrientEntries)
+        }
+        else {
+            val tmp = nutrientRepository.getNutrientEntriesByDiaryEntryId(diaryEntry.id)
+            _nutrients.postValue(tmp.value)
         }
     }
-
-    fun setDiaryEntry(entry: DiaryEntry) = diaryEntry.postValue(entry)
 
     fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
         nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
 
-    fun updateDiaryEntry(diaryEntry: DiaryEntry, consumptionAmount: Int) {
+    fun updateDiaryEntry(consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
         diaryEntry.nutrientEntries = calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
         diaryEntry.consumedCalories = filter(diaryEntry.nutrientEntries, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
     }
 
+    // TODO: Refactor this method
     private fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, consumptionAmount: Int): List<NutrientEntry> {
         val consumedNutrients = mutableListOf<NutrientEntry>()
         for (nutrient in nutrients) {
@@ -42,11 +49,11 @@ class DetailsViewModel @Inject constructor(
         return consumedNutrients
     }
 
-    fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
-        diaryRepository.deleteDiaryEntry(diaryEntryId)
+    fun deleteDiaryEntry() = viewModelScope.launch {
+        diaryRepository.deleteDiaryEntry(diaryEntry.id)
     }
 
-    fun saveDiaryEntry(diaryEntry: DiaryEntry) = viewModelScope.launch {
+    fun saveDiaryEntry() = viewModelScope.launch {
         val insertedDiaryEntryId = diaryRepository.insertDiaryEntry(diaryEntry)
         diaryEntry.nutrientEntries.map { it.diaryEntryId = insertedDiaryEntryId }
         nutrientRepository.insertNutrientEntries(diaryEntry.nutrientEntries)

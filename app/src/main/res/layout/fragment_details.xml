@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="diaryEntry"
-            type="com.android.project.lightweight.persistence.entity.DiaryEntry" />
+            name="detailsViewModel"
+            type="com.android.project.lightweight.data.viewmodel.DetailsViewModel" />
     </data>
 
     <ScrollView
@@ -28,7 +28,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:detailsMenu="@{diaryEntry}"
+                app:detailsMenu="@{detailsViewModel.diaryEntry}"
                 app:titleTextColor="@color/mdtp_white" />
 
             <LinearLayout
@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:visibility="@{diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
+                android:visibility="@{detailsViewModel.diaryEntry.id == 0L ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chip_layout">
