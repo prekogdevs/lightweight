@@ -16,7 +16,7 @@ import com.android.project.lightweight.data.adapter.NutrientAdapter
 import com.android.project.lightweight.data.viewmodel.DetailsViewModel
 import com.android.project.lightweight.databinding.FragmentDetailsBinding
 import com.android.project.lightweight.persistence.entity.NutrientEntry
-import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.FilterCategory
 import com.android.project.lightweight.util.UIUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +32,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding.lifecycleOwner = this
         binding.detailsViewModel = detailsViewModel
+        nutrientAdapter.setNutrients(detailsViewModel.diaryEntry.nutrientEntries)
         binding.foodNutrientsRecyclerView.apply {
             adapter = nutrientAdapter
             setHasFixedSize(true)
@@ -48,7 +49,7 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
         }
         binding.chipGroup.forEach {
             it.setOnClickListener { chip ->
-                val filteredNutrients = filterByNutrient(chip, detailsViewModel.nutrients.value!!)
+                val filteredNutrients = filterByNutrient(chip)
                 nutrientAdapter.setNutrients(filteredNutrients)
             }
         }
@@ -64,14 +65,13 @@ class DetailsFragment @Inject constructor(private val nutrientAdapter: NutrientA
         })
     }
 
-    // TODO: Refactor this approach (call from XML with binding?)
-    private fun filterByNutrient(view: View, nutrientEntries: List<NutrientEntry>): List<NutrientEntry> {
+    private fun filterByNutrient(view: View): List<NutrientEntry> {
         return when (view.id) {
-            R.id.chip_general -> detailsViewModel.filter(nutrientEntries, AppConstants.general)
-            R.id.chip_vitamins -> detailsViewModel.filter(nutrientEntries, AppConstants.vitamins)
-            R.id.chip_minerals -> detailsViewModel.filter(nutrientEntries, AppConstants.minerals)
+            R.id.chip_general -> detailsViewModel.filterByNutrientCategory(FilterCategory.GENERAL)
+            R.id.chip_vitamins -> detailsViewModel.filterByNutrientCategory(FilterCategory.VITAMINS)
+            R.id.chip_minerals -> detailsViewModel.filterByNutrientCategory(FilterCategory.MINERALS)
             else -> {
-                nutrientEntries
+                detailsViewModel.filterByNutrientCategory(FilterCategory.ALL)
             }
         }
     }

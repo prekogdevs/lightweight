@@ -41,4 +41,5 @@ class DiaryViewModel @Inject constructor(
     fun deleteDiaryEntry(diaryEntryId: Long) = viewModelScope.launch {
         diaryRepository.deleteDiaryEntry(diaryEntryId)
     }
+
 }

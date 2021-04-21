@@ -6,6 +6,8 @@ import com.android.project.lightweight.persistence.entity.NutrientEntry
 import com.android.project.lightweight.persistence.repository.AbstractDiaryRepository
 import com.android.project.lightweight.persistence.repository.AbstractNutrientRepository
 import com.android.project.lightweight.util.AppConstants
+import com.android.project.lightweight.util.AppConstants.energyNutrientNumber
+import com.android.project.lightweight.util.FilterCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,37 +18,38 @@ class DetailsViewModel @Inject constructor(
     private val nutrientRepository: AbstractNutrientRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    private val diaryEntryId = MutableLiveData<Long>()
     val diaryEntry: DiaryEntry = savedStateHandle.get<DiaryEntry>("diaryEntry")!!
-    private val _nutrients = MutableLiveData<List<NutrientEntry>>()
-    val nutrients: LiveData<List<NutrientEntry>> = _nutrients
 
-    init {
-        if(diaryEntry.id == 0L) {
-            _nutrients.postValue(diaryEntry.nutrientEntries)
-        }
-        else {
-            val tmp = nutrientRepository.getNutrientEntriesByDiaryEntryId(diaryEntry.id)
-            _nutrients.postValue(tmp.value)
+    // DiaryFragment -> DetailsFragment (when DiaryEntry exists in DB)
+    val nutrients: LiveData<List<NutrientEntry>> = Transformations.switchMap(diaryEntryId) {
+        it?.let {
+            nutrientRepository.getNutrientEntriesByDiaryEntryId(it)
         }
     }
 
-    fun filter(nutrientEntries: List<NutrientEntry>, filterList: List<Int>) =
-        nutrientEntries.filter { nutrientEntry -> filterList.contains(nutrientEntry.nutrientNumber.toInt()) }
+    init {
+        if (diaryEntry.id != 0L) {
+            diaryEntryId.postValue(diaryEntry.id)
+        }
+    }
+
+    fun filterByNutrientCategory(filterCategory: FilterCategory): List<NutrientEntry> {
+        val nutrientsToFilter = nutrients.value ?: diaryEntry.nutrientEntries
+        return when (filterCategory) {
+            FilterCategory.ALL -> nutrientsToFilter
+            FilterCategory.GENERAL -> nutrientsToFilter.filter { AppConstants.general.contains(it.nutrientNumber.toInt()) }
+            FilterCategory.VITAMINS -> nutrientsToFilter.filter { AppConstants.vitamins.contains(it.nutrientNumber.toInt()) }
+            FilterCategory.MINERALS -> nutrientsToFilter.filter { AppConstants.minerals.contains(it.nutrientNumber.toInt()) }
+        }
+    }
 
     fun updateDiaryEntry(consumptionAmount: Int) {
         diaryEntry.consumedAmount = consumptionAmount
-        diaryEntry.nutrientEntries = calculateConsumedNutrients(diaryEntry.nutrientEntries, consumptionAmount)
-        diaryEntry.consumedCalories = filter(diaryEntry.nutrientEntries, listOf(AppConstants.energyNutrientNumber)).first().consumedAmount
-    }
-
-    // TODO: Refactor this method
-    private fun calculateConsumedNutrients(nutrients: List<NutrientEntry>, consumptionAmount: Int): List<NutrientEntry> {
-        val consumedNutrients = mutableListOf<NutrientEntry>()
-        for (nutrient in nutrients) {
+        diaryEntry.nutrientEntries.forEach { nutrient ->
             nutrient.consumedAmount = (nutrient.originalComponentValueInPortion * consumptionAmount) / 100
-            consumedNutrients.add(nutrient)
         }
-        return consumedNutrients
+        diaryEntry.consumedCalories = diaryEntry.nutrientEntries.first { it.nutrientNumber.toInt() == energyNutrientNumber }.consumedAmount
     }
 
     fun deleteDiaryEntry() = viewModelScope.launch {
