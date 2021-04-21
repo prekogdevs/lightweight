@@ -52,14 +52,13 @@ class SearchFragment : Fragment() {
             })
         }
         var searchJob: Job? = null
-        binding.searchView.apply {
-            onQueryTextChanged { query ->
-                searchJob?.cancel()
-                searchJob = MainScope().launch {
-                    delay(AppConstants.SEARCH_FOR_FOOD_DELAY)
-                    searchViewModel.searchForFood(query)
-                }
+        binding.searchView.onQueryTextChanged { query ->
+            searchJob?.cancel()
+            searchJob = MainScope().launch {
+                delay(AppConstants.SEARCH_FOR_FOOD_DELAY)
+                searchViewModel.searchForFood(query)
             }
+
         }
         searchViewModel.foodResponse.observe(viewLifecycleOwner, { event ->
             val foodResponse = event.peekContent().data

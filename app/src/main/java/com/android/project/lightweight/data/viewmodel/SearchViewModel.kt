@@ -8,7 +8,7 @@ import com.android.project.lightweight.api.retrofit.model.Food
 import com.android.project.lightweight.api.retrofit.model.FoodResponse
 import com.android.project.lightweight.persistence.entity.DiaryEntry
 import com.android.project.lightweight.persistence.repository.AbstractSearchRepository
-import com.android.project.lightweight.persistence.transformer.EntityTransformer
+import com.android.project.lightweight.transformer.EntityTransformer
 import com.android.project.lightweight.util.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

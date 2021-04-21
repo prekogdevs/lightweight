@@ -1,4 +1,4 @@
-package com.android.project.lightweight.persistence.transformer
+package com.android.project.lightweight.transformer
 
 import com.android.project.lightweight.api.retrofit.model.FoodNutrient
 import com.android.project.lightweight.persistence.entity.NutrientEntry
